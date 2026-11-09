@@ -1,0 +1,291 @@
+<title>Premier League by the Numbers</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* Layout: same match-report column as the Leverkusen page; a title-race explorer first, then two smaller season charts. */
+:root {
+  --bg: #f3f4f6;
+  --panel: #ffffff;
+  --ink: #14161a;
+  --ink-2: #4e5560;
+  --muted: #868d97;
+  --line: #e0e3e8;
+  --context: #c8cdd4;
+  --accent: #2a78d6;
+  --accent-2: #e34948;
+  --mid: #8d96a0;
+  --on-ink: #ffffff;
+  --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --font-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1114; --panel: #181b1f; --ink: #eef0f3; --ink-2: #b8bfc8; --muted: #838b95; --line: #2a2f35;
+    --context: #3c434b; --accent: #4a90e8; --accent-2: #ef6463; --mid: #7a838d; --on-ink: #0f1114;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1114; --panel: #181b1f; --ink: #eef0f3; --ink-2: #b8bfc8; --muted: #838b95; --line: #2a2f35;
+  --context: #3c434b; --accent: #4a90e8; --accent-2: #ef6463; --mid: #7a838d; --on-ink: #0f1114;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 var(--font-body); }
+.wrap { max-width: 920px; margin: 0 auto; display: grid; gap: 22px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 32px 48px; }
+.eyebrow { font: 600 13px/1 var(--font-body); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 700 clamp(40px, 8vw, 66px)/0.95 var(--font-display); margin: 10px 0 0; text-transform: uppercase; text-wrap: balance; }
+h1 em { font-style: normal; color: var(--accent); }
+.byline { margin: 10px 0 0; font-size: 13px; color: var(--muted); }
+.lede { margin: 14px 0 0; color: var(--ink-2); max-width: 62ch; }
+h2 { font: 700 24px/1.1 var(--font-display); text-transform: uppercase; margin: 0; }
+.sub { margin: 4px 0 0; color: var(--ink-2); font-size: 15px; max-width: 64ch; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 16px; min-width: 0; }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.seg { display: inline-flex; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 3px; }
+.seg button { font: 600 14px var(--font-body); color: var(--ink-2); background: transparent; border: 0; border-radius: 6px; padding: 7px 12px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--on-ink); }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+select { font: 600 14px var(--font-body); color: var(--ink); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; cursor: pointer; }
+.slider { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--ink-2); flex: 1 1 220px; min-width: 0; }
+.slider input { flex: 1; min-width: 0; accent-color: var(--accent); }
+.slider b { font: 700 20px/1 var(--font-display); color: var(--ink); min-width: 24px; font-variant-numeric: tabular-nums; }
+.race { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 18px; align-items: start; }
+.chart { position: relative; min-width: 0; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { font-family: var(--font-body); }
+.tk { fill: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.gl { stroke: var(--line); stroke-width: 1; }
+.rank { display: grid; gap: 2px; font-size: 14px; font-variant-numeric: tabular-nums; max-height: 430px; overflow-y: auto; }
+.rank h3 { margin: 0 0 6px; font: 600 12px var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.rank .r { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 6px; padding: 3px 6px; border-radius: 5px; cursor: default; }
+.rank .r span:nth-child(2) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rank .r .n { color: var(--muted); }
+.rank .r b { font-weight: 600; }
+.rank .r.now { background: var(--accent); color: var(--on-ink); }
+.rank .r.now .n { color: var(--on-ink); opacity: .8; }
+.rank .r.hl { background: var(--bg); }
+.note { font-size: 14px; color: var(--ink-2); margin: 0; }
+.note strong { color: var(--accent); }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--on-ink); font-size: 13px; line-height: 1.4; padding: 7px 9px; border-radius: 6px; white-space: nowrap; transform: translate(-50%, calc(-100% - 12px)); z-index: 3; font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+.notes { font-size: 13.5px; color: var(--muted); display: grid; gap: 6px; max-width: 70ch; }
+.notes p { margin: 0; }
+@media (max-width: 700px) { .race { grid-template-columns: minmax(0, 1fr); } .rank { max-height: 260px; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Premier League · 15 seasons · 5,700 matches</div>
+    <h1>Premier League <em>by the numbers</em></h1>
+    <p class="lede">How good is a fast start? What happened to home advantage without fans? Is the league scoring more? Explore every season from 2010-11 to 2024-25.</p>
+    <p class="byline">Independent analysis by Stephen tAMBI using openfootball match results.</p>
+  </header>
+
+  <section class="panel" aria-labelledby="t-race">
+    <div>
+      <h2 id="t-race">The title race</h2>
+      <p class="sub" id="race-sub"></p>
+    </div>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="View">
+        <button type="button" id="v-champs" aria-pressed="true" data-v="champs">Every champion</button>
+        <button type="button" id="v-season" aria-pressed="false" data-v="season">One season</button>
+      </div>
+      <select id="season" aria-label="Season" hidden></select>
+      <label class="slider" for="game">After game <b id="game-out">10</b><input type="range" id="game" min="1" max="38" value="10"></label>
+    </div>
+    <div class="race">
+      <div class="chart" id="race"></div>
+      <div class="rank" id="rank" aria-live="polite"></div>
+    </div>
+    <p class="note" id="race-note"></p>
+  </section>
+
+  <section class="panel" aria-labelledby="t-home">
+    <div>
+      <h2 id="t-home">Home advantage</h2>
+      <p class="sub">Share of matches won by the home team, the away team, or drawn. Hover a season for the numbers.</p>
+    </div>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--accent)"></i>Home wins</span>
+      <span><i class="sw" style="background:var(--accent-2)"></i>Away wins</span>
+      <span><i class="sw" style="background:var(--mid)"></i>Draws</span>
+    </div>
+    <div class="chart" id="home"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="t-goals">
+    <div>
+      <h2 id="t-goals">Goals per match</h2>
+      <p class="sub">Average goals per match by season. Hover a bar for the season total.</p>
+    </div>
+    <div class="chart" id="goals"></div>
+  </section>
+
+  <footer class="notes">
+    <p>Data: openfootball match results, Premier League 2010-11 to 2024-25; current table as of the date shown. Matches are ordered by date; restart matches from summer 2020 are dated a year too early in the source and were corrected.</p>
+    <p>Points deductions (for example Everton and Nottingham Forest in 2023-24) are not applied. Ties on points are ordered by goal difference.</p>
+  </footer>
+</div>
+
+<script>
+const DATA = /*__DATA__*/{};
+const S = DATA.seasons, NOW = DATA.now;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const svgNS = "http://www.w3.org/2000/svg";
+function el(tag, a, p) { const e = document.createElementNS(svgNS, tag); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; }
+function tip(box) { const t = document.createElement("div"); t.className = "tip"; t.hidden = true; box.appendChild(t);
+  return { show(h, x, y) { t.innerHTML = h; t.hidden = false; t.style.left = x + "px"; t.style.top = y + "px"; }, hide() { t.hidden = true; } }; }
+
+const ars = NOW.table.find(t => t.team.startsWith("Arsenal"));
+const arsGames = ars.wins + ars.draws + ars.losses;
+const state = { view: "champs", season: S[S.length - 1].season, game: arsGames, hover: null };
+
+const sel = document.getElementById("season");
+sel.innerHTML = S.map(s => `<option value="${s.season}">${s.season}</option>`).reverse().join("");
+sel.value = state.season;
+sel.addEventListener("change", () => { state.season = sel.value; state.hover = null; drawRace(); });
+document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => {
+  state.view = b.dataset.v; state.hover = null;
+  document.querySelectorAll(".seg button").forEach(o => o.setAttribute("aria-pressed", o === b));
+  sel.hidden = state.view !== "season"; drawRace();
+}));
+const game = document.getElementById("game");
+game.value = state.game;
+game.addEventListener("input", () => { state.game = +game.value; drawRace(); });
+
+function series() {
+  if (state.view === "champs") return S.map(s => ({ key: s.season, label: `${s.teams[0].name} ${s.season}`, pts: s.teams[0].pts, final: s.teams[0].pts[37], main: false }));
+  const s = S.find(x => x.season === state.season);
+  return s.teams.map((t, i) => ({ key: t.name, label: t.name, pts: t.pts, final: t.pts[37], main: i === 0, pos: i + 1 }));
+}
+
+function drawRace() {
+  document.getElementById("game-out").textContent = state.game;
+  const box = document.getElementById("race"); box.innerHTML = "";
+  const list = series();
+  const W = 640, H = 430, m = { t: 12, r: 14, b: 32, l: 34 };
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Cumulative points by game" }, box);
+  const x = g => m.l + (g - 1) / 37 * (W - m.l - m.r);
+  const y = v => H - m.b - v / 100 * (H - m.t - m.b);
+  [0, 20, 40, 60, 80, 100].forEach(v => { el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), class: "gl" }, svg); el("text", { x: m.l - 8, y: y(v) + 4, "text-anchor": "end", class: "tk" }, svg).textContent = v; });
+  [1, 10, 19, 28, 38].forEach(g => el("text", { x: x(g), y: H - 10, "text-anchor": "middle", class: "tk" }, svg).textContent = "Game " + g);
+  el("line", { x1: x(state.game), x2: x(state.game), y1: m.t, y2: H - m.b, stroke: css("--ink-2"), "stroke-width": 1, "stroke-dasharray": "3 3" }, svg);
+  const path = p => "M" + p.map((v, i) => `${x(i + 1)},${y(v)}`).join("L");
+  const lines = el("g", {}, svg), dots = el("g", {}, svg);
+  const paths = {};
+  [...list].sort((a, b) => a.main - b.main).forEach(s => {
+    paths[s.key] = el("path", { d: path(s.pts), fill: "none", stroke: s.main ? css("--accent") : css("--context"),
+      "stroke-width": s.main ? 2.4 : 1.3, "stroke-linejoin": "round" }, lines);
+    if (s.main) el("circle", { cx: x(state.game), cy: y(s.pts[state.game - 1]), r: 4, fill: css("--accent"), stroke: css("--panel"), "stroke-width": 1.5 }, dots);
+  });
+  if (state.view === "champs") {
+    el("circle", { cx: x(arsGames), cy: y(ars.points), r: 6, fill: css("--accent"), stroke: css("--panel"), "stroke-width": 2 }, dots);
+    const t = el("text", { x: x(arsGames) + 10, y: y(ars.points) - 8, fill: css("--accent"), "font-size": 13, "font-weight": 600 }, dots);
+    t.textContent = `Arsenal ${NOW.season}: ${ars.points}`;
+  }
+  const hdot = el("circle", { r: 4.5, fill: css("--ink"), stroke: css("--panel"), "stroke-width": 1.5, visibility: "hidden" }, dots);
+  const tp = tip(box);
+  function setHover(key) {
+    if (state.hover && paths[state.hover]) {
+      const prev = list.find(s => s.key === state.hover);
+      paths[state.hover].setAttribute("stroke", prev.main ? css("--accent") : css("--context"));
+      paths[state.hover].setAttribute("stroke-width", prev.main ? 2.4 : 1.3);
+    }
+    state.hover = key;
+    if (key && paths[key]) { paths[key].setAttribute("stroke", css("--ink")); paths[key].setAttribute("stroke-width", 2.4); lines.appendChild(paths[key]); }
+    drawRank(list);
+  }
+  const hit = el("rect", { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, fill: "transparent" }, svg);
+  function near(ev) {
+    const r = svg.getBoundingClientRect(), sx = (ev.clientX - r.left) * W / r.width, sy = (ev.clientY - r.top) * H / r.height;
+    const g = Math.max(1, Math.min(38, Math.round((sx - m.l) / (W - m.l - m.r) * 37 + 1)));
+    let best = null, bd = 1e9;
+    list.forEach(s => { const d = Math.abs(y(s.pts[g - 1]) - sy); if (d < bd) { bd = d; best = s; } });
+    if (bd > 24) { leave(); return; }
+    if (state.hover !== best.key) setHover(best.key);
+    hdot.setAttribute("cx", x(g)); hdot.setAttribute("cy", y(best.pts[g - 1])); hdot.setAttribute("visibility", "visible");
+    tp.show(`<b>${best.label}</b><br>${best.pts[g - 1]} pts after game ${g} · ${best.final} final`,
+      Math.min(Math.max(x(g) * r.width / W, 110), r.width - 110), y(best.pts[g - 1]) * r.height / H);
+  }
+  function leave() { tp.hide(); hdot.setAttribute("visibility", "hidden"); if (state.hover) setHover(null); }
+  hit.addEventListener("pointermove", near);
+  hit.addEventListener("pointerdown", near);
+  hit.addEventListener("pointerleave", leave);
+  drawRank(list);
+}
+
+function drawRank(list) {
+  const g = state.game, rank = document.getElementById("rank");
+  let rows = list.map(s => ({ label: s.label, v: s.pts[g - 1], key: s.key, now: false }));
+  if (state.view === "champs" && g === arsGames) rows.push({ label: `Arsenal ${NOW.season}`, v: ars.points, key: "now", now: true });
+  rows.sort((a, b) => b.v - a.v || a.now - b.now);
+  rank.innerHTML = `<h3>${state.view === "champs" ? "Champions" : "Table"} after game ${g}</h3>` + rows.map((r, i) =>
+    `<div class="r${r.now ? " now" : ""}${r.key === state.hover ? " hl" : ""}"><span class="n">${i + 1}</span><span>${r.label}</span><b>${r.v}</b></div>`).join("");
+  const sub = document.getElementById("race-sub"), note = document.getElementById("race-note");
+  if (state.view === "champs") {
+    sub.textContent = "Points after each game for every champion since 2010-11. Move the slider or hover a line.";
+    const champsAt = list.map(s => s.pts[arsGames - 1]);
+    const beaten = champsAt.filter(v => v < ars.points).length;
+    note.innerHTML = `This season: <strong>Arsenal have ${ars.points} points after ${arsGames} games</strong> (table as of ${NOW.as_of}), more than ${beaten} of the last ${list.length} champions had at that point. Move the slider to ${arsGames} to see where they rank.`;
+  } else {
+    const s = S.find(x => x.season === state.season);
+    sub.textContent = `Points after each game for all 20 teams in ${s.season}. The champion is highlighted; hover any line to find a team.`;
+    const leaderAt = [...s.teams].sort((a, b) => b.pts[g - 1] - a.pts[g - 1])[0];
+    note.innerHTML = `After game ${g}, <strong>${leaderAt.name}</strong> led with ${leaderAt.pts[g - 1]} points. ${s.teams[0].name} won the title with ${s.teams[0].pts[37]}${leaderAt.name === s.teams[0].name ? "." : ", so the leader at that point did not win the league."}`;
+  }
+}
+
+function drawHome() {
+  const box = document.getElementById("home"); box.innerHTML = "";
+  const W = 880, H = 300, m = { t: 14, r: 20, b: 30, l: 40 };
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Home, away and draw share by season" }, box);
+  const x = i => m.l + i * (W - m.l - m.r) / (S.length - 1), y = v => H - m.b - (v - 15) / 40 * (H - m.t - m.b);
+  [20, 30, 40, 50].forEach(v => { el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), class: "gl" }, svg); el("text", { x: m.l - 8, y: y(v) + 4, "text-anchor": "end", class: "tk" }, svg).textContent = v + "%"; });
+  const ci = S.findIndex(s => s.season === "2020-21");
+  el("rect", { x: x(ci) - 18, y: m.t, width: 36, height: H - m.t - m.b, fill: css("--line"), opacity: .6 }, svg);
+  el("text", { x: x(ci), y: m.t + 14, "text-anchor": "middle", class: "tk" }, svg).textContent = "no fans";
+  S.forEach((s, i) => { if (i % 2 === 0) el("text", { x: x(i), y: H - 8, "text-anchor": "middle", class: "tk" }, svg).textContent = s.season; });
+  [["home", "--accent"], ["away", "--accent-2"], ["draw", "--mid"]].forEach(([k, c]) => {
+    el("path", { d: "M" + S.map((s, i) => `${x(i)},${y(s[k])}`).join("L"), fill: "none", stroke: css(c), "stroke-width": k === "draw" ? 1.6 : 2.4, "stroke-linejoin": "round" }, svg);
+  });
+  const cross = el("line", { y1: m.t, y2: H - m.b, stroke: css("--context"), visibility: "hidden" }, svg);
+  const tp = tip(box);
+  const hit = el("rect", { x: m.l - 10, y: m.t, width: W - m.l - m.r + 20, height: H - m.t - m.b, fill: "transparent" }, svg);
+  const move = ev => { const r = svg.getBoundingClientRect(), sx = (ev.clientX - r.left) * W / r.width;
+    const i = Math.max(0, Math.min(S.length - 1, Math.round((sx - m.l) / (W - m.l - m.r) * (S.length - 1)))), s = S[i];
+    cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("visibility", "visible");
+    tp.show(`<b>${s.season}</b><br>Home ${s.home}% · Away ${s.away}% · Draw ${s.draw}%`, Math.min(Math.max(x(i) * r.width / W, 110), r.width - 110), y(s.home) * r.height / H); };
+  hit.addEventListener("pointermove", move); hit.addEventListener("pointerdown", move);
+  hit.addEventListener("pointerleave", () => { tp.hide(); cross.setAttribute("visibility", "hidden"); });
+}
+
+function drawGoals() {
+  const box = document.getElementById("goals"); box.innerHTML = "";
+  const W = 880, H = 260, m = { t: 22, r: 10, b: 30, l: 40 };
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Goals per match by season" }, box);
+  const bw = (W - m.l - m.r) / S.length, y = v => H - m.b - v / 3.5 * (H - m.t - m.b);
+  [0, 1, 2, 3].forEach(v => { el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), class: "gl" }, svg); el("text", { x: m.l - 8, y: y(v) + 4, "text-anchor": "end", class: "tk" }, svg).textContent = v; });
+  const top = S.reduce((a, b) => b.gpg > a.gpg ? b : a);
+  const tp = tip(box);
+  S.forEach((s, i) => {
+    const cx = m.l + bw * i + bw / 2, w = bw * .62, t = y(s.gpg), hot = s === top;
+    el("path", { d: `M${cx - w / 2},${y(0)}V${t + 3}Q${cx - w / 2},${t} ${cx - w / 2 + 3},${t}H${cx + w / 2 - 3}Q${cx + w / 2},${t} ${cx + w / 2},${t + 3}V${y(0)}Z`, fill: css(hot ? "--accent" : "--context") }, svg);
+    if (hot || i === S.length - 1) el("text", { x: cx, y: t - 6, "text-anchor": "middle", fill: css("--ink"), "font-size": 12, "font-weight": 600 }, svg).textContent = s.gpg.toFixed(2);
+    if (i % 2 === 0) el("text", { x: cx, y: H - 8, "text-anchor": "middle", class: "tk" }, svg).textContent = s.season;
+    const h = el("rect", { x: m.l + bw * i, y: m.t, width: bw, height: H - m.t - m.b, fill: "transparent" }, svg);
+    const show = () => { const r = svg.getBoundingClientRect(); tp.show(`<b>${s.season}</b><br>${s.gpg.toFixed(2)} per match · ${s.goals.toLocaleString("en-US")} goals`, Math.min(Math.max(cx * r.width / W, 100), r.width - 100), t * r.height / H); };
+    h.addEventListener("pointerenter", show); h.addEventListener("pointerdown", show); h.addEventListener("pointerleave", tp.hide);
+  });
+}
+
+function drawAll() { drawRace(); drawHome(); drawGoals(); }
+drawAll();
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", drawAll);
+new MutationObserver(drawAll).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+</script>

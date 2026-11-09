@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Price of a Title</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: pitch-green masthead with the headline comparison, then three panels: one league-season, all clubs, value for money. Gold marks champions. */
+:root {
+  --pitch: #0f3d2a;
+  --pitch-2: #145236;
+  --bg: #f2f4f2;
+  --panel: #ffffff;
+  --ink: #111614;
+  --ink-2: #4b5650;
+  --muted: #84908a;
+  --line: #dde3df;
+  --bar: #c6cfc9;
+  --gold: #c8960c;
+  --gold-soft: #f6ebc8;
+  --red: #c8372d;
+  --on-pitch: #ffffff;
+  --on-pitch-2: #bcd3c6;
+  --pl: #5b3fd1; --bl: #c8372d; --ll: #d97a00; --sa: #1f6fd1; --l1: #0f8a6a;
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0c100e; --panel: #151b18; --ink: #eef2ef; --ink-2: #b6c1bb; --muted: #84908a; --line: #26302b; --bar: #3a4640;
+    --gold: #e6b73a; --gold-soft: #3a3115; --red: #ef6b61; --pl: #8f78f0; --bl: #ef6b61; --ll: #f0a640; --sa: #5b9bf0; --l1: #3cc49c; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0c100e; --panel: #151b18; --ink: #eef2ef; --ink-2: #b6c1bb; --muted: #84908a; --line: #26302b; --bar: #3a4640;
+  --gold: #e6b73a; --gold-soft: #3a3115; --red: #ef6b61; --pl: #8f78f0; --bl: #ef6b61; --ll: #f0a640; --sa: #5b9bf0; --l1: #3cc49c; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--font-body); }
+.inner { max-width: 980px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.mast { background: var(--pitch); color: var(--on-pitch); }
+.mast .inner { padding-block: 40px 34px; display: grid; gap: 20px; }
+.back { color: var(--on-pitch-2); font-size: 14px; text-decoration: none; }
+.back:hover { color: var(--on-pitch); }
+.eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--on-pitch-2); }
+h1 { font: 800 clamp(44px, 8.5vw, 80px)/.92 var(--font-display); margin: 6px 0 0; text-transform: uppercase; }
+h1 span { color: var(--gold); }
+.lede { margin: 12px 0 0; max-width: 62ch; color: var(--on-pitch-2); font-size: 17px; }
+.vs { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 14px; align-items: stretch; }
+.vs > div { background: var(--pitch-2); border-radius: 10px; padding: 16px 18px; display: grid; gap: 2px; }
+.vs .mid { background: none; align-self: center; font: 800 26px var(--font-display); color: var(--on-pitch-2); padding: 0; }
+.vs .club { font: 700 22px/1.1 var(--font-display); text-transform: uppercase; }
+.vs .res { font-size: 14px; color: var(--on-pitch-2); }
+.vs b { font: 800 40px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.vs .win b { color: var(--gold); }
+.vs small { font-size: 13.5px; color: var(--on-pitch-2); }
+.byline { font-size: 12.5px; color: var(--on-pitch-2); }
+main.inner { padding-block: 24px 48px; display: grid; gap: 20px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px; display: grid; gap: 14px; min-width: 0; }
+h2 { font: 700 28px/1.05 var(--font-display); text-transform: uppercase; margin: 0; text-wrap: balance; }
+.sub { margin: 4px 0 0; color: var(--ink-2); font-size: 15px; max-width: 68ch; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+.seg { display: inline-flex; flex-wrap: wrap; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 3px; }
+.seg button { font: 600 14px var(--font-body); color: var(--ink-2); background: transparent; border: 0; border-radius: 6px; padding: 7px 12px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--pitch); color: var(--on-pitch); }
+button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.chart { position: relative; min-width: 0; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { font-family: var(--font-body); }
+.tk { fill: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.gl { stroke: var(--line); stroke-width: 1; }
+.verdict { margin: 0; font-size: 16px; color: var(--ink-2); max-width: 70ch; }
+.verdict strong { color: var(--ink); }
+.verdict .g { color: var(--gold); font-weight: 700; }
+.verdict .r { color: var(--red); font-weight: 700; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13.5px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+.sq { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.tip { position: absolute; pointer-events: none; background: var(--pitch); color: var(--on-pitch); font-size: 13px; line-height: 1.45; padding: 8px 10px; border-radius: 6px; white-space: nowrap; transform: translate(-50%, calc(-100% - 12px)); z-index: 3; font-variant-numeric: tabular-nums; }
+.lists { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.lists h3 { font: 700 18px var(--font-display); text-transform: uppercase; margin: 0 0 6px; }
+.lists ol { margin: 0; padding: 0; list-style: none; display: grid; gap: 2px; }
+.lists li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; padding: 7px 0; border-top: 1px solid var(--line); font-size: 15px; }
+.lists li small { display: block; color: var(--muted); font-size: 13px; }
+.lists li b { font-variant-numeric: tabular-nums; align-self: center; }
+.lists .best b { color: var(--gold); }
+.lists .worst b { color: var(--red); }
+footer { font-size: 13px; color: var(--muted); display: grid; gap: 6px; max-width: 78ch; }
+footer p { margin: 0; }
+footer a { color: var(--ink-2); }
+@media (max-width: 680px) { .vs { grid-template-columns: minmax(0, 1fr); } .vs .mid { justify-self: center; } .lists { grid-template-columns: minmax(0, 1fr); } }
+</style>
+
+</head>
+<body>
+<header class="mast">
+  <div class="inner">
+    <a class="back" href="../../">← Sports, through data</a>
+    <div>
+      <div class="eyebrow">Wages vs results · Europe's top five leagues · 2022/23–2024/25</div>
+      <h1>The price of <span>a title</span></h1>
+      <p class="lede">Bigger wage bills usually win. But not always. Compare what clubs paid their staff with where they finished, and see who got the most for their money.</p>
+    </div>
+    <div class="vs" id="vs"></div>
+    <div class="byline">Independent analysis by Stephen tAMBI. Wages as reported in UEFA's European Club Finance and Investment Landscape reports.</div>
+  </div>
+</header>
+
+<main class="inner">
+  <section class="panel" aria-labelledby="t-race">
+    <div>
+      <h2 id="t-race">Pick a title race</h2>
+      <p class="sub">Each club's wage bill, in final league order. Gold is the champion; red marks clubs that paid more than the champion and still finished below them. Only clubs in UEFA's list of top wage payers have figures.</p>
+    </div>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Season" id="seasons"></div>
+      <div class="seg" role="group" aria-label="League" id="leagues"></div>
+    </div>
+    <div class="chart" id="race"></div>
+    <p class="verdict" id="race-note"></p>
+  </section>
+
+  <section class="panel" aria-labelledby="t-all">
+    <div>
+      <h2 id="t-all">Wages vs points, every club</h2>
+      <p class="sub">All 62 club-seasons with UEFA wage figures. Further right means a bigger wage bill, higher up means more points. Clubs above the crowd got more than their money suggests. Hover any dot.</p>
+    </div>
+    <div class="legend" id="lg-legend"></div>
+    <div class="chart" id="scatter"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="t-value">
+    <div>
+      <h2 id="t-value">Cost per point</h2>
+      <p class="sub">Wage bill divided by league points: what one point cost each club.</p>
+    </div>
+    <div class="lists">
+      <div class="best"><h3>Best value</h3><ol id="best"></ol></div>
+      <div class="worst"><h3>Most expensive points</h3><ol id="worst"></ol></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Wages: UEFA, <em>The European Club Finance and Investment Landscape</em>, club wage rankings for financial years 2023, 2024 and 2025 (top 20–25 wage payers). Wages cover all staff costs, not only players. Financial year N is shown as the season ending in N; most top clubs close their books in the summer. Some clubs' latest figures in the 2025 edition refer to 2024 and are shown for 2023/24 only.</p>
+    <p>League tables: openfootball match results, with official points deductions (Juventus −10 in 2022/23; Everton −8 and Nottingham Forest −4 in 2023/24) and published final tables where the source was incomplete (2024/25 La Liga and Serie A).</p>
+  </footer>
+</main>
+
+<script>
+const D = {"rows":[{"season":"2022/23","league":"La Liga","club":"Barcelona","wages":639,"points":88,"position":1,"teams":20,"champion":true,"cost_per_point":7.26},{"season":"2022/23","league":"Ligue 1","club":"PSG","wages":617,"points":85,"position":1,"teams":20,"champion":true,"cost_per_point":7.26},{"season":"2022/23","league":"Premier League","club":"Man City","wages":554,"points":89,"position":1,"teams":20,"champion":true,"cost_per_point":6.22},{"season":"2022/23","league":"La Liga","club":"Real Madrid","wages":453,"points":78,"position":2,"teams":20,"champion":false,"cost_per_point":5.81},{"season":"2022/23","league":"Premier League","club":"Liverpool","wages":429,"points":67,"position":5,"teams":20,"champion":false,"cost_per_point":6.4},{"season":"2022/23","league":"Bundesliga","club":"Bayern Munich","wages":416,"points":71,"position":1,"teams":18,"champion":true,"cost_per_point":5.86},{"season":"2022/23","league":"Premier League","club":"Man United","wages":381,"points":75,"position":3,"teams":20,"champion":false,"cost_per_point":5.08},{"season":"2022/23","league":"Premier League","club":"Tottenham","wages":289,"points":60,"position":8,"teams":20,"champion":false,"cost_per_point":4.82},{"season":"2022/23","league":"Serie A","club":"Juventus","wages":283,"points":62,"position":7,"teams":20,"champion":false,"cost_per_point":4.56},{"season":"2022/23","league":"Premier League","club":"Arsenal","wages":270,"points":84,"position":2,"teams":20,"champion":false,"cost_per_point":3.21},{"season":"2022/23","league":"La Liga","club":"Atlético Madrid","wages":245,"points":77,"position":3,"teams":20,"champion":false,"cost_per_point":3.18},{"season":"2022/23","league":"Bundesliga","club":"Dortmund","wages":236,"points":71,"position":2,"teams":18,"champion":false,"cost_per_point":3.32},{"season":"2022/23","league":"Serie A","club":"Inter","wages":230,"points":72,"position":3,"teams":20,"champion":false,"cost_per_point":3.19},{"season":"2022/23","league":"Premier League","club":"Aston Villa","wages":223,"points":61,"position":7,"teams":20,"champion":false,"cost_per_point":3.66},{"season":"2022/23","league":"Premier League","club":"Newcastle","wages":215,"points":71,"position":4,"teams":20,"champion":false,"cost_per_point":3.03},{"season":"2022/23","league":"Bundesliga","club":"RB Leipzig","wages":192,"points":66,"position":3,"teams":18,"champion":false,"cost_per_point":2.91},{"season":"2022/23","league":"Serie A","club":"Roma","wages":181,"points":63,"position":6,"teams":20,"champion":false,"cost_per_point":2.87},{"season":"2023/24","league":"Ligue 1","club":"PSG","wages":658,"points":76,"position":1,"teams":18,"champion":true,"cost_per_point":8.66},{"season":"2023/24","league":"Premier League","club":"Man City","wages":554,"points":91,"position":1,"teams":20,"champion":true,"cost_per_point":6.09},{"season":"2023/24","league":"La Liga","club":"Real Madrid","wages":503,"points":95,"position":1,"teams":20,"champion":true,"cost_per_point":5.29},{"season":"2023/24","league":"La Liga","club":"Barcelona","wages":478,"points":85,"position":2,"teams":20,"champion":false,"cost_per_point":5.62},{"season":"2023/24","league":"Premier League","club":"Liverpool","wages":449,"points":82,"position":3,"teams":20,"champion":false,"cost_per_point":5.48},{"season":"2023/24","league":"Bundesliga","club":"Bayern Munich","wages":430,"points":72,"position":3,"teams":18,"champion":false,"cost_per_point":5.97},{"season":"2023/24","league":"Premier League","club":"Man United","wages":429,"points":60,"position":8,"teams":20,"champion":false,"cost_per_point":7.15},{"season":"2023/24","league":"Premier League","club":"Chelsea","wages":395,"points":63,"position":6,"teams":20,"champion":false,"cost_per_point":6.27},{"season":"2023/24","league":"Premier League","club":"Arsenal","wages":381,"points":89,"position":2,"teams":20,"champion":false,"cost_per_point":4.28},{"season":"2023/24","league":"Premier League","club":"Aston Villa","wages":293,"points":68,"position":4,"teams":20,"champion":false,"cost_per_point":4.31},{"season":"2023/24","league":"Bundesliga","club":"Dortmund","wages":269,"points":63,"position":5,"teams":18,"champion":false,"cost_per_point":4.27},{"season":"2023/24","league":"La Liga","club":"Atlético Madrid","wages":268,"points":76,"position":4,"teams":20,"champion":false,"cost_per_point":3.53},{"season":"2023/24","league":"Serie A","club":"Juventus","wages":264,"points":71,"position":3,"teams":20,"champion":false,"cost_per_point":3.72},{"season":"2023/24","league":"Premier League","club":"Tottenham","wages":260,"points":66,"position":5,"teams":20,"champion":false,"cost_per_point":3.94},{"season":"2023/24","league":"Premier League","club":"Newcastle","wages":255,"points":60,"position":7,"teams":20,"champion":false,"cost_per_point":4.25},{"season":"2023/24","league":"Serie A","club":"Inter","wages":232,"points":94,"position":1,"teams":20,"champion":true,"cost_per_point":2.47},{"season":"2023/24","league":"Bundesliga","club":"RB Leipzig","wages":202,"points":65,"position":4,"teams":18,"champion":false,"cost_per_point":3.11},{"season":"2023/24","league":"Serie A","club":"Roma","wages":202,"points":63,"position":6,"teams":20,"champion":false,"cost_per_point":3.21},{"season":"2023/24","league":"Premier League","club":"Nottingham Forest","wages":194,"points":32,"position":17,"teams":20,"champion":false,"cost_per_point":6.06},{"season":"2023/24","league":"Bundesliga","club":"Leverkusen","wages":192,"points":90,"position":1,"teams":18,"champion":true,"cost_per_point":2.13},{"season":"2023/24","league":"Serie A","club":"AC Milan","wages":189,"points":75,"position":2,"teams":20,"champion":false,"cost_per_point":2.52},{"season":"2023/24","league":"Premier League","club":"West Ham","wages":187,"points":52,"position":9,"teams":20,"champion":false,"cost_per_point":3.6},{"season":"2023/24","league":"Premier League","club":"Everton","wages":182,"points":40,"position":15,"teams":20,"champion":false,"cost_per_point":4.55},{"season":"2023/24","league":"Premier League","club":"Fulham","wages":180,"points":47,"position":13,"teams":20,"champion":false,"cost_per_point":3.83},{"season":"2023/24","league":"Ligue 1","club":"Lyon","wages":162,"points":53,"position":6,"teams":18,"champion":false,"cost_per_point":3.06},{"season":"2024/25","league":"Premier League","club":"Man City","wages":557,"points":71,"position":3,"teams":20,"champion":false,"cost_per_point":7.85},{"season":"2024/25","league":"La Liga","club":"Barcelona","wages":551,"points":88,"position":1,"teams":20,"champion":true,"cost_per_point":6.26},{"season":"2024/25","league":"Ligue 1","club":"PSG","wages":551,"points":84,"position":1,"teams":18,"champion":true,"cost_per_point":6.56},{"season":"2024/25","league":"La Liga","club":"Real Madrid","wages":514,"points":84,"position":2,"teams":20,"champion":false,"cost_per_point":6.12},{"season":"2024/25","league":"Premier League","club":"Liverpool","wages":509,"points":84,"position":1,"teams":20,"champion":true,"cost_per_point":6.06},{"season":"2024/25","league":"Premier League","club":"Chelsea","wages":445,"points":69,"position":4,"teams":20,"champion":false,"cost_per_point":6.45},{"season":"2024/25","league":"Bundesliga","club":"Bayern Munich","wages":443,"points":82,"position":1,"teams":18,"champion":true,"cost_per_point":5.4},{"season":"2024/25","league":"Premier League","club":"Man United","wages":416,"points":42,"position":15,"teams":20,"champion":false,"cost_per_point":9.9},{"season":"2024/25","league":"Premier League","club":"Arsenal","wages":413,"points":74,"position":2,"teams":20,"champion":false,"cost_per_point":5.58},{"season":"2024/25","league":"Premier League","club":"Tottenham","wages":318,"points":38,"position":17,"teams":20,"champion":false,"cost_per_point":8.37},{"season":"2024/25","league":"Premier League","club":"Aston Villa","wages":309,"points":66,"position":6,"teams":20,"champion":false,"cost_per_point":4.68},{"season":"2024/25","league":"Premier League","club":"Newcastle","wages":289,"points":66,"position":5,"teams":20,"champion":false,"cost_per_point":4.38},{"season":"2024/25","league":"La Liga","club":"Atlético Madrid","wages":280,"points":76,"position":3,"teams":20,"champion":false,"cost_per_point":3.68},{"season":"2024/25","league":"Bundesliga","club":"Dortmund","wages":268,"points":57,"position":4,"teams":18,"champion":false,"cost_per_point":4.7},{"season":"2024/25","league":"Serie A","club":"Inter","wages":260,"points":81,"position":2,"teams":20,"champion":false,"cost_per_point":3.21},{"season":"2024/25","league":"Serie A","club":"Juventus","wages":245,"points":70,"position":4,"teams":20,"champion":false,"cost_per_point":3.5},{"season":"2024/25","league":"Bundesliga","club":"Leverkusen","wages":209,"points":69,"position":2,"teams":18,"champion":false,"cost_per_point":3.03},{"season":"2024/25","league":"Premier League","club":"Nottingham Forest","wages":192,"points":65,"position":7,"teams":20,"champion":false,"cost_per_point":2.95},{"season":"2024/25","league":"Serie A","club":"AC Milan","wages":189,"points":63,"position":8,"teams":20,"champion":false,"cost_per_point":3.0},{"season":"2024/25","league":"Ligue 1","club":"Lyon","wages":178,"points":57,"position":6,"teams":18,"champion":false,"cost_per_point":3.12}],"champions":[{"season":"2022/23","league":"Bundesliga","club":"FC Bayern München","points":71,"in_uefa_list":true,"below_eur_m":null},{"season":"2022/23","league":"Premier League","club":"Manchester City FC","points":89,"in_uefa_list":true,"below_eur_m":null},{"season":"2022/23","league":"La Liga","club":"FC Barcelona","points":88,"in_uefa_list":true,"below_eur_m":null},{"season":"2022/23","league":"Ligue 1","club":"Paris Saint-Germain","points":85,"in_uefa_list":true,"below_eur_m":null},{"season":"2022/23","league":"Serie A","club":"SSC Napoli","points":90,"in_uefa_list":false,"below_eur_m":181},{"season":"2023/24","league":"Bundesliga","club":"Bayer 04 Leverkusen","points":90,"in_uefa_list":true,"below_eur_m":null},{"season":"2023/24","league":"Premier League","club":"Manchester City FC","points":91,"in_uefa_list":true,"below_eur_m":null},{"season":"2023/24","league":"La Liga","club":"Real Madrid CF","points":95,"in_uefa_list":true,"below_eur_m":null},{"season":"2023/24","league":"Ligue 1","club":"Paris Saint-Germain FC","points":76,"in_uefa_list":true,"below_eur_m":null},{"season":"2023/24","league":"Serie A","club":"FC Internazionale Milano","points":94,"in_uefa_list":true,"below_eur_m":null},{"season":"2024/25","league":"Bundesliga","club":"FC Bayern München","points":82,"in_uefa_list":true,"below_eur_m":null},{"season":"2024/25","league":"Premier League","club":"Liverpool FC","points":84,"in_uefa_list":true,"below_eur_m":null},{"season":"2024/25","league":"La Liga","club":"FC Barcelona","points":88,"in_uefa_list":true,"below_eur_m":null},{"season":"2024/25","league":"Ligue 1","club":"Paris Saint-Germain FC","points":84,"in_uefa_list":true,"below_eur_m":null},{"season":"2024/25","league":"Serie A","club":"SSC Napoli","points":82,"in_uefa_list":false,"below_eur_m":178}],"list_floor":{"2022-23":181,"2023-24":157,"2024-25":178}};
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const svgNS = "http://www.w3.org/2000/svg";
+function el(t, a, p) { const e = document.createElementNS(svgNS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; }
+function tip(box) { const t = document.createElement("div"); t.className = "tip"; t.hidden = true; box.appendChild(t);
+  return { show(h, x, y) { t.innerHTML = h; t.hidden = false; t.style.left = x + "px"; t.style.top = y + "px"; }, hide() { t.hidden = true; } }; }
+const R = D.rows, SEASONS = ["2022/23", "2023/24", "2024/25"], LEAGUES = ["Premier League", "Bundesliga", "La Liga", "Serie A", "Ligue 1"];
+const LC = { "Premier League": "--pl", "Bundesliga": "--bl", "La Liga": "--ll", "Serie A": "--sa", "Ligue 1": "--l1" };
+const eur = v => "€" + Math.round(v) + "m";
+const ord = n => n + (n % 10 === 1 && n !== 11 ? "st" : n % 10 === 2 && n !== 12 ? "nd" : n % 10 === 3 && n !== 13 ? "rd" : "th");
+const champName = c => ({ "SSC Napoli": "Napoli" }[c] || c);
+
+(function hero() {
+  const lev = R.find(r => r.club === "Leverkusen" && r.season === "2023/24"), bay = R.find(r => r.club === "Bayern Munich" && r.season === "2023/24");
+  document.getElementById("vs").innerHTML =
+    `<div class="win"><span class="club">Leverkusen 2023/24</span><span class="res">Champions, unbeaten · ${lev.points} pts</span><b>${eur(lev.wages)}</b><small>wages · ${eur(lev.cost_per_point * 1)} per point</small></div>` +
+    `<div class="mid">vs</div>` +
+    `<div><span class="club">Bayern Munich 2023/24</span><span class="res">${ord(bay.position)} · ${bay.points} pts</span><b>${eur(bay.wages)}</b><small>wages · ${eur(bay.cost_per_point)} per point</small></div>`;
+  document.querySelector("#vs .win small").textContent = `wages · €${lev.cost_per_point.toFixed(1)}m per point`;
+  document.querySelectorAll("#vs > div")[2].querySelector("small").textContent = `wages · €${bay.cost_per_point.toFixed(1)}m per point`;
+})();
+
+/* 1. one title race */
+const state = { season: "2023/24", league: "Bundesliga" };
+function segButtons(id, items, key) {
+  const box = document.getElementById(id);
+  box.innerHTML = items.map(v => `<button type="button" id="${id}-${v.replace(/\W/g, "")}" aria-pressed="${state[key] === v}">${v}</button>`).join("");
+  box.querySelectorAll("button").forEach((b, i) => b.addEventListener("click", () => {
+    state[key] = items[i]; box.querySelectorAll("button").forEach(o => o.setAttribute("aria-pressed", o === b)); drawRace();
+  }));
+}
+segButtons("seasons", SEASONS, "season"); segButtons("leagues", LEAGUES, "league");
+function drawRace() {
+  const box = document.getElementById("race"); box.innerHTML = "";
+  const rows = R.filter(r => r.season === state.season && r.league === state.league).sort((a, b) => a.position - b.position);
+  const ch = D.champions.find(c => c.season === state.season && c.league === state.league);
+  const items = [...rows];
+  if (!ch.in_uefa_list) items.unshift({ club: champName(ch.club), position: 1, points: ch.points, champion: true, wages: null, below: ch.below_eur_m });
+  const champ = items.find(r => r.champion);
+  const W = 900, rowH = 44, m = { t: 6, r: 170, b: 26, l: 190 }, H = m.t + m.b + items.length * rowH;
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": `${state.league} ${state.season} wages by final position` }, box);
+  const max = 700, x = v => m.l + v / max * (W - m.l - m.r);
+  [0, 100, 200, 300, 400, 500, 600, 700].forEach(v => { el("line", { x1: x(v), x2: x(v), y1: m.t, y2: H - m.b, class: "gl" }, svg); el("text", { x: x(v), y: H - 6, "text-anchor": "middle", class: "tk" }, svg).textContent = "€" + v + "m"; });
+  const tp = tip(box);
+  items.forEach((r, i) => {
+    const yy = m.t + i * rowH, bh = 24, by = yy + (rowH - bh) / 2;
+    const over = !r.champion && r.wages && champ.wages !== null && r.wages > (champ.wages || 0);
+    const overNoChampFig = !r.champion && r.wages && champ.wages === null;
+    const col = r.champion ? css("--gold") : (over || overNoChampFig) ? css("--red") : css("--bar");
+    el("text", { x: 14, y: by + 17, fill: css("--muted"), "font-size": 14, "font-weight": 600 }, svg).textContent = ord(r.position);
+    el("text", { x: 52, y: by + 17, fill: css("--ink"), "font-size": 15, "font-weight": r.champion ? 700 : 500 }, svg).textContent = r.club;
+    if (r.wages !== null) {
+      const xe = x(r.wages);
+      el("path", { d: `M${m.l},${by}H${xe - 4}Q${xe},${by} ${xe},${by + 4}V${by + bh - 4}Q${xe},${by + bh} ${xe - 4},${by + bh}H${m.l}Z`, fill: col }, svg);
+      el("text", { x: xe + 8, y: by + 17, fill: css("--ink"), "font-size": 14, "font-weight": 700 }, svg).textContent = eur(r.wages);
+    } else {
+      el("rect", { x: m.l, y: by, width: x(r.below) - m.l, height: bh, rx: 4, fill: "none", stroke: css("--gold"), "stroke-width": 2, "stroke-dasharray": "5 4" }, svg);
+      el("text", { x: x(r.below) + 8, y: by + 17, fill: css("--ink"), "font-size": 14, "font-weight": 700 }, svg).textContent = `under ${eur(r.below)}`;
+    }
+    el("text", { x: W - 6, y: by + 17, "text-anchor": "end", fill: css("--ink-2"), "font-size": 14 }, svg).textContent = `${r.points} pts${r.wages ? " · €" + (r.wages / r.points).toFixed(1) + "m/pt" : ""}`;
+    const hit = el("rect", { x: 0, y: yy, width: W, height: rowH, fill: "transparent" }, svg);
+    hit.addEventListener("pointerenter", () => { const rc = svg.getBoundingClientRect();
+      tp.show(`<b>${r.club} · ${ord(r.position)}, ${r.points} pts</b><br>${r.wages ? `Wages ${eur(r.wages)} · €${(r.wages / r.points).toFixed(2)}m per point` : `Not in UEFA's top wage list: under ${eur(r.below)}`}`, Math.min(Math.max(x(r.wages || r.below) * rc.width / W, 140), rc.width - 140), by * rc.height / H); });
+    hit.addEventListener("pointerleave", tp.hide);
+  });
+  // verdict
+  const richer = rows.filter(r => !r.champion && (champ.wages === null || r.wages > champ.wages));
+  let note;
+  if (champ.wages === null) {
+    note = `<strong class="g">${champ.club} won with a wage bill too small for UEFA's list</strong> (under ${eur(champ.below)}). ` +
+      (richer.length ? `${richer.map(r => `${r.club} (${eur(r.wages)}, ${ord(r.position)})`).join(", ")} all paid more and finished below them.` : "");
+  } else if (richer.length) {
+    const top = richer.sort((a, b) => b.wages - a.wages)[0];
+    const gap = `${eur(top.wages - champ.wages)} more and finished ${ord(top.position)}, ${champ.points - top.points} points behind`;
+    note = `<strong class="g">${champ.club} won on ${eur(champ.wages)}.</strong> ` + (richer.length === 1
+      ? `<span class="r">${top.club} paid ${gap}.</span>`
+      : `<span class="r">${richer.length} clubs paid more and lost.</span> The biggest spender, ${top.club}, paid ${gap}.`);
+  } else {
+    const second = rows.filter(r => !r.champion).sort((a, b) => b.wages - a.wages)[0];
+    const tied = rows.find(r => !r.champion && r.points === champ.points);
+    note = `<strong>The biggest wage bill won.</strong> ${champ.club} paid ${eur(champ.wages)}` +
+      (second ? `, ${eur(champ.wages - second.wages)} more than the next-highest payer in UEFA's list, ${second.club}.` : ".") +
+      (tied ? ` But ${tied.club} finished level on ${tied.points} points with ${eur(champ.wages - tied.wages)} less and lost only on goal difference.` : "");
+  }
+  document.getElementById("race-note").innerHTML = note;
+}
+
+/* 2. scatter */
+document.getElementById("lg-legend").innerHTML = LEAGUES.map(l => `<span><i class="sw" style="background:var(${LC[l]})"></i>${l}</span>`).join("") + `<span><i class="sw" style="background:transparent;box-shadow:0 0 0 2px var(--gold)"></i>Champion</span>`;
+function drawScatter() {
+  const box = document.getElementById("scatter"); box.innerHTML = "";
+  const W = 900, H = 460, m = { t: 14, r: 20, b: 40, l: 46 };
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Wages vs points for every club-season" }, box);
+  const x = v => m.l + (v - 100) / 600 * (W - m.l - m.r), y = v => H - m.b - (v - 30) / 70 * (H - m.t - m.b);
+  [100, 200, 300, 400, 500, 600, 700].forEach(v => { el("line", { x1: x(v), x2: x(v), y1: m.t, y2: H - m.b, class: "gl" }, svg); el("text", { x: x(v), y: H - 20, "text-anchor": "middle", class: "tk" }, svg).textContent = "€" + v + "m"; });
+  [30, 50, 70, 90].forEach(v => { el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), class: "gl" }, svg); el("text", { x: m.l - 8, y: y(v) + 4, "text-anchor": "end", class: "tk" }, svg).textContent = v; });
+  el("text", { x: (m.l + W - m.r) / 2, y: H - 2, "text-anchor": "middle", class: "tk" }, svg).textContent = "Wage bill →";
+  el("text", { x: 12, y: m.t + 10, class: "tk" }, svg).textContent = "Points";
+  const tp = tip(box);
+  const LABEL = { "Leverkusen|2023/24": [-10, 22], "Man United|2024/25": [10, 4], "Inter|2023/24": [8, -8], "Tottenham|2024/25": [10, 4], "PSG|2023/24": [-8, 18] };
+  [...R].sort((a, b) => a.champion - b.champion).forEach(r => {
+    const cx = x(r.wages), cy = y(r.points);
+    el("circle", { cx, cy, r: 7, fill: css(LC[r.league]), "fill-opacity": .85, stroke: r.champion ? css("--gold") : css("--panel"), "stroke-width": r.champion ? 3 : 1.5 }, svg);
+    const k = `${r.club}|${r.season}`;
+    if (LABEL[k]) { const [dx, dy] = LABEL[k]; el("text", { x: cx + dx, y: cy + dy, fill: css("--ink"), "font-size": 13, "font-weight": 600, "text-anchor": dx < 0 ? "end" : "start" }, svg).textContent = `${r.club} ${r.season}`; }
+    const h = el("circle", { cx, cy, r: 13, fill: "transparent" }, svg);
+    h.addEventListener("pointerenter", () => { const rc = svg.getBoundingClientRect(); tp.show(`<b>${r.club} ${r.season}</b><br>${r.league}: ${ord(r.position)}, ${r.points} pts${r.champion ? " · champion" : ""}<br>Wages ${eur(r.wages)} · €${r.cost_per_point.toFixed(2)}m per point`, Math.min(Math.max(cx * rc.width / W, 130), rc.width - 130), cy * rc.height / H); });
+    h.addEventListener("pointerleave", tp.hide);
+  });
+}
+
+/* 3. cost per point */
+(function lists() {
+  const s = [...R].sort((a, b) => a.cost_per_point - b.cost_per_point);
+  const li = r => `<li><span>${r.club} ${r.season}<small>${r.league}, ${ord(r.position)}, ${r.points} pts · ${eur(r.wages)} wages</small></span><b>€${r.cost_per_point.toFixed(2)}m</b></li>`;
+  document.getElementById("best").innerHTML = s.slice(0, 6).map(li).join("");
+  document.getElementById("worst").innerHTML = s.slice(-6).reverse().map(li).join("");
+})();
+
+function drawAll() { drawRace(); drawScatter(); }
+drawAll();
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", drawAll);
+new MutationObserver(drawAll).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+</script>
+
+</body>
+</html>
