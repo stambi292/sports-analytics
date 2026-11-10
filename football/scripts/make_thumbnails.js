@@ -2,6 +2,8 @@
 // Add one entry per new project and run: node football/scripts/make_thumbnails.js
 const {chromium}=require('playwright');
 const T=[
+ {f:'og-when-a-player-collapses.png',bg:'#141a22',ink:'#fff',acc:'#f0595d',sub:'#b7c0cc',kick:'SUDDEN DEATH IN FOOTBALL · FIFA REGISTRY 2014–18',t:'WHEN A PLAYER<br><span>COLLAPSES</span>',
+  body:`<div class="stats"><div><em>617</em><small>players, 67 countries</small></div><div><em>35%</em><small>survived with bystander CPR</small></div><div><em style="color:#3ccf84">85%</em><small>survived with trained staff + AED</small></div></div>`},
  {f:'og-home.png',bg:'#0f3d2a',ink:'#fff',acc:'#2dd4bf',sub:'#bcd3c6',kick:'SPORTS ANALYTICS · BY STEPHEN tAMBI',t:'SPORTS,<br><span>THROUGH DATA</span>',
   body:`<div class="stats"><div><em>3</em><small>interactive projects</small></div><div><em class="a">Football</em><small>first, more sports next</small></div></div>`},
  {f:'og-price-of-a-title.png',bg:'#0f3d2a',ink:'#fff',acc:'#d4a017',sub:'#bcd3c6',kick:"WAGES VS RESULTS · EUROPE'S TOP 5 LEAGUES",t:'THE PRICE OF<br><span>A TITLE</span>',

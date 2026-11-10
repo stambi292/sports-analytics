@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>When a Player Collapses</title>
+<meta name="description" content="Sudden death in football: what the FIFA Sudden Death Registry says about who collapses, why, and what saves lives. CPR with a defibrillator raised survival to 85%.">
+<meta property="og:title" content="When a Player Collapses">
+<meta property="og:description" content="617 sudden deaths and cardiac arrests in football, 67 countries. With trained staff and a defibrillator, 85% survived. Without, 35%.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stambi292.github.io/sports-analytics/football/when-a-player-collapses/">
+<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-when-a-player-collapses.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta name="author" content="Stephen tAMBI">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: sober masthead, 2026 cases, registry numbers, two interactives (who gives CPR; minutes matter), causes, what clubs can do, sources. */
+:root {
+  --bg: #f4f5f7; --panel: #ffffff; --ink: #12161c; --ink-2: #4a525d; --muted: #7c8591; --line: #dfe3e8;
+  --mast: #141a22; --on-mast: #ffffff; --on-mast-2: #b7c0cc;
+  --pulse: #d93a3f; --aed: #178a50; --aed-soft: #e3f4ea; --dot-off: #d5dae0; --lost: #9aa3ae;
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0d1116; --panel: #151b22; --ink: #eef1f4; --ink-2: #b7c0cc; --muted: #86909c; --line: #27303a;
+  --mast: #0a0e13; --pulse: #f0595d; --aed: #3ccf84; --aed-soft: #12301f; --dot-off: #2b343e; --lost: #5d6773; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0d1116; --panel: #151b22; --ink: #eef1f4; --ink-2: #b7c0cc; --muted: #86909c; --line: #27303a;
+  --mast: #0a0e13; --pulse: #f0595d; --aed: #3ccf84; --aed-soft: #12301f; --dot-off: #2b343e; --lost: #5d6773; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
+.inner { max-width: 980px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+.mast { background: var(--mast); color: var(--on-mast); }
+.mast .inner { padding-block: 22px 48px; display: grid; gap: 14px; }
+.back { color: var(--on-mast-2); text-decoration: none; font-weight: 600; font-size: 15px; }
+.eyebrow { font: 600 14px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--on-mast-2); margin-top: 18px; }
+h1 { font: 800 clamp(44px, 8vw, 84px)/.95 var(--font-display); margin: 0; text-transform: uppercase; text-wrap: balance; }
+h1 span { color: var(--pulse); }
+.lede { margin: 4px 0 0; max-width: 62ch; color: var(--on-mast-2); font-size: 19px; }
+.byline { font-size: 14px; color: var(--on-mast-2); }
+.pulse { display: block; width: 100%; max-width: 520px; height: 40px; }
+.pulse path { fill: none; stroke: var(--pulse); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+h2 { font: 700 32px/1.05 var(--font-display); text-transform: uppercase; margin: 0 0 8px; text-wrap: balance; }
+.intro { margin: 0 0 18px; color: var(--ink-2); max-width: 66ch; }
+section { padding-block: 40px 4px; }
+.cases { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.case { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--lost); border-radius: 8px; padding: 14px 16px; display: grid; gap: 4px; min-width: 0; align-content: start; }
+.case.saved { border-left-color: var(--aed); }
+.case .when { font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.case h3 { margin: 0; font: 700 22px/1.1 var(--font-display); }
+.case p { margin: 0; color: var(--ink-2); font-size: 15.5px; }
+.case .tag { justify-self: start; font-size: 12.5px; font-weight: 600; border-radius: 4px; padding: 1px 7px; background: var(--bg); color: var(--ink-2); border: 1px solid var(--line); }
+.case.saved .tag { background: var(--aed-soft); color: var(--aed); border-color: transparent; }
+.case .src { font-size: 13px; color: var(--muted); }
+.case .src a { color: var(--muted); }
+.note { font-size: 14.5px; color: var(--muted); margin-top: 12px; max-width: 70ch; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+.kpi b { display: block; font: 800 44px/1 var(--font-display); }
+.kpi span { color: var(--ink-2); font-size: 15px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 16px; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button { font: 600 15px var(--font-body); border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 6px; padding: 7px 12px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--panel); border-color: var(--ink); }
+.seg button:focus-visible, input:focus-visible { outline: 2px solid var(--pulse); outline-offset: 2px; }
+.dotwrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 220px); gap: 20px; align-items: center; }
+.dots { display: grid; grid-template-columns: repeat(20, minmax(0, 1fr)); gap: 5px; max-width: 520px; }
+.dots i { aspect-ratio: 1; border-radius: 50%; background: var(--dot-off); transition: background .25s; }
+.dots i.on { background: var(--aed); }
+.big { font: 800 72px/1 var(--font-display); color: var(--aed); }
+.bigcap { color: var(--ink-2); }
+.slider { display: grid; gap: 8px; }
+.slider label { font-weight: 600; }
+input[type=range] { width: 100%; accent-color: var(--pulse); }
+.meter { height: 26px; background: var(--dot-off); border-radius: 6px; overflow: hidden; }
+.meter div { height: 100%; background: var(--aed); width: 100%; transition: width .2s, background .2s; }
+.ticks { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); }
+.bars { display: grid; gap: 10px; }
+.bar { display: grid; grid-template-columns: minmax(0, 210px) minmax(0, 1fr) 48px; gap: 10px; align-items: center; font-size: 15.5px; }
+.bar .track { height: 20px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+.bar .fill { height: 100%; background: var(--ink-2); border-radius: 0 4px 4px 0; }
+.bar b { text-align: right; }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.two h3 { font: 700 20px var(--font-display); text-transform: uppercase; margin: 0 0 10px; }
+ol.do { margin: 0; padding-left: 22px; display: grid; gap: 8px; }
+ol.do li { padding-left: 4px; }
+footer { padding-block: 40px 56px; color: var(--muted); font-size: 14.5px; display: grid; gap: 6px; }
+footer a { color: var(--ink-2); }
+@media (max-width: 760px) {
+  .cases, .two { grid-template-columns: minmax(0, 1fr); }
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dotwrap { grid-template-columns: minmax(0, 1fr); }
+  .bar { grid-template-columns: minmax(0, 1fr) 48px; } .bar .track { grid-column: 1 / -1; grid-row: 2; }
+}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="inner">
+    <a class="back" href="../../">← Sports, through data</a>
+    <div class="eyebrow">Sudden death in football · what the data says</div>
+    <h1>When a player <span>collapses</span></h1>
+    <svg class="pulse" viewBox="0 0 520 40" aria-hidden="true"><path d="M0 20 H180 l10 -14 l10 28 l10 -30 l10 22 l8 -6 H330 l8 -10 l8 16 l6 -6 H520"/></svg>
+    <p class="lede">Every year, players collapse on football pitches. Most of them are amateurs, and many could be saved. Data from FIFA's Sudden Death Registry shows that the first few minutes, and whether a defibrillator is nearby, decide who survives.</p>
+    <div class="byline">Independent analysis by Stephen tAMBI, based on the FIFA Sudden Death Registry and news reports.</div>
+  </div>
+</header>
+
+<main class="inner">
+  <section aria-labelledby="h-cases">
+    <h2 id="h-cases">2026: players we lost</h2>
+    <p class="intro">Recent cases reported in the media. Each one is a person, a family and a team. They are listed here to show why the response on the pitch matters.</p>
+    <div class="cases">
+      <article class="case">
+        <span class="when">January 2026 · Portugal</span>
+        <h3>Nassur Bacem, 27</h3>
+        <p>The Moncarapachense defender told teammates he felt unwell around the 27th minute of a cup quarter-final, then collapsed. Staff gave CPR and used the stadium's defibrillator; the ambulance arrived about 18 minutes later. He died in hospital.</p>
+        <span class="tag">Cardiac arrest</span>
+        <span class="src">Source: <a href="https://www.beinsports.com/en-us/soccer/articles/another-tragedy-in-football-27-year-old-player-dies-during-match-2026-01-22">beIN Sports</a></span>
+      </article>
+      <article class="case">
+        <span class="when">April 2026 · Nigeria</span>
+        <h3>Michael Eneramo</h3>
+        <p>The former Nigeria international, who played for Sivasspor and in Tunisia, collapsed during a game and died on the field.</p>
+        <span class="tag">Cause not reported</span>
+        <span class="src">Source: <a href="https://sports.yahoo.com/articles/pro-soccer-player-dies-pitch-170222368.html">Yahoo Sports</a></span>
+      </article>
+      <article class="case">
+        <span class="when">November 2026 · Spain</span>
+        <h3>Jesús de Miguel, 30</h3>
+        <p>The Tenerife-based player died after a collision with a goalkeeper during a match.</p>
+        <span class="tag">Trauma (collision)</span>
+        <span class="src">Source: <a href="https://www.cnn.com/2026/11/03/sport/jesus-de-miguel-spain-dies-after-on-pitch-collision">CNN</a></span>
+      </article>
+      <article class="case">
+        <span class="when">November 2026 · Russia</span>
+        <h3>Stepan Chernov, 21</h3>
+        <p>Reported to have collapsed early in the second half of his debut in an amateur five-a-side match in Yekaterinburg, a day after joining the club. Medics tried to resuscitate him for about 40 minutes. His family said it was a sudden cardiac arrest.</p>
+        <span class="tag">Cardiac arrest (reported by family)</span>
+        <span class="src">Source: <a href="https://needtoknow.co.uk/2026/11/10/footballer-21-drops-dead-during-debut-match/">Need To Know</a></span>
+      </article>
+      <article class="case saved">
+        <span class="when">June 2021 · Euro 2020, Copenhagen</span>
+        <h3>Christian Eriksen, survived</h3>
+        <p>Denmark's midfielder suffered a cardiac arrest on the pitch. Teammates and medical staff started CPR quickly and used a defibrillator. He survived and returned to top-level football.</p>
+        <span class="tag">Saved by CPR + defibrillator</span>
+        <span class="src">Widely reported at the time</span>
+      </article>
+    </div>
+    <p class="note">News reports are not a complete list, and causes are only confirmed after medical investigation. The numbers below come from a scientific registry, not from headlines.</p>
+  </section>
+
+  <section aria-labelledby="h-reg">
+    <h2 id="h-reg">The registry</h2>
+    <p class="intro">FIFA's Sudden Death Registry (FIFA-SDR) collected sudden deaths and cardiac arrests of football players worldwide from 2014 to 2018.</p>
+    <div class="kpis">
+      <div class="kpi"><b>617</b><span>players affected in 67 countries</span></div>
+      <div class="kpi"><b>23%</b><span>survived (142 players)</span></div>
+      <div class="kpi"><b>95%</b><span>were amateurs, not professionals</span></div>
+      <div class="kpi"><b>34</b><span>average age (range 5 to 76)</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-cpr">
+    <h2 id="h-cpr">Who helps decides who lives</h2>
+    <p class="intro">Survival of players who received prompt CPR on the pitch, by who gave it. Pick a response to see how many of 100 players would survive.</p>
+    <div class="card">
+      <div class="seg" role="group" aria-label="Who gave CPR">
+        <button type="button" data-v="35" data-l="CPR by bystanders (lay persons)" aria-pressed="false">Bystanders</button>
+        <button type="button" data-v="50" data-l="CPR by trained staff" aria-pressed="false">Trained staff</button>
+        <button type="button" data-v="85" data-l="Trained staff with a defibrillator (AED)" aria-pressed="true">Trained staff + AED</button>
+      </div>
+      <div class="dotwrap">
+        <div class="dots" id="dots" role="img" aria-label="85 of 100 players survive"></div>
+        <div><div class="big" id="big">85</div><div class="bigcap"><span id="cap">Trained staff with a defibrillator (AED)</span>: out of 100 players, this many survived.</div></div>
+      </div>
+    </div>
+    <p class="note">Survival rates among 471 out-of-hospital cases where CPR was started promptly. Source: FIFA-SDR, Egger &amp; Ukaj, Aspetar Sports Medicine Journal (2022).</p>
+  </section>
+
+  <section aria-labelledby="h-min">
+    <h2 id="h-min">Every minute counts</h2>
+    <p class="intro">Without blood flow, the brain starts to suffer irreversible damage after about five minutes, and the chance of a good outcome falls by roughly 13% for every minute before good CPR begins. Move the slider.</p>
+    <div class="card">
+      <div class="slider">
+        <label for="min">Minutes before CPR starts: <span id="minv">0</span></label>
+        <input id="min" type="range" min="0" max="10" step="1" value="0">
+        <div class="meter" aria-hidden="true"><div id="bar"></div></div>
+        <div class="ticks"><span>0 min</span><span>5 min</span><span>10 min</span></div>
+      </div>
+      <p style="margin:0"><b id="pct">100%</b> <span id="pcttxt">of the best possible chance of a good outcome remains.</span></p>
+    </div>
+    <p class="note">Illustration based on the ~13% per-minute decline reported in the FIFA-SDR article. Real outcomes depend on the cause, the quality of CPR and how fast a defibrillator is used. This is not medical advice.</p>
+  </section>
+
+  <section aria-labelledby="h-why">
+    <h2 id="h-why">Why players collapse</h2>
+    <p class="intro">Causes were confirmed by autopsy or medical records in 211 of the 617 cases (34%).</p>
+    <div class="two">
+      <div class="card">
+        <h3>All confirmed cases</h3>
+        <div class="bars" id="b1"></div>
+      </div>
+      <div class="card">
+        <h3>Heart causes, players aged 35 and under</h3>
+        <div class="bars" id="b2"></div>
+      </div>
+    </div>
+    <p class="note">Over 35, coronary artery disease caused 76% of cardiac cases. Under 35, causes differed by region: cardiomyopathy led in South America (42%), coronary artery anomalies in North America (33%) and sudden unexplained death in Europe (26%). Among young players, 9% of deaths were commotio cordis, often caused by the ball hitting the chest.</p>
+  </section>
+
+  <section aria-labelledby="h-do">
+    <h2 id="h-do">What clubs and players can do</h2>
+    <div class="card">
+      <ol class="do">
+        <li><b>Put a defibrillator (AED) at every pitch,</b> for training as well as matches, and make sure everyone knows where it is.</li>
+        <li><b>Train players and coaches in CPR.</b> In the registry, players were most often the first to help, before the ambulance arrived.</li>
+        <li><b>Act at once:</b> call the emergency number, start chest compressions, and use the AED as soon as it arrives.</li>
+        <li><b>Report every case</b> to the FIFA Sudden Death Registry, so the data keeps improving.</li>
+      </ol>
+    </div>
+  </section>
+
+  <footer>
+    <span>Sources: Egger F, Scharhag J, Kästner A, Dvořák J, Bohm P, Meyer T. <a href="https://bjsm.bmj.com/content/56/2/80.abstract">FIFA Sudden Death Registry: a prospective observational study of sudden death in worldwide football</a>, British Journal of Sports Medicine. Egger F, Ukaj A. <a href="https://journal.aspetar.com/en/journals/volume-11-targeted-topic-sports-science-in-football/fifa-sudden-death-registry">FIFA Sudden Death Registry</a>, Aspetar Sports Medicine Journal, 2022. Case reports as linked above.</span>
+    <span>Independent analysis by Stephen tAMBI. Not affiliated with FIFA or any club. Not medical advice: learn CPR from an accredited course.</span>
+  </footer>
+</main>
+
+<script>
+(() => {
+  const dots = document.getElementById('dots');
+  for (let i = 0; i < 100; i++) dots.appendChild(document.createElement('i'));
+  const btns = document.querySelectorAll('.seg button');
+  function show(b) {
+    const v = +b.dataset.v;
+    btns.forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+    [...dots.children].forEach((d, i) => d.classList.toggle('on', i < v));
+    document.getElementById('big').textContent = v;
+    document.getElementById('cap').textContent = b.dataset.l;
+    dots.setAttribute('aria-label', v + ' of 100 players survive');
+  }
+  btns.forEach(b => b.addEventListener('click', () => show(b)));
+  show(btns[2]);
+
+  const min = document.getElementById('min');
+  function upd() {
+    const m = +min.value, p = Math.round(100 * Math.pow(0.87, m));
+    document.getElementById('minv').textContent = m;
+    document.getElementById('pct').textContent = p + '%';
+    document.getElementById('pcttxt').textContent = m === 0 ? 'of the best possible chance of a good outcome remains.' : 'of the best possible chance remains after ' + m + (m === 1 ? ' minute' : ' minutes') + ' without CPR.';
+    const bar = document.getElementById('bar');
+    bar.style.width = p + '%';
+    bar.style.background = m >= 5 ? 'var(--pulse)' : 'var(--aed)';
+  }
+  min.addEventListener('input', upd); upd();
+
+  function bars(id, rows) {
+    const el = document.getElementById(id), max = Math.max(...rows.map(r => r[1]));
+    el.innerHTML = rows.map(([l, v]) => `<div class="bar"><span>${l}</span><div class="track"><div class="fill" style="width:${v / max * 100}%"></div></div><b>${v}%</b></div>`).join('');
+  }
+  bars('b1', [['Heart (cardiovascular)', 82], ['Trauma (collisions, blows)', 11], ['Other non-traumatic', 7]]);
+  bars('b2', [['Sudden unexplained death', 22], ['Cardiomyopathy', 18], ['Coronary artery anomaly', 9], ['Early coronary artery disease', 9]]);
+})();
+</script>
+</body>
+</html>
