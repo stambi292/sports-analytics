@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kick-off for Whom?</title>
+<meta name="description" content="4,270 LALIGA kick-offs since 2015/16: how many games start late or on Mondays and Fridays, which clubs get those slots, and how far away fans travel for them.">
+<meta name="author" content="Stephen tAMBI">
+<meta property="og:title" content="Kick-off for whom? LALIGA's schedule from the fans' seats">
+<meta property="og:description" content="4,270 LALIGA kick-offs: 40% now start at 20:45 or later, and smaller clubs get Monday and Friday slots 3.5 times as often as the big three.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stambi292.github.io/sports-analytics/football/kick-off-for-whom/">
+<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-kick-off-for-whom.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: black masthead with the LALIGA red accent, headline numbers, the week heatmap, the trend, the fairness ranking, the away-fan trip planner, recommendations, method. */
+:root {
+  --bg: #f7f5f2; --panel: #ffffff; --ink: #141414; --ink-2: #4d4d4d; --muted: #7a7a7a; --line: #e4e1dc; --grid: #eeebe6;
+  --red: #ff4b44; --red-ink: #c8302a; --red-soft: #ffe6e4; --mast: #141414; --on-mast: #f7f5f2; --on-mast-2: #bdbdbd;
+  --cool: #2f5d8a; --cool-soft: #e3ecf5; --zero: #f1eee9;
+  --font-display: "Oswald", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111111; --panel: #1b1b1b; --ink: #f2f0ec; --ink-2: #c4c2be; --muted: #8f8d89; --line: #2d2d2d; --grid: #252525;
+  --red: #ff5a52; --red-ink: #ff7a73; --red-soft: #3a1b19; --mast: #0a0a0a; --cool: #7fb0e0; --cool-soft: #1a2633; --zero: #222222; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #111111; --panel: #1b1b1b; --ink: #f2f0ec; --ink-2: #c4c2be; --muted: #8f8d89; --line: #2d2d2d; --grid: #252525;
+  --red: #ff5a52; --red-ink: #ff7a73; --red-soft: #3a1b19; --mast: #0a0a0a; --cool: #7fb0e0; --cool-soft: #1a2633; --zero: #222222; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
+.inner { max-width: 1000px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+.mast { background: var(--mast); color: var(--on-mast); border-left: 10px solid var(--red); }
+.mast .inner { padding-block: 22px 60px; display: grid; gap: 14px; }
+.back { color: var(--on-mast-2); text-decoration: none; font-weight: 600; font-size: 15px; }
+.eyebrow { font: 700 13px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--red); margin-top: 18px; }
+h1 { font: 700 clamp(44px, 8vw, 84px)/1 var(--font-display); text-transform: uppercase; margin: 0; letter-spacing: -.005em; max-width: 14ch; }
+h1 em { font-style: normal; color: var(--red); }
+.lede { margin: 4px 0 0; max-width: 64ch; color: var(--on-mast-2); font-size: 19px; }
+.byline { font-size: 14px; color: var(--on-mast-2); }
+h2 { font: 600 32px/1.1 var(--font-display); margin: 0 0 8px; text-wrap: balance; }
+.intro { margin: 0 0 18px; color: var(--ink-2); max-width: 68ch; }
+section { padding-block: 44px 4px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: -32px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--red); border-radius: 8px; padding: 14px 16px; }
+.kpi b { display: block; font: 700 36px/1.05 var(--font-display); font-variant-numeric: tabular-nums; }
+.kpi span { color: var(--ink-2); font-size: 15px; line-height: 1.4; display: block; margin-top: 4px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: grid; gap: 16px; min-width: 0; }
+.ctrls { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; }
+select { font: 600 15px var(--font-body); padding: 7px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+select:focus-visible, button:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+.heatwrap { overflow-x: auto; }
+.heat { border-collapse: separate; border-spacing: 3px; font-variant-numeric: tabular-nums; min-width: 560px; }
+.heat th { font: 600 13px var(--font-body); color: var(--muted); padding: 2px 4px; text-align: center; white-space: nowrap; }
+.heat th.d { text-align: left; color: var(--ink); font-size: 14px; }
+.heat td { width: 52px; height: 40px; text-align: center; border-radius: 4px; font: 700 14px var(--font-body); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; color: var(--ink-2); align-items: center; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.chart svg { display: block; width: 100%; height: auto; }
+.chart text { fill: var(--muted); font: 500 12px var(--font-body); }
+.bars { display: grid; gap: 7px; }
+.brow { display: grid; grid-template-columns: minmax(0, 150px) minmax(0, 1fr) 60px; gap: 12px; align-items: center; }
+.brow .l { font-weight: 600; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.track { height: 20px; background: var(--grid); border-radius: 3px; position: relative; }
+.fill { position: absolute; inset: 0 auto 0 0; border-radius: 0 3px 3px 0; }
+.brow .v { font: 700 15px var(--font-body); font-variant-numeric: tabular-nums; text-align: right; }
+.trips { display: grid; gap: 6px; max-height: 520px; overflow-y: auto; padding-right: 4px; }
+.trip { display: grid; grid-template-columns: 150px minmax(0, 1fr) 80px; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 6px; background: var(--bg); font-size: 15px; }
+.trip.tough { background: var(--red-soft); }
+.trip .km { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+.trip .when { font-variant-numeric: tabular-nums; }
+.trip .flag { font: 700 12px var(--font-body); color: var(--red-ink); text-transform: uppercase; letter-spacing: .05em; }
+.stats { display: flex; flex-wrap: wrap; gap: 8px 32px; }
+.stats b { font: 700 30px var(--font-display); display: block; font-variant-numeric: tabular-nums; }
+.stats span { color: var(--ink-2); font-size: 14.5px; }
+.note { font-size: 14.5px; color: var(--muted); margin: 0; max-width: 74ch; }
+.recs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.rec { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; display: grid; gap: 6px; align-content: start; }
+.rec h3 { margin: 0; font: 600 21px/1.2 var(--font-display); }
+.rec p { margin: 0; color: var(--ink-2); font-size: 15.5px; }
+.rec .tag { font: 700 12px var(--font-body); color: var(--red-ink); text-transform: uppercase; letter-spacing: .08em; }
+.balance { border-left: 4px solid var(--cool); background: var(--cool-soft); padding: 12px 16px; border-radius: 0 8px 8px 0; color: var(--ink); margin: 0; }
+footer { padding-block: 40px 56px; color: var(--muted); font-size: 14.5px; display: grid; gap: 6px; }
+footer a { color: var(--ink-2); }
+@media (max-width: 820px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .recs { grid-template-columns: minmax(0, 1fr); }
+  .brow { grid-template-columns: minmax(0, 110px) minmax(0, 1fr) 52px; }
+  .trip { grid-template-columns: minmax(0, 1fr) 70px; }
+  .trip .where { grid-column: 1 / -1; grid-row: 2; }
+}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="inner">
+    <a class="back" href="../../">← Sports, through data</a>
+    <div class="eyebrow">LALIGA · kick-off times · fans</div>
+    <h1>Kick-off for <em>whom?</em></h1>
+    <p class="lede">Late-night and Monday games are one of the oldest complaints of Spanish football fans: Alavés supporters once unfurled a giant TV with the words “switch off the TV, save football”. I mapped every LALIGA kick-off since 2015/16 to see how the schedule has changed, which clubs carry the awkward slots, and what it asks of away fans.</p>
+    <div class="byline">Independent analysis by Stephen tAMBI on public fixture data. Not affiliated with LALIGA or any club.</div>
+  </div>
+</header>
+
+<main class="inner">
+  <div class="kpis" id="kpis"></div>
+
+  <section aria-labelledby="h-week">
+    <h2 id="h-week">The week of a LALIGA season</h2>
+    <p class="intro">Every kick-off of a season by day and time. Dark red cells start at 20:45 or later.</p>
+    <div class="card">
+      <div class="ctrls"><label for="seasonSel" style="font-weight:600">Season</label><select id="seasonSel"></select></div>
+      <div class="heatwrap"><table class="heat" id="heat" aria-label="Kick-offs by day and time"></table></div>
+      <div class="legend"><span><i style="background:var(--red)"></i>20:45 or later</span><span><i style="background:var(--cool)"></i>Before 20:45</span><span>Darker = more matches</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-trend">
+    <h2 id="h-trend">Later and later</h2>
+    <p class="intro" id="trendIntro"></p>
+    <div class="card">
+      <div class="chart"><svg id="trend" viewBox="0 0 900 280" role="img" aria-label="Share of late kick-offs by season"></svg></div>
+      <p class="note">Share of all matches starting at 20:45 or later. 2026/27 covers the first 90 matches only.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-fair">
+    <h2 id="h-fair">Who gets Monday and Friday</h2>
+    <p class="intro" id="fairIntro"></p>
+    <div class="card">
+      <div class="bars" id="fair"></div>
+      <p class="note">Share of each club's home league matches played on a Monday or Friday outside midweek rounds, 2021/22 to 2025/26. Clubs with at least three seasons in LALIGA in that period. Red: Real Madrid, Barcelona, Atlético Madrid.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-away">
+    <h2 id="h-away">Plan the away trips</h2>
+    <p class="intro">Pick a club to see every away trip its fans faced in 2025/26. A tough trip is more than 500 km at 20:45 or later, or on a Monday or Friday.</p>
+    <div class="card">
+      <div class="ctrls"><label for="clubSel" style="font-weight:600">Club</label><select id="clubSel"></select></div>
+      <div class="stats" id="awayStats"></div>
+      <div class="trips" id="trips"></div>
+      <p class="note">Distances are straight lines between stadiums, so real trips are longer. Trips to and from Mallorca and Las Palmas mean flights.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-recs">
+    <h2 id="h-recs">What LALIGA could change</h2>
+    <p class="balance">Late and weeknight slots exist for good reasons: they spread games across TV windows, keep the big matches in prime time for Spanish and international audiences, and pay for the clubs' broadcasting income. The ideas below keep those slots and change who gets them.</p>
+    <div class="recs" id="recs" style="margin-top:14px"></div>
+  </section>
+
+  <section aria-labelledby="h-method">
+    <h2 id="h-method">How it was built</h2>
+    <div class="card">
+      <ul style="margin:0;padding-left:20px;display:grid;gap:6px;color:var(--ink-2)">
+        <li><b>Data:</b> <span id="mData"></span> Kick-off times are local Spanish time.</li>
+        <li><b>Definitions:</b> "late" = 20:45 or later. Monday and Friday games count only in regular weekend rounds, not in midweek rounds where the whole round is played Tuesday to Thursday.</li>
+        <li><b>Distance:</b> straight-line distance between the two clubs' stadium cities, from approximate coordinates.</li>
+        <li><b>Not covered:</b> attendance and TV audiences are not in the public data used here, so the page shows the schedule, not its effect on crowds. Matching attendance by slot would be the natural next step.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <span>Data: openfootball football.json (LALIGA EA SPORTS fixtures and kick-off times, 2015/16 to 2026/27). Fan protest: Trivela, 18 December 2018 (Alavés vs Athletic Club).</span>
+    <span>Independent analysis by Stephen tAMBI. Not affiliated with LALIGA or any club.</span>
+  </footer>
+</main>
+
+<script>
+const D = /*__DATA__*/null;
+(() => {
+  const NS = 'http://www.w3.org/2000/svg';
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const n0 = v => Math.round(v).toLocaleString('en-US');
+  const T = D.trend, L = D.last, B = D.bigVsRest, ratio = (B.restMonfri / B.bigMonfri).toFixed(1);
+  const last = T.find(t => t.season === '2025/26');
+  document.getElementById('kpis').innerHTML = [
+    [last.late + '%', 'of 2025/26 matches kicked off at 20:45 or later'],
+    [L.monfri, `Monday and Friday games in 2025/26 (${L.monLate} of the ${L.mon} Mondays at 21:00)`],
+    [ratio + '×', 'more Monday/Friday slots for other clubs than for the big three'],
+    [L.tough, 'away trips of 500 km+ at night or on a weeknight in 2025/26'],
+  ].map(([a, b]) => `<div class="kpi"><b>${a}</b><span>${b}</span></div>`).join('');
+
+  // Heatmap
+  const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const seasonSel = document.getElementById('seasonSel');
+  const seasons = Object.keys(D.heat);
+  seasonSel.innerHTML = seasons.map(s => `<option${s === '2025/26' ? ' selected' : ''}>${s}</option>`).join('');
+  function drawHeat() {
+    const cells = D.heat[seasonSel.value], times = [...new Set(cells.map(c => c.time))].sort();
+    const max = Math.max(...cells.map(c => c.n));
+    const get = (d, t) => (cells.find(c => c.d === d && c.time === t) || {}).n || 0;
+    const late = t => (+t.slice(0, 2) + +t.slice(3) / 60) >= 20.75;
+    let h = '<tr><th></th>' + times.map(t => `<th>${t}</th>`).join('') + '</tr>';
+    DAYS.forEach(d => {
+      h += `<tr><th class="d">${d}</th>` + times.map(t => {
+        const n = get(d, t);
+        if (!n) return `<td style="background:var(--zero)"></td>`;
+        const a = 0.25 + 0.75 * n / max, col = late(t) ? css('--red') : css('--cool');
+        const txt = a > 0.55 ? '#ffffff' : css('--ink');
+        return `<td style="background:color-mix(in srgb, ${col} ${Math.round(a * 100)}%, var(--panel));color:${txt}" title="${d} ${t}: ${n} matches">${n}</td>`;
+      }).join('') + '</tr>';
+    });
+    document.getElementById('heat').innerHTML = h;
+  }
+  seasonSel.addEventListener('change', drawHeat);
+
+  // Trend
+  const first = T[1];
+  document.getElementById('trendIntro').innerHTML = `Since 2016/17 the share of games starting at 20:45 or later has crept from <b>${first.late}%</b> to <b>${last.late}%</b>, and the first 90 matches of 2026/27 are at ${T[T.length - 1].late}%. The number of different kick-off times has fallen from ${first.slots} to ${last.slots}: the schedule is tidier, but later.`;
+  function drawTrend() {
+    const svg = document.getElementById('trend'); svg.innerHTML = '';
+    const W = Math.max(320, svg.clientWidth || 900), H = W < 600 ? 240 : 280, Lm = 44, R = 34, Tp = 24, B = 40;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    const el = (t, a, txt) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; svg.appendChild(e); return e; };
+    const pts = T.slice(1), x = i => Lm + i * (W - Lm - R) / (pts.length - 1), y = v => Tp + (H - Tp - B) * (1 - v / 50);
+    [0, 10, 20, 30, 40, 50].forEach(v => { el('line', { x1: Lm, x2: W - R, y1: y(v), y2: y(v), stroke: css('--grid') }); el('text', { x: Lm - 6, y: y(v) + 4, 'text-anchor': 'end' }, v + '%'); });
+    el('polyline', { points: pts.map((p, i) => x(i) + ',' + y(p.late)).join(' '), fill: 'none', stroke: css('--red'), 'stroke-width': 3, 'stroke-linejoin': 'round' });
+    pts.forEach((p, i) => {
+      const partial = i === pts.length - 1;
+      el('circle', { cx: x(i), cy: y(p.late), r: 5, fill: partial ? css('--panel') : css('--red'), stroke: css('--red'), 'stroke-width': 2 });
+      if (W >= 600 || i % 2 === 0 || partial) el('text', { x: x(i), y: H - B + 18, 'text-anchor': 'middle' }, p.season.slice(2));
+      if (i === 0 || i === pts.length - 2 || partial) el('text', { x: i === 0 ? x(i) + 8 : x(i), y: y(p.late) - 12, 'text-anchor': i === 0 ? 'start' : 'middle', style: 'font-weight:700;fill:' + css('--ink') }, p.late + '%');
+    });
+  }
+
+  // Fairness
+  document.getElementById('fairIntro').innerHTML = `Matches involving Real Madrid, Barcelona or Atlético were played on a Monday or Friday only <b>${B.bigMonfri}%</b> of the time; everyone else's, <b>${B.restMonfri}%</b>. The big three get the prime-time evenings instead (${B.bigLate}% late, against ${B.restLate}%). And weeknight games are not shorter trips: the median Monday or Friday away trip is ${D.distance.monfriMedian} km, against ${D.distance.otherMedian} km at weekends.`;
+  function drawFair() {
+    const max = Math.max(...D.fair.map(f => f.monfri));
+    document.getElementById('fair').innerHTML = D.fair.map(f => `<div class="brow"><div class="l">${f.club}</div><div class="track"><div class="fill" style="width:${f.monfri / max * 100}%;background:${f.big ? css('--red') : css('--cool')}"></div></div><div class="v">${f.monfri}%</div></div>`).join('');
+  }
+
+  // Away trips
+  const clubSel = document.getElementById('clubSel'), clubs = Object.keys(D.away).sort((a, b) => a.localeCompare(b));
+  clubSel.innerHTML = clubs.map(c => `<option${c === 'Real Betis' ? ' selected' : ''}>${c}</option>`).join('');
+  function drawTrips() {
+    const a = D.away[clubSel.value];
+    const lateN = a.trips.filter(t => t.late).length, wk = a.trips.filter(t => t.monfri).length;
+    document.getElementById('awayStats').innerHTML = `<div><b>${n0(a.km)} km</b><span>to all away games, one way</span></div><div><b>${a.tough}</b><span>tough trips</span></div><div><b>${lateN}</b><span>away games at 20:45 or later</span></div><div><b>${wk}</b><span>on a Monday or Friday</span></div>`;
+    document.getElementById('trips').innerHTML = a.trips.map(t => {
+      const d = new Date(t.date + 'T12:00:00'), ds = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+      const why = t.tough ? `<span class="flag">${t.monfri ? t.dow + ' night' : 'late'}, long trip</span>` : '';
+      return `<div class="trip${t.tough ? ' tough' : ''}"><span class="when">${t.dow} ${ds} · ${t.time}</span><span class="where">at ${t.home} ${why}</span><span class="km">${n0(t.km)} km</span></div>`;
+    }).join('');
+  }
+  clubSel.addEventListener('change', drawTrips);
+
+  document.getElementById('recs').innerHTML = D.recs.map(r => `<div class="rec"><span class="tag">${r.tag}</span><h3>${r.h}</h3><p>${r.p}</p></div>`).join('');
+  document.getElementById('mData').textContent = `${n0(D.matches)} LALIGA EA SPORTS matches over ${D.seasons} seasons, 2015/16 to the first 90 matches of 2026/27.`;
+
+  function all() { drawHeat(); drawTrend(); drawFair(); drawTrips(); }
+  all();
+  addEventListener('resize', drawTrend);
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', all);
+})();
+</script>
+</body>
+</html>
