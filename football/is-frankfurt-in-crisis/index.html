@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Is Frankfurt in Crisis?</title>
+<meta name="description" content="Eintracht Frankfurt have 12 points after 9 Bundesliga games and the leakiest defence of any Frankfurt team at this stage since 2010. What history says, and what would turn it around.">
+<meta property="og:title" content="Is Frankfurt in Crisis?">
+<meta property="og:description" content="12 points after 9 games, 20 goals conceded. Teams with this start since 2010 finished 9.7th on average, and 1 in 3 still made the top six.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stambi292.github.io/sports-analytics/football/is-frankfurt-in-crisis/">
+<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-is-frankfurt-in-crisis.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta name="author" content="Stephen tAMBI">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: black-and-red masthead, verdict tiles, points race chart with a season picker, goals-conceded bars, what history says, a pace calculator, and three fixes. */
+:root {
+  --bg: #f5f5f4; --panel: #ffffff; --ink: #141414; --ink-2: #4c4c4a; --muted: #838380; --line: #e1e0dd;
+  --mast: #0f0f0f; --on-mast: #ffffff; --on-mast-2: #c4c4c0;
+  --red: #e1000f; --red-soft: #fde6e7; --past: #9a9a96; --good: #1f8a4c; --grid: #ecebe8;
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e0e0d; --panel: #171716; --ink: #f1f1ef; --ink-2: #bdbdb9; --muted: #8b8b87; --line: #2b2b29;
+  --mast: #050505; --red: #ff3b45; --red-soft: #3a1214; --past: #7a7a76; --good: #3fc47a; --grid: #232321; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0e0e0d; --panel: #171716; --ink: #f1f1ef; --ink-2: #bdbdb9; --muted: #8b8b87; --line: #2b2b29;
+  --mast: #050505; --red: #ff3b45; --red-soft: #3a1214; --past: #7a7a76; --good: #3fc47a; --grid: #232321; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
+.inner { max-width: 980px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+.mast { background: var(--mast); color: var(--on-mast); border-bottom: 6px solid var(--red); }
+.mast .inner { padding-block: 22px 44px; display: grid; gap: 14px; }
+.back { color: var(--on-mast-2); text-decoration: none; font-weight: 600; font-size: 15px; }
+.eyebrow { font: 600 14px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--on-mast-2); margin-top: 18px; }
+h1 { font: 800 clamp(44px, 8vw, 84px)/.95 var(--font-display); margin: 0; text-transform: uppercase; text-wrap: balance; }
+h1 span { color: var(--red); }
+.lede { margin: 4px 0 0; max-width: 62ch; color: var(--on-mast-2); font-size: 19px; }
+.byline { font-size: 14px; color: var(--on-mast-2); }
+h2 { font: 700 32px/1.05 var(--font-display); text-transform: uppercase; margin: 0 0 8px; text-wrap: balance; }
+.intro { margin: 0 0 18px; color: var(--ink-2); max-width: 66ch; }
+section { padding-block: 40px 4px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: -28px; position: relative; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+.kpi b { display: block; font: 800 44px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.kpi b.red { color: var(--red); }
+.kpi span { color: var(--ink-2); font-size: 15px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 14px; min-width: 0; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.controls label { font-weight: 600; }
+select, input[type=range] { font: 500 16px var(--font-body); }
+select { padding: 6px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+select:focus-visible, input:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 15px; color: var(--ink-2); }
+.legend i { display: inline-block; width: 18px; height: 3px; vertical-align: middle; margin-right: 6px; border-radius: 2px; }
+.chart { width: 100%; overflow-x: auto; }
+.chart svg { display: block; width: 100%; height: auto; min-width: 520px; }
+.chart text { fill: var(--muted); font: 500 12px var(--font-body); }
+.note { font-size: 14.5px; color: var(--muted); margin-top: 10px; max-width: 70ch; }
+.strip { display: grid; grid-template-columns: repeat(18, minmax(0, 1fr)); gap: 4px; align-items: end; }
+.strip .col { display: flex; flex-direction: column-reverse; gap: 3px; align-items: center; }
+.strip .col i { width: 100%; max-width: 26px; aspect-ratio: 1; border-radius: 50%; background: var(--past); }
+.strip .col.top i { background: var(--good); }
+.strip .col.rel i { background: var(--red); }
+.strip .lab { font-size: 12px; color: var(--muted); text-align: center; }
+.calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 260px); gap: 20px; align-items: center; }
+.big { font: 800 64px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.fixes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.fix { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--red); border-radius: 8px; padding: 16px; display: grid; gap: 6px; align-content: start; }
+.fix h3 { margin: 0; font: 700 22px/1.1 var(--font-display); text-transform: uppercase; }
+.fix p { margin: 0; color: var(--ink-2); font-size: 15.5px; }
+.fix b.num { font: 800 34px/1 var(--font-display); color: var(--red); }
+table { width: 100%; border-collapse: collapse; font-size: 15px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+th { color: var(--muted); font-weight: 600; }
+footer { padding-block: 40px 56px; color: var(--muted); font-size: 14.5px; display: grid; gap: 6px; }
+footer a { color: var(--ink-2); }
+@media (max-width: 760px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .calc, .fixes { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="inner">
+    <a class="back" href="../../">← Sports, through data</a>
+    <div class="eyebrow">Bundesliga 2026/27 · Eintracht Frankfurt after 9 matchdays</div>
+    <h1>Is Frankfurt <span>in crisis?</span></h1>
+    <p class="lede">Tenth place, 12 points, and a 2-2 at promoted Paderborn. The headlines say crisis. I compared this start with every Frankfurt season since 2010 and with every Bundesliga team that had the same points. The problem is real, but it is smaller and more specific than it looks.</p>
+    <div class="byline">Independent analysis by Stephen tAMBI, using openfootball and Sportradar match results. Not affiliated with Eintracht Frankfurt.</div>
+  </div>
+</header>
+
+<main class="inner">
+  <div class="kpis">
+    <div class="kpi"><b>12</b><span>points after 9 games (W3 D3 L3)</span></div>
+    <div class="kpi"><b class="red">20</b><span>goals conceded, the most by Frankfurt at this stage since 2010</span></div>
+    <div class="kpi"><b>15</b><span>goals scored, a normal Frankfurt attack</span></div>
+    <div class="kpi"><b>1 in 3</b><span>teams with this start since 2010 still finished top six</span></div>
+  </div>
+
+  <section aria-labelledby="h-race">
+    <h2 id="h-race">This season against the past</h2>
+    <p class="intro">Points after each matchday. Red is 2026/27. Pick a past Frankfurt season to compare; 2020/21 also had 12 points after 9 games and finished fifth.</p>
+    <div class="card">
+      <div class="controls"><label for="season">Compare with</label><select id="season"></select><span id="seasonNote" class="legend"></span></div>
+      <div class="legend"><span><i style="background:var(--red)"></i>2026/27</span><span><i id="cmpKey" style="background:var(--ink-2)"></i><span id="cmpLabel">2020/21</span></span><span><i style="background:var(--past);opacity:.5"></i>All other seasons</span></div>
+      <div class="chart"><svg id="race" viewBox="0 0 900 360" role="img" aria-label="Frankfurt points by matchday"></svg></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-ga">
+    <h2 id="h-ga">The real problem: goals against</h2>
+    <p class="intro">Goals scored and conceded after 9 games, every Frankfurt Bundesliga season since 2010. The attack is in its usual range. The defence has never been this open at this point.</p>
+    <div class="card"><div class="chart"><svg id="goals" viewBox="0 0 900 300" role="img" aria-label="Frankfurt goals for and against after 9 games by season"></svg></div>
+      <div class="legend"><span><i style="background:var(--ink-2)"></i>Scored</span><span><i style="background:var(--red)"></i>Conceded</span></div></div>
+    <p class="note">Six of the 20 came in one game, a 6-0 at RB Leipzig. Without it, Frankfurt concede 1.75 a game, still more than in 10 of these 15 seasons.</p>
+  </section>
+
+  <section aria-labelledby="h-hist">
+    <h2 id="h-hist">What happened to teams with 12 points after 9</h2>
+    <p class="intro">Every Bundesliga team since 2010/11 with exactly 12 points after 9 games, by where they finished. One dot is one team.</p>
+    <div class="card">
+      <div class="strip" id="strip"></div>
+      <div class="legend"><span><i style="background:var(--good);height:10px;width:10px;border-radius:50%"></i>Top six (Europe)</span><span><i style="background:var(--past);height:10px;width:10px;border-radius:50%"></i>Mid-table</span><span><i style="background:var(--red);height:10px;width:10px;border-radius:50%"></i>16th or lower</span></div>
+      <p style="margin:0" id="histText"></p>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-calc">
+    <h2 id="h-calc">Where will they finish?</h2>
+    <p class="intro">Frankfurt are on 1.33 points per game. Move the slider to set their pace for the last 25 games and see the final total, next to the average points each place needed since 2010.</p>
+    <div class="card">
+      <div class="calc">
+        <div class="controls" style="display:grid;gap:8px">
+          <label for="ppg">Points per game from now on: <span id="ppgv">1.33</span></label>
+          <input id="ppg" type="range" min="0.6" max="2.2" step="0.01" value="1.33">
+          <div class="legend"><span>0.80 avoids relegation</span><span>1.60 reaches Europe</span></div>
+        </div>
+        <div><div class="big" id="total">45</div><div style="color:var(--ink-2)">final points, usually worth <b id="place">9th</b> place</div></div>
+      </div>
+    </div>
+    <p class="note">Typical totals since 2010/11: 6th place 51.8 points (from 47 to 59), 7th 49.3, 16th 32.2. Next five games: Hoffenheim (H), Stuttgart (A), Werder Bremen (H), Gladbach (A), Leverkusen (A).</p>
+  </section>
+
+  <section aria-labelledby="h-fix">
+    <h2 id="h-fix">What Frankfurt can do</h2>
+    <p class="intro">Three changes the numbers point to, in order of how much they are worth.</p>
+    <div class="fixes">
+      <div class="fix"><b class="num">+6 pts</b><h3>Turn high-scoring draws into wins</h3><p>All three draws (3-3, 2-2, 2-2) came in games where Frankfurt scored at least twice. One goal fewer conceded in each would have made 18 points, level with fourth-placed Leipzig.</p></div>
+      <div class="fix"><b class="num">2.2 → 1.5</b><h3>Get goals against back to normal</h3><p>Frankfurt concede 2.2 a game. Their average after 9 games in past seasons is 1.5. Cutting back to that level, through a more compact block and fewer open transitions, is the single biggest lever.</p></div>
+      <div class="fix"><b class="num">1.60</b><h3>Set the pace target for Europe</h3><p>To reach the 52 points that sixth place usually needs, Frankfurt must take 40 from the last 25 games: 1.6 a game, up from 1.33. That is about one extra win every four games.</p></div>
+    </div>
+    <p class="note">The good news for the club: the attack works (15 goals, in line with past seasons), and history says this start ends in mid-table on average, not in a relegation fight. Only 3 of 29 teams with 12 points after 9 finished 16th or lower.</p>
+  </section>
+
+  <section aria-labelledby="h-games">
+    <h2 id="h-games">The nine games</h2>
+    <div class="card" style="overflow-x:auto"><table id="games"><thead><tr><th>#</th><th>Opponent</th><th></th><th>Score</th><th>Points</th></tr></thead><tbody></tbody></table></div>
+  </section>
+
+  <footer>
+    <span>Data: <a href="https://github.com/openfootball/football.json">openfootball</a> match results 2010/11 to 2025/26, 2026/27 results from Sportradar, up to 11 November 2026. Frankfurt were in the 2. Bundesliga in 2011/12, so that season is not included. Final places are ranked by points, goal difference and goals scored.</span>
+    <span>Independent analysis by Stephen tAMBI. Not affiliated with Eintracht Frankfurt or the DFL.</span>
+  </footer>
+</main>
+
+<script>
+const D = {"now":{"season":"2026-27","games":[{"opp":"Union Berlin","ha":"A","gf":3,"ga":3},{"opp":"FC Augsburg","ha":"H","gf":1,"ga":4},{"opp":"FSV Mainz","ha":"A","gf":3,"ga":1},{"opp":"SC Freiburg","ha":"H","gf":2,"ga":2},{"opp":"RB Leipzig","ha":"A","gf":0,"ga":6},{"opp":"1. FC K\u00f6ln","ha":"H","gf":1,"ga":0},{"opp":"Borussia Dortmund","ha":"A","gf":0,"ga":1},{"opp":"Hamburger SV","ha":"H","gf":3,"ga":1},{"opp":"SC Paderborn 07","ha":"A","gf":2,"ga":2}],"cum":[1,1,4,5,5,8,8,11,12],"pts":12,"gf":15,"ga":20,"rank":10},"past":{"2010-11":{"cum":[0,0,3,3,3,6,9,12,13,16,19,20,20,20,23,23,26,26,26,26,27,27,27,27,28,28,31,32,33,33,34,34,34,34],"rank":17,"gf9":14,"ga9":9},"2012-13":{"cum":[3,6,9,12,13,16,16,19,19,20,20,23,24,24,24,27,30,30,33,36,37,37,38,38,39,39,42,42,42,45,46,49,50,51],"rank":6,"gf9":20,"ga9":13},"2013-14":{"cum":[0,0,3,3,6,7,8,9,10,10,10,10,11,11,11,14,15,18,18,21,21,22,25,26,26,29,32,32,35,35,35,36,36,36],"rank":13,"gf9":12,"ga9":14},"2014-15":{"cum":[3,4,4,5,6,9,12,12,12,12,12,15,18,21,21,22,23,23,24,25,28,28,31,31,34,34,35,35,36,36,36,39,40,43],"rank":9,"gf9":17,"ga9":18},"2015-16":{"cum":[0,1,4,7,8,8,9,9,9,12,13,14,14,14,14,14,17,20,21,21,21,22,23,23,24,24,27,27,27,27,30,33,36,36],"rank":16,"gf9":14,"ga9":16},"2016-17":{"cum":[3,3,6,9,10,10,11,14,15,18,21,24,25,26,26,29,29,32,35,35,35,35,35,35,36,37,37,38,38,41,41,41,41,42],"rank":11,"gf9":13,"ga9":8},"2017-18":{"cum":[1,1,4,4,7,7,10,13,14,15,18,19,19,22,22,25,26,27,30,33,33,36,39,39,42,42,45,45,46,46,46,46,49,49],"rank":8,"gf9":10,"ga9":9},"2018-19":{"cum":[3,3,3,4,4,7,10,13,14,17,20,23,23,23,26,27,27,30,31,32,33,34,37,40,43,46,49,52,52,53,54,54,54,54],"rank":7,"gf9":20,"ga9":13},"2019-20":{"cum":[3,3,6,6,7,10,11,14,14,17,17,17,17,18,18,18,18,21,24,25,28,28,28,31,31,31,31,32,35,35,38,41,42,45],"rank":9,"gf9":16,"ga9":14},"2020-21":{"cum":[1,4,7,8,8,9,10,11,12,13,13,14,17,20,23,26,27,30,33,36,39,42,42,43,44,47,50,53,53,56,56,57,57,60],"rank":5,"gf9":14,"ga9":16},"2021-22":{"cum":[0,1,2,3,4,5,8,8,8,9,12,15,18,18,21,24,27,27,28,28,31,31,31,31,34,37,38,39,39,39,40,40,41,42],"rank":11,"gf9":9,"ga9":14},"2022-23":{"cum":[0,1,2,5,8,8,11,14,14,17,20,20,23,26,27,30,31,32,35,35,38,38,39,40,40,41,41,42,42,43,43,46,47,50],"rank":7,"gf9":16,"ga9":16},"2023-24":{"cum":[3,4,5,6,7,7,10,13,14,17,18,18,18,21,21,24,27,28,31,31,32,33,34,37,40,40,41,42,42,45,45,45,46,47],"rank":6,"gf9":12,"ga9":9},"2024-25":{"cum":[0,3,6,9,12,13,13,14,17,20,23,26,27,27,27,30,33,36,37,38,39,42,42,42,42,45,48,48,51,52,55,56,57,60],"rank":3,"gf9":23,"ga9":14},"2025-26":{"cum":[3,6,6,6,9,9,10,13,14,17,20,21,21,24,25,26,26,27,27,27,28,31,31,34,35,38,38,39,42,42,43,43,43,44],"rank":8,"gf9":22,"ga9":19}},"twelve":[3,3,4,5,5,5,5,6,6,6,8,8,8,9,9,9,12,12,12,12,12,13,13,15,15,15,16,16,18],"placeavg":[82.3,70,64.1,59.8,56.3,51.8,49.3,47.1,45.1,42.9,41.5,40.1,38.1,35.7,34.4,32.2,29.3,23.2],"next":[["TSG Hoffenheim","H","Nov 21"],["VfB Stuttgart","A","Nov 28"],["Werder Bremen","H","Dec 5"],["Borussia M\u00f6nchengladbach","A","Dec 12"],["Bayer Leverkusen","A","Dec 19"]]};
+(() => {
+  const NS = 'http://www.w3.org/2000/svg';
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+  const seasons = Object.keys(D.past);
+  const label = s => s.slice(0, 4) + '/' + s.slice(5);
+  const ord = n => n + (n % 10 === 1 && n !== 11 ? 'st' : n % 10 === 2 && n !== 12 ? 'nd' : n % 10 === 3 && n !== 13 ? 'rd' : 'th');
+
+  // Race chart
+  const sel = document.getElementById('season');
+  seasons.slice().reverse().forEach(s => { const o = document.createElement('option'); o.value = s; o.textContent = label(s) + ' (finished ' + ord(D.past[s].rank) + ')'; sel.appendChild(o); });
+  sel.value = '2020-21';
+  const svg = document.getElementById('race');
+  function race() {
+    svg.innerHTML = '';
+    const W = 900, H = 360, L = 44, R = 20, T = 16, B = 34, maxP = 70;
+    const x = m => L + (m - 1) * (W - L - R) / 33, y = p => T + (H - T - B) * (1 - p / maxP);
+    for (let p = 0; p <= maxP; p += 10) { el('line', { x1: L, x2: W - R, y1: y(p), y2: y(p), stroke: css('--grid') }, svg); el('text', { x: L - 8, y: y(p) + 4, 'text-anchor': 'end' }, svg).textContent = p; }
+    [1, 9, 17, 25, 34].forEach(m => { el('text', { x: x(m), y: H - 12, 'text-anchor': 'middle' }, svg).textContent = 'MD ' + m; });
+    el('line', { x1: x(9), x2: x(9), y1: T, y2: H - B, stroke: css('--line'), 'stroke-dasharray': '4 4' }, svg);
+    const line = (arr, col, w, op) => el('polyline', { points: arr.map((p, i) => x(i + 1) + ',' + y(p)).join(' '), fill: 'none', stroke: col, 'stroke-width': w, 'stroke-linejoin': 'round', opacity: op }, svg);
+    seasons.forEach(s => { if (s !== sel.value) line(D.past[s].cum, css('--past'), 1.5, .35); });
+    const c = D.past[sel.value];
+    line(c.cum, css('--ink-2'), 2.5, 1);
+    el('text', { x: x(34) - 4, y: y(c.cum[33]) - 8, 'text-anchor': 'end', style: 'fill:' + css('--ink-2') + ';font-weight:700' }, svg).textContent = c.cum[33] + ' pts, ' + ord(c.rank);
+    line(D.now.cum, css('--red'), 4, 1);
+    D.now.cum.forEach((p, i) => el('circle', { cx: x(i + 1), cy: y(p), r: 3.5, fill: css('--red') }, svg));
+    el('text', { x: x(9) + 10, y: y(12) - 10, style: 'fill:' + css('--red') + ';font-weight:700;font-size:14px' }, svg).textContent = '12 pts now';
+    document.getElementById('cmpLabel').textContent = label(sel.value);
+    document.getElementById('seasonNote').textContent = label(sel.value) + ' after 9: ' + c.cum[8] + ' points.';
+  }
+  sel.addEventListener('change', race);
+
+  // Goals chart
+  function goals() {
+    const g = document.getElementById('goals'); g.innerHTML = '';
+    const all = seasons.map(s => [label(s), D.past[s].gf9, D.past[s].ga9, false]).concat([['2026/27', D.now.gf, D.now.ga, true]]);
+    const W = 900, H = 300, L = 34, R = 10, T = 16, B = 46, maxG = 25, n = all.length, bw = (W - L - R) / n;
+    const y = v => T + (H - T - B) * (1 - v / maxG);
+    for (let v = 0; v <= maxG; v += 5) { el('line', { x1: L, x2: W - R, y1: y(v), y2: y(v), stroke: css('--grid') }, g); el('text', { x: L - 6, y: y(v) + 4, 'text-anchor': 'end' }, g).textContent = v; }
+    all.forEach(([lab, f, a, now], i) => {
+      const x0 = L + i * bw + bw * .15, w = bw * .33;
+      el('rect', { x: x0, y: y(f), width: w, height: y(0) - y(f), rx: 2, fill: css('--ink-2'), opacity: now ? 1 : .55 }, g);
+      el('rect', { x: x0 + w + 2, y: y(a), width: w, height: y(0) - y(a), rx: 2, fill: css('--red'), opacity: now ? 1 : .5 }, g);
+      if (now) el('text', { x: x0 + w + 2 + w / 2, y: y(a) - 6, 'text-anchor': 'middle', style: 'fill:' + css('--red') + ';font-weight:800;font-size:14px' }, g).textContent = a;
+      const t = el('text', { x: x0 + w, y: H - 26, 'text-anchor': 'middle', style: now ? 'font-weight:700;fill:' + css('--ink') : '' }, g); t.textContent = lab.slice(2, 4) + '/' + lab.slice(5, 7);
+    });
+    el('text', { x: L, y: H - 6 }, g).textContent = 'Season (after 9 games)';
+  }
+
+  // Strip
+  const strip = document.getElementById('strip');
+  const counts = Array(18).fill(0); D.twelve.forEach(r => counts[r - 1]++);
+  counts.forEach((c, i) => {
+    const wrap = document.createElement('div'); wrap.style.display = 'grid'; wrap.style.gap = '4px';
+    const col = document.createElement('div'); col.className = 'col' + (i < 6 ? ' top' : i >= 15 ? ' rel' : ''); col.style.minHeight = '120px';
+    for (let k = 0; k < c; k++) col.appendChild(document.createElement('i'));
+    const lab = document.createElement('div'); lab.className = 'lab'; lab.textContent = i + 1;
+    wrap.appendChild(col); wrap.appendChild(lab); strip.appendChild(wrap);
+  });
+  const avg = (D.twelve.reduce((a, b) => a + b, 0) / D.twelve.length).toFixed(1);
+  const top = D.twelve.filter(r => r <= 6).length, rel = D.twelve.filter(r => r >= 16).length;
+  document.getElementById('histText').innerHTML = `<b>${D.twelve.length} teams</b> had 12 points after 9 games. They finished <b>${avg}th</b> on average. <b>${top}</b> reached the top six, and <b>${rel}</b> finished 16th or lower.`;
+
+  // Calculator
+  const ppg = document.getElementById('ppg');
+  function calc() {
+    const v = +ppg.value, tot = Math.round(D.now.pts + 25 * v);
+    document.getElementById('ppgv').textContent = v.toFixed(2);
+    document.getElementById('total').textContent = tot;
+    let p = D.placeavg.findIndex(a => tot >= a); if (p < 0) p = 17;
+    const plEl = document.getElementById('place'); plEl.textContent = ord(p + 1);
+    plEl.style.color = p < 6 ? css('--good') : p >= 15 ? css('--red') : '';
+  }
+  ppg.addEventListener('input', calc);
+
+  // Games table
+  const tb = document.querySelector('#games tbody');
+  let c = 0;
+  D.now.games.forEach((g, i) => { const p = g.gf > g.ga ? 3 : g.gf === g.ga ? 1 : 0; c += p;
+    const tr = document.createElement('tr'); tr.innerHTML = `<td>${i + 1}</td><td>${g.opp}</td><td>${g.ha === 'H' ? 'Home' : 'Away'}</td><td>${g.gf}-${g.ga}</td><td>${p}</td>`; tb.appendChild(tr); });
+
+  const draw = () => { race(); goals(); calc(); };
+  draw();
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+})();
+</script>
+</body>
+</html>

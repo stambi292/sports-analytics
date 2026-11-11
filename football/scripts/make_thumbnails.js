@@ -2,6 +2,8 @@
 // Add one entry per new project and run: node football/scripts/make_thumbnails.js
 const {chromium}=require('playwright');
 const T=[
+ {f:'og-is-frankfurt-in-crisis.png',bg:'#0f0f0f',ink:'#fff',acc:'#ff3b45',sub:'#c4c4c0',kick:'BUNDESLIGA 2026/27 · EINTRACHT FRANKFURT AFTER 9 GAMES',t:'IS FRANKFURT<br><span>IN CRISIS?</span>',
+  body:`<div class="stats"><div><em>12</em><small>points after 9</small></div><div><em class="a">20</em><small>goals conceded, most since 2010</small></div><div><em>1 in 3</em><small>with this start still made top 6</small></div></div>`},
  {f:'og-when-a-player-collapses.png',bg:'#141a22',ink:'#fff',acc:'#f0595d',sub:'#b7c0cc',kick:'SUDDEN DEATH IN FOOTBALL · FIFA REGISTRY 2014–18',t:'WHEN A PLAYER<br><span>COLLAPSES</span>',
   body:`<div class="stats"><div><em>617</em><small>players, 67 countries</small></div><div><em>35%</em><small>survived with bystander CPR</small></div><div><em style="color:#3ccf84">85%</em><small>survived with trained staff + AED</small></div></div>`},
  {f:'og-home.png',bg:'#0f3d2a',ink:'#fff',acc:'#2dd4bf',sub:'#bcd3c6',kick:'SPORTS ANALYTICS · BY STEPHEN tAMBI',t:'SPORTS,<br><span>THROUGH DATA</span>',
