@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Injury Bill</title>
+<meta name="description" content="Bundesliga clubs paid €110.9m in wages to injured players in 2024/25. Which clubs lose the most, why the Bundesliga has Europe's most injuries but its cheapest, and what clubs could save.">
+<meta property="og:title" content="The Injury Bill">
+<meta property="og:description" content="€110.9m in wages to injured Bundesliga players in 2024/25. Bayern alone: 23%. Hoffenheim's injuries last 31 days on average.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stambi292.github.io/sports-analytics/football/the-injury-bill/">
+<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-the-injury-bill.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta name="author" content="Stephen tAMBI">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: deep-blue masthead, headline numbers, club ranking with a cost/injuries/days toggle, Europe comparison, trend, a savings calculator, lessons, table. */
+:root {
+  --bg: #f3f5f8; --panel: #ffffff; --ink: #111722; --ink-2: #485263; --muted: #7d8696; --line: #dde2ea; --grid: #e9edf3;
+  --mast: #0e1f3d; --on-mast: #ffffff; --on-mast-2: #b8c5dc;
+  --hurt: #e0475a; --hurt-soft: #fde8eb; --save: #1f8a5b; --bar: #5b6b86;
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0b0f17; --panel: #141a25; --ink: #edf1f7; --ink-2: #b6c0d0; --muted: #858fa0; --line: #252d3b; --grid: #1d2430;
+  --mast: #070f1f; --hurt: #ff6b7c; --hurt-soft: #3b1720; --save: #3fcf8b; --bar: #8a9ab5; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0b0f17; --panel: #141a25; --ink: #edf1f7; --ink-2: #b6c0d0; --muted: #858fa0; --line: #252d3b; --grid: #1d2430;
+  --mast: #070f1f; --hurt: #ff6b7c; --hurt-soft: #3b1720; --save: #3fcf8b; --bar: #8a9ab5; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
+.inner { max-width: 980px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+.mast { background: var(--mast); color: var(--on-mast); }
+.mast .inner { padding-block: 22px 48px; display: grid; gap: 14px; }
+.back { color: var(--on-mast-2); text-decoration: none; font-weight: 600; font-size: 15px; }
+.eyebrow { font: 600 14px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--on-mast-2); margin-top: 18px; }
+h1 { font: 800 clamp(48px, 9vw, 92px)/.92 var(--font-display); margin: 0; text-transform: uppercase; }
+h1 span { color: var(--hurt); }
+.lede { margin: 4px 0 0; max-width: 62ch; color: var(--on-mast-2); font-size: 19px; }
+.byline { font-size: 14px; color: var(--on-mast-2); }
+h2 { font: 700 32px/1.05 var(--font-display); text-transform: uppercase; margin: 0 0 8px; text-wrap: balance; }
+.intro { margin: 0 0 18px; color: var(--ink-2); max-width: 66ch; }
+section { padding-block: 40px 4px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: -28px; position: relative; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+.kpi b { display: block; font: 800 42px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.kpi b.h { color: var(--hurt); }
+.kpi span { color: var(--ink-2); font-size: 15px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 14px; min-width: 0; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button { font: 600 15px var(--font-body); border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 6px; padding: 7px 12px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--panel); border-color: var(--ink); }
+.seg button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--hurt); outline-offset: 2px; }
+.bars { display: grid; gap: 7px; }
+.bar { display: grid; grid-template-columns: minmax(0, 210px) minmax(0, 1fr) 80px; gap: 10px; align-items: center; font-size: 15px; }
+.bar .track { height: 18px; background: var(--grid); border-radius: 4px; overflow: hidden; }
+.bar .fill { height: 100%; border-radius: 0 4px 4px 0; transition: width .3s; }
+.bar b { text-align: right; font-variant-numeric: tabular-nums; }
+.note { font-size: 14.5px; color: var(--muted); margin-top: 10px; max-width: 70ch; }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.two h3 { margin: 0; font: 700 20px var(--font-display); text-transform: uppercase; }
+.chart svg { display: block; width: 100%; height: auto; }
+.chart text { fill: var(--muted); font: 500 12px var(--font-body); }
+.calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 280px); gap: 20px; align-items: center; }
+.calc .controls { display: grid; gap: 10px; }
+select { font: 500 16px var(--font-body); padding: 6px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+input[type=range] { width: 100%; accent-color: var(--save); }
+.big { font: 800 64px/1 var(--font-display); color: var(--save); font-variant-numeric: tabular-nums; }
+.fixes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.fix { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--save); border-radius: 8px; padding: 16px; display: grid; gap: 6px; align-content: start; }
+.fix h3 { margin: 0; font: 700 22px/1.1 var(--font-display); text-transform: uppercase; }
+.fix p { margin: 0; color: var(--ink-2); font-size: 15.5px; }
+.fix b.num { font: 800 34px/1 var(--font-display); color: var(--save); }
+table { width: 100%; border-collapse: collapse; font-size: 15px; font-variant-numeric: tabular-nums; }
+th, td { text-align: right; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+th:first-child, td:first-child { text-align: left; }
+th { color: var(--muted); font-weight: 600; cursor: pointer; }
+footer { padding-block: 40px 56px; color: var(--muted); font-size: 14.5px; display: grid; gap: 6px; }
+footer a { color: var(--ink-2); }
+@media (max-width: 760px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .two, .calc, .fixes { grid-template-columns: minmax(0, 1fr); } .bar { grid-template-columns: minmax(0, 1fr) 80px; } .bar .track { grid-column: 1 / -1; grid-row: 2; } }
+@media (prefers-reduced-motion: reduce) { .bar .fill { transition: none; } }
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="inner">
+    <a class="back" href="../../">← Sports, through data</a>
+    <div class="eyebrow">Bundesliga · wages paid to injured players, 2024/25</div>
+    <h1>The injury <span>bill</span></h1>
+    <p class="lede">This season's headlines are full of players who cannot play: Hoffenheim's record signing out for months, Arkadiusz Milik with 34 minutes since 2024. Behind every one is a wage bill. I looked at what injuries cost each Bundesliga club last season, and what cutting the time players spend out would be worth.</p>
+    <div class="byline">Independent analysis by Stephen tAMBI, based on Howden's Men's European Football Injury Index 2025.</div>
+  </div>
+</header>
+
+<main class="inner">
+  <div class="kpis">
+    <div class="kpi"><b class="h">€110.9m</b><span>in wages paid to injured Bundesliga players in 2024/25</span></div>
+    <div class="kpi"><b>1,197</b><span>injuries, about 66 per club</span></div>
+    <div class="kpi"><b>23%</b><span>of the league's bill was Bayern's alone (€25.2m)</span></div>
+    <div class="kpi"><b>569 min</b><span>between injuries over five seasons, the most often of Europe's top five leagues</span></div>
+  </div>
+
+  <section aria-labelledby="h-clubs">
+    <h2 id="h-clubs">Club by club, 2024/25</h2>
+    <p class="intro">Switch between what injuries cost, how many there were, and how long players were out on average. The clubs change places completely.</p>
+    <div class="card">
+      <div class="seg" role="group" aria-label="Measure">
+        <button type="button" data-m="cost" aria-pressed="true">Wage cost</button>
+        <button type="button" data-m="inj" aria-pressed="false">Number of injuries</button>
+        <button type="button" data-m="sev" aria-pressed="false">Average days out</button>
+      </div>
+      <div class="bars" id="bars"></div>
+      <p style="margin:0" id="barText"></p>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-eu">
+    <h2 id="h-eu">Most injuries, cheapest injuries</h2>
+    <div class="two">
+      <div class="card"><h3>Injuries, 2020/21 to 2024/25</h3><div class="bars" id="euInj"></div></div>
+      <div class="card"><h3>Average cost per injury</h3><div class="bars" id="euCost"></div></div>
+    </div>
+    <p class="note">The Bundesliga had more injuries than any other top league over five seasons, but each one cost clubs the least, under €0.1m, because Bundesliga wages are lower and absences shorter. In the Premier League each injury costs almost three times as much.</p>
+  </section>
+
+  <section aria-labelledby="h-trend">
+    <h2 id="h-trend">The bill by season</h2>
+    <div class="card"><div class="chart"><svg id="trend" viewBox="0 0 900 260" role="img" aria-label="Bundesliga injury cost by season"></svg></div></div>
+    <p class="note">After two seasons near €149m, the bill fell by €38m in 2024/25.</p>
+  </section>
+
+  <section aria-labelledby="h-calc">
+    <h2 id="h-calc">What would fewer days out be worth?</h2>
+    <p class="intro">The wage cost of injuries is a club's injured players' daily wages times the days they miss. So every day of absence a club prevents saves money. Pick a club and set how much it cuts its days out.</p>
+    <div class="card">
+      <div class="calc">
+        <div class="controls">
+          <label for="club">Club</label><select id="club"></select>
+          <label for="cut">Cut days out by: <span id="cutv">10%</span></label>
+          <input id="cut" type="range" min="0" max="40" step="1" value="10">
+        </div>
+        <div><div class="big" id="saved">€2.5m</div><div style="color:var(--ink-2)" id="savedTxt"></div></div>
+      </div>
+    </div>
+    <p class="note">Based on 2024/25: injuries × average days out ≈ days lost. Savings assume the same wage mix of injured players.</p>
+  </section>
+
+  <section aria-labelledby="h-fix">
+    <h2 id="h-fix">What clubs can do</h2>
+    <div class="fixes">
+      <div class="fix"><b class="num">€3.4m</b><h3>Shorten the absences</h3><p>Hoffenheim's injured players were out 31 days on average, the league's longest; the league average is 19. Getting back to average would have saved about €3.4m, a fifth of what Hoffenheim paid for Nathan de Cat. Faster diagnosis and return-to-play plans matter as much as preventing the injury.</p></div>
+      <div class="fix"><b class="num">€16k</b><h3>Protect the expensive players</h3><p>Each day an injured Bayern player missed cost about €16,000 in wages, almost six times Werder's rate. Load management, rotation and individual training plans pay back fastest where wages are highest.</p></div>
+      <div class="fix"><b class="num">U21</b><h3>Manage young players' load</h3><p>Howden found under-21s were, for their numbers, the most often injured group in the top leagues over four seasons. Clubs buying young talent should plan their minutes and recovery, not just their fee.</p></div>
+    </div>
+    <p class="note">Daily figures are the club's injury cost divided by its estimated days lost (injuries × average days out).</p>
+  </section>
+
+  <section aria-labelledby="h-table">
+    <h2 id="h-table">All 18 clubs, 2024/25</h2>
+    <div class="card" style="overflow-x:auto"><table id="tbl"><thead><tr><th data-k="club">Club</th><th data-k="inj">Injuries</th><th data-k="sev">Avg days out</th><th data-k="days">≈ Days lost</th><th data-k="cost">Cost €m</th><th data-k="perDay">€ per day</th></tr></thead><tbody></tbody></table></div>
+    <p class="note">Clubs as in the 2024/25 Bundesliga, so Holstein Kiel, Bochum and Heidenheim are included. Click a column to sort.</p>
+  </section>
+
+  <footer>
+    <span>Data: <a href="https://www.howdengroupholdings.com/reports/mens-european-football-injury-index-202425">Howden, Men's European Football Injury Index 2024/25</a> (published December 2025). Howden counts injuries longer than one day in domestic club matches and calculates cost as each injured player's daily base salary times days unavailable, assuming full wages are paid. Current injury cases from <a href="https://www.goal.com/de">Goal.com</a>, 11 November 2026.</span>
+    <span>Independent analysis by Stephen tAMBI. Not affiliated with Howden, the DFL or any club. Not medical advice.</span>
+  </footer>
+</main>
+
+<script>
+const D = {"rows":[{"club":"Bayern Munich","rank":1,"inj":75,"cost":25.16,"sev":21,"days":1575,"perDay":15975,"prev":{"inj":107,"cost":44.12,"sev":17}},{"club":"Bayer Leverkusen","rank":2,"inj":43,"cost":6.63,"sev":19,"days":817,"perDay":8115,"prev":{"inj":42,"cost":4.05,"sev":16}},{"club":"Eintracht Frankfurt","rank":3,"inj":67,"cost":3.97,"sev":15,"days":1005,"perDay":3950,"prev":{"inj":79,"cost":4.46,"sev":13}},{"club":"Borussia Dortmund","rank":4,"inj":72,"cost":11.1,"sev":14,"days":1008,"perDay":11012,"prev":{"inj":104,"cost":20.43,"sev":15}},{"club":"SC Freiburg","rank":5,"inj":45,"cost":3.24,"sev":25,"days":1125,"perDay":2880,"prev":{"inj":55,"cost":4.17,"sev":26}},{"club":"Mainz 05","rank":6,"inj":68,"cost":3.24,"sev":13,"days":884,"perDay":3665,"prev":{"inj":69,"cost":4.57,"sev":20}},{"club":"RB Leipzig","rank":7,"inj":59,"cost":14.36,"sev":24,"days":1416,"perDay":10141,"prev":{"inj":74,"cost":14.12,"sev":13}},{"club":"Werder Bremen","rank":8,"inj":82,"cost":2.88,"sev":13,"days":1066,"perDay":2702,"prev":{"inj":88,"cost":4.37,"sev":15}},{"club":"VfB Stuttgart","rank":9,"inj":69,"cost":5.88,"sev":24,"days":1656,"perDay":3551,"prev":{"inj":75,"cost":4.07,"sev":18}},{"club":"Borussia Mönchengladbach","rank":10,"inj":66,"cost":4.84,"sev":17,"days":1122,"perDay":4314,"prev":{"inj":109,"cost":10.01,"sev":17}},{"club":"VfL Wolfsburg","rank":11,"inj":85,"cost":7.94,"sev":22,"days":1870,"perDay":4246,"prev":{"inj":73,"cost":7.06,"sev":19}},{"club":"FC Augsburg","rank":12,"inj":68,"cost":3.04,"sev":19,"days":1292,"perDay":2353,"prev":{"inj":81,"cost":5.45,"sev":24}},{"club":"Union Berlin","rank":13,"inj":51,"cost":3.44,"sev":23,"days":1173,"perDay":2933,"prev":{"inj":60,"cost":3.35,"sev":15}},{"club":"FC St. Pauli","rank":14,"inj":70,"cost":2.18,"sev":27,"days":1890,"perDay":1153,"prev":null},{"club":"TSG Hoffenheim","rank":15,"inj":65,"cost":8.82,"sev":31,"days":2015,"perDay":4377,"prev":{"inj":69,"cost":6.76,"sev":22}},{"club":"1. FC Heidenheim","rank":16,"inj":64,"cost":0.99,"sev":11,"days":704,"perDay":1406,"prev":{"inj":37,"cost":0.82,"sev":26}},{"club":"Holstein Kiel","rank":17,"inj":76,"cost":1.38,"sev":16,"days":1216,"perDay":1135,"prev":null},{"club":"VfL Bochum","rank":18,"inj":72,"cost":1.79,"sev":11,"days":792,"perDay":2260,"prev":{"inj":74,"cost":4.69,"sev":24}}],"total":110.88,"injuries":1197,"leagues":[["Premier League",5367,1379.14,0.26],["La Liga",4171,600.83,0.14],["Bundesliga",6177,579.74,0.09],["Serie A",3967,495.23,0.12],["Ligue 1",2914,391.0,0.13]],"season_cost":[["2020/21",85.99],["2021/22",85.69],["2022/23",148.36],["2023/24",148.82],["2024/25",110.88]]};
+(() => {
+  const NS = 'http://www.w3.org/2000/svg';
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const R = D.rows;
+  const fmt = { cost: v => '€' + v.toFixed(2) + 'm', inj: v => v, sev: v => v + ' days' };
+  const txt = {
+    cost: 'Bayern, Leipzig and Dortmund made up 46% of the league bill: their injured players earn the most.',
+    inj: 'Wolfsburg had the most injuries (85), Werder 82. Werder paid only €2.9m for them: many injuries, short and cheap.',
+    sev: "Hoffenheim's injuries lasted 31 days on average, the longest. Heidenheim and Bochum were back after 11."
+  };
+  let mode = 'cost';
+  function bars() {
+    const rows = R.slice().sort((a, b) => b[mode] - a[mode]), max = rows[0][mode];
+    document.getElementById('bars').innerHTML = rows.map((r, i) => `<div class="bar"><span>${r.club}</span><div class="track"><div class="fill" style="width:${r[mode] / max * 100}%;background:${i < 3 ? 'var(--hurt)' : 'var(--bar)'}"></div></div><b>${fmt[mode](r[mode])}</b></div>`).join('');
+    document.getElementById('barText').textContent = txt[mode];
+  }
+  document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => { mode = b.dataset.m; document.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false')); bars(); }));
+
+  function eu() {
+    const L = D.leagues, mi = Math.max(...L.map(l => l[1])), mc = Math.max(...L.map(l => l[3]));
+    document.getElementById('euInj').innerHTML = L.slice().sort((a, b) => b[1] - a[1]).map(l => `<div class="bar"><span>${l[0]}</span><div class="track"><div class="fill" style="width:${l[1] / mi * 100}%;background:${l[0] === 'Bundesliga' ? 'var(--hurt)' : 'var(--bar)'}"></div></div><b>${l[1].toLocaleString('en-US')}</b></div>`).join('');
+    document.getElementById('euCost').innerHTML = L.slice().sort((a, b) => b[3] - a[3]).map(l => `<div class="bar"><span>${l[0]}</span><div class="track"><div class="fill" style="width:${l[3] / mc * 100}%;background:${l[0] === 'Bundesliga' ? 'var(--hurt)' : 'var(--bar)'}"></div></div><b>€${l[3].toFixed(2)}m</b></div>`).join('');
+  }
+
+  function trend() {
+    const svg = document.getElementById('trend'); svg.innerHTML = '';
+    const el = (t, a) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); svg.appendChild(e); return e; };
+    const S = D.season_cost, W = 900, H = 260, L0 = 50, Rr = 20, T = 20, B = 36, max = 160, bw = (W - L0 - Rr) / S.length;
+    const y = v => T + (H - T - B) * (1 - v / max);
+    for (let v = 0; v <= max; v += 40) { el('line', { x1: L0, x2: W - Rr, y1: y(v), y2: y(v), stroke: css('--grid') }); el('text', { x: L0 - 8, y: y(v) + 4, 'text-anchor': 'end' }).textContent = '€' + v + 'm'; }
+    S.forEach(([s, v], i) => { const x = L0 + i * bw + bw * .2, w = bw * .6;
+      el('rect', { x, y: y(v), width: w, height: y(0) - y(v), rx: 3, fill: i === S.length - 1 ? css('--hurt') : css('--bar') });
+      el('text', { x: x + w / 2, y: y(v) - 8, 'text-anchor': 'middle', style: 'font-weight:700;fill:' + css('--ink') }).textContent = '€' + v.toFixed(1) + 'm';
+      el('text', { x: x + w / 2, y: H - 12, 'text-anchor': 'middle' }).textContent = s; });
+  }
+
+  const sel = document.getElementById('club');
+  R.slice().sort((a, b) => a.club.localeCompare(b.club)).forEach(r => { const o = document.createElement('option'); o.value = r.club; o.textContent = r.club; sel.appendChild(o); });
+  sel.value = 'TSG Hoffenheim';
+  const cut = document.getElementById('cut');
+  function calc() {
+    const r = R.find(x => x.club === sel.value), c = +cut.value / 100, saved = r.cost * c, days = Math.round(r.days * c);
+    document.getElementById('cutv').textContent = cut.value + '%';
+    document.getElementById('saved').textContent = '€' + (saved >= 1 ? saved.toFixed(1) + 'm' : Math.round(saved * 1000) + 'k');
+    document.getElementById('savedTxt').textContent = `saved in wages a season, and about ${days.toLocaleString('en-US')} more player-days available for ${r.club}.`;
+  }
+  sel.addEventListener('change', calc); cut.addEventListener('input', calc);
+
+  let sortK = 'cost', asc = false;
+  function table() {
+    const rows = R.slice().sort((a, b) => (typeof a[sortK] === 'string' ? a[sortK].localeCompare(b[sortK]) : a[sortK] - b[sortK]) * (asc ? 1 : -1));
+    document.querySelector('#tbl tbody').innerHTML = rows.map(r => `<tr><td>${r.club}</td><td>${r.inj}</td><td>${r.sev}</td><td>${r.days.toLocaleString('en-US')}</td><td>${r.cost.toFixed(2)}</td><td>${r.perDay.toLocaleString('en-US')}</td></tr>`).join('');
+  }
+  document.querySelectorAll('#tbl th').forEach(th => th.addEventListener('click', () => { const k = th.dataset.k; asc = sortK === k ? !asc : k === 'club'; sortK = k; table(); }));
+
+  const draw = () => { bars(); eu(); trend(); calc(); table(); };
+  draw();
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+})();
+</script>
+</body>
+</html>

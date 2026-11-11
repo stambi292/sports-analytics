@@ -2,6 +2,8 @@
 // Add one entry per new project and run: node football/scripts/make_thumbnails.js
 const {chromium}=require('playwright');
 const T=[
+ {f:'og-the-injury-bill.png',bg:'#0e1f3d',ink:'#fff',acc:'#ff6b7c',sub:'#b8c5dc',kick:'BUNDESLIGA · WAGES PAID TO INJURED PLAYERS, 2024/25',t:'THE INJURY<br><span>BILL</span>',
+  body:`<div class="stats"><div><em class="a">€110.9m</em><small>wages to injured players</small></div><div><em>23%</em><small>of it was Bayern's</small></div><div><em>31 days</em><small>Hoffenheim's average absence</small></div></div>`},
  {f:'og-did-the-money-buy-points.png',bg:'#0f2a1f',ink:'#fff',acc:'#3fcf86',sub:'#b9cfc3',kick:'BUNDESLIGA 2026/27 · SUMMER SPENDING VS POINTS AFTER 9 GAMES',t:'DID THE MONEY<br><span>BUY POINTS?</span>',
   body:`<div class="stats"><div><em>€782m</em><small>spent this summer</small></div><div><em class="a">€0.49m</em><small>Werder, per point</small></div><div><em style="color:#f07a5f">€9.81m</em><small>Leverkusen, per point</small></div></div>`},
  {f:'og-is-frankfurt-in-crisis.png',bg:'#e1000f',ink:'#fff',acc:'#111111',sub:'#ffe3e5',kick:'BUNDESLIGA 2026/27 · EINTRACHT FRANKFURT AFTER 9 GAMES',t:'IS FRANKFURT<br><span>IN CRISIS?</span>',
