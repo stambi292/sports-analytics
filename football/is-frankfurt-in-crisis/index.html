@@ -21,27 +21,27 @@
 :root {
   --bg: #f5f5f4; --panel: #ffffff; --ink: #141414; --ink-2: #4c4c4a; --muted: #838380; --line: #e1e0dd;
   --mast: #0f0f0f; --on-mast: #ffffff; --on-mast-2: #c4c4c0;
-  --red: #e1000f; --red-soft: #fde6e7; --past: #9a9a96; --good: #1f8a4c; --grid: #ecebe8;
+  --red: #e1000f; --eintracht: #e1000f; --red-soft: #fde6e7; --past: #9a9a96; --good: #1f8a4c; --grid: #ecebe8;
   --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
   --font-body: "Barlow", "Segoe UI", system-ui, sans-serif;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #0e0e0d; --panel: #171716; --ink: #f1f1ef; --ink-2: #bdbdb9; --muted: #8b8b87; --line: #2b2b29;
-  --mast: #050505; --red: #ff3b45; --red-soft: #3a1214; --past: #7a7a76; --good: #3fc47a; --grid: #232321; color-scheme: dark; } }
+  --mast: #050505; --eintracht: #c8000d; --red: #ff3b45; --red-soft: #3a1214; --past: #7a7a76; --good: #3fc47a; --grid: #232321; color-scheme: dark; } }
 :root[data-theme="dark"] {
   --bg: #0e0e0d; --panel: #171716; --ink: #f1f1ef; --ink-2: #bdbdb9; --muted: #8b8b87; --line: #2b2b29;
-  --mast: #050505; --red: #ff3b45; --red-soft: #3a1214; --past: #7a7a76; --good: #3fc47a; --grid: #232321; color-scheme: dark; }
+  --mast: #050505; --eintracht: #c8000d; --red: #ff3b45; --red-soft: #3a1214; --past: #7a7a76; --good: #3fc47a; --grid: #232321; color-scheme: dark; }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
 .inner { max-width: 980px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
-.mast { background: var(--mast); color: var(--on-mast); border-bottom: 6px solid var(--red); }
+.mast { background: var(--eintracht); color: var(--on-mast); border-bottom: 8px solid var(--mast); }
 .mast .inner { padding-block: 22px 44px; display: grid; gap: 14px; }
-.back { color: var(--on-mast-2); text-decoration: none; font-weight: 600; font-size: 15px; }
-.eyebrow { font: 600 14px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--on-mast-2); margin-top: 18px; }
+.back { color: var(--on-mast); text-decoration: none; font-weight: 600; font-size: 15px; }
+.eyebrow { font: 600 14px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--on-mast); opacity: .85; margin-top: 18px; }
 h1 { font: 800 clamp(44px, 8vw, 84px)/.95 var(--font-display); margin: 0; text-transform: uppercase; text-wrap: balance; }
-h1 span { color: var(--red); }
-.lede { margin: 4px 0 0; max-width: 62ch; color: var(--on-mast-2); font-size: 19px; }
-.byline { font-size: 14px; color: var(--on-mast-2); }
+h1 span { color: var(--mast); }
+.lede { margin: 4px 0 0; max-width: 62ch; color: var(--on-mast); font-size: 19px; }
+.byline { font-size: 14px; color: var(--on-mast); opacity: .85; }
 h2 { font: 700 32px/1.05 var(--font-display); text-transform: uppercase; margin: 0 0 8px; text-wrap: balance; }
 .intro { margin: 0 0 18px; color: var(--ink-2); max-width: 66ch; }
 section { padding-block: 40px 4px; }
@@ -71,7 +71,7 @@ select:focus-visible, input:focus-visible { outline: 2px solid var(--red); outli
 .calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 260px); gap: 20px; align-items: center; }
 .big { font: 800 64px/1 var(--font-display); font-variant-numeric: tabular-nums; }
 .fixes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-.fix { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--red); border-radius: 8px; padding: 16px; display: grid; gap: 6px; align-content: start; }
+.fix { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--mast); border-radius: 8px; padding: 16px; display: grid; gap: 6px; align-content: start; }
 .fix h3 { margin: 0; font: 700 22px/1.1 var(--font-display); text-transform: uppercase; }
 .fix p { margin: 0; color: var(--ink-2); font-size: 15.5px; }
 .fix b.num { font: 800 34px/1 var(--font-display); color: var(--red); }
