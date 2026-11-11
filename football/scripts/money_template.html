@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Did the Money Buy Points?</title>
+<meta name="description" content="Bundesliga clubs spent €782m on transfers in summer 2026. Nine games in, the top spenders lead the table, but Werder Bremen are sixth on €7.3m and Leverkusen pay €9.8m per point.">
+<meta property="og:title" content="Did the Money Buy Points?">
+<meta property="og:description" content="Summer 2026 transfer spending against points after 9 Bundesliga games. Werder: €0.5m per point. Leverkusen: €9.8m per point.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stambi292.github.io/sports-analytics/football/did-the-money-buy-points/">
+<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-did-the-money-buy-points.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta name="author" content="Stephen tAMBI">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: ledger-green masthead, four headline numbers, a spend-vs-points scatter with a spent/net toggle, cost-per-point bars, the record-signing case, lessons for clubs, full table. */
+:root {
+  --bg: #f4f6f4; --panel: #ffffff; --ink: #121815; --ink-2: #48524c; --muted: #7e8882; --line: #dde3df; --grid: #eaeeeb;
+  --mast: #0f2a1f; --on-mast: #ffffff; --on-mast-2: #b9cfc3;
+  --cash: #1d8a55; --cash-soft: #e2f3e9; --cost: #d4553a; --dot: #5f6b65;
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0c110e; --panel: #151c18; --ink: #edf2ee; --ink-2: #b6c3bb; --muted: #86928b; --line: #26302a; --grid: #1f2823;
+  --mast: #08170f; --cash: #3fcf86; --cash-soft: #12301f; --cost: #f07a5f; --dot: #9aa59f; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0c110e; --panel: #151c18; --ink: #edf2ee; --ink-2: #b6c3bb; --muted: #86928b; --line: #26302a; --grid: #1f2823;
+  --mast: #08170f; --cash: #3fcf86; --cash-soft: #12301f; --cost: #f07a5f; --dot: #9aa59f; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
+.inner { max-width: 980px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+.mast { background: var(--mast); color: var(--on-mast); }
+.mast .inner { padding-block: 22px 48px; display: grid; gap: 14px; }
+.back { color: var(--on-mast-2); text-decoration: none; font-weight: 600; font-size: 15px; }
+.eyebrow { font: 600 14px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--on-mast-2); margin-top: 18px; }
+h1 { font: 800 clamp(44px, 8vw, 84px)/.95 var(--font-display); margin: 0; text-transform: uppercase; text-wrap: balance; }
+h1 span { color: var(--cash); }
+.lede { margin: 4px 0 0; max-width: 62ch; color: var(--on-mast-2); font-size: 19px; }
+.byline { font-size: 14px; color: var(--on-mast-2); }
+h2 { font: 700 32px/1.05 var(--font-display); text-transform: uppercase; margin: 0 0 8px; text-wrap: balance; }
+.intro { margin: 0 0 18px; color: var(--ink-2); max-width: 66ch; }
+section { padding-block: 40px 4px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: -28px; position: relative; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+.kpi b { display: block; font: 800 42px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.kpi b.g { color: var(--cash); } .kpi b.r { color: var(--cost); }
+.kpi span { color: var(--ink-2); font-size: 15px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 14px; min-width: 0; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button { font: 600 15px var(--font-body); border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 6px; padding: 7px 12px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--panel); border-color: var(--ink); }
+.seg button:focus-visible { outline: 2px solid var(--cash); outline-offset: 2px; }
+.chart { width: 100%; overflow-x: auto; }
+.chart svg { display: block; width: 100%; height: auto; min-width: 560px; }
+.chart text { fill: var(--muted); font: 500 12px var(--font-body); }
+.chart .lab { fill: var(--ink); font-weight: 600; }
+.note { font-size: 14.5px; color: var(--muted); margin-top: 10px; max-width: 70ch; }
+.bars { display: grid; gap: 7px; }
+.bar { display: grid; grid-template-columns: minmax(0, 200px) minmax(0, 1fr) 70px; gap: 10px; align-items: center; font-size: 15px; }
+.bar .track { height: 18px; background: var(--grid); border-radius: 4px; overflow: hidden; }
+.bar .fill { height: 100%; border-radius: 0 4px 4px 0; }
+.bar b { text-align: right; font-variant-numeric: tabular-nums; }
+.case { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 280px); gap: 20px; align-items: center; }
+.big { font: 800 64px/1 var(--font-display); color: var(--cost); }
+.fixes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.fix { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--cash); border-radius: 8px; padding: 16px; display: grid; gap: 6px; align-content: start; }
+.fix h3 { margin: 0; font: 700 22px/1.1 var(--font-display); text-transform: uppercase; }
+.fix p { margin: 0; color: var(--ink-2); font-size: 15.5px; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; font-variant-numeric: tabular-nums; }
+th, td { text-align: right; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
+th { color: var(--muted); font-weight: 600; cursor: pointer; }
+footer { padding-block: 40px 56px; color: var(--muted); font-size: 14.5px; display: grid; gap: 6px; }
+footer a { color: var(--ink-2); }
+@media (max-width: 760px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .case, .fixes { grid-template-columns: minmax(0, 1fr); } .bar { grid-template-columns: minmax(0, 1fr) 70px; } .bar .track { grid-column: 1 / -1; grid-row: 2; } }
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="inner">
+    <a class="back" href="../../">← Sports, through data</a>
+    <div class="eyebrow">Bundesliga 2026/27 · summer transfer spending vs points after 9 games</div>
+    <h1>Did the money <span>buy points?</span></h1>
+    <p class="lede">Bundesliga clubs spent €782m on new players this summer. Hoffenheim's €18.5m record signing has played 30 league minutes. Nine games in, I put every club's spending next to its points to see who got value, and who is paying the most for each point.</p>
+    <div class="byline">Independent analysis by Stephen tAMBI, using published transfer figures and Sportradar results. Not affiliated with the DFL or any club.</div>
+  </div>
+</header>
+
+<main class="inner">
+  <div class="kpis">
+    <div class="kpi"><b>€782m</b><span>spent on transfers by the 18 clubs</span></div>
+    <div class="kpi"><b>0.69</b><span>correlation between spending and points: money matters</span></div>
+    <div class="kpi"><b class="g">€0.49m</b><span>Werder Bremen's cost per point, 6th place on €7.3m</span></div>
+    <div class="kpi"><b class="r">€9.81m</b><span>Leverkusen's cost per point, the league's highest</span></div>
+  </div>
+
+  <section aria-labelledby="h-scatter">
+    <h2 id="h-scatter">Spending against points</h2>
+    <p class="intro">Each dot is a club. Switch between what clubs spent and their net spend (spent minus sales). Spending tracks points; selling players does not cost points.</p>
+    <div class="card">
+      <div class="seg" role="group" aria-label="Spending measure">
+        <button type="button" data-m="spent" aria-pressed="true">Money spent</button>
+        <button type="button" data-m="net" aria-pressed="false">Net spend</button>
+      </div>
+      <div class="chart"><svg id="scatter" viewBox="0 0 900 440" role="img" aria-label="Transfer spending vs points by club"></svg></div>
+      <p style="margin:0" id="corrText"></p>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-ppt">
+    <h2 id="h-ppt">What each point cost</h2>
+    <p class="intro">Summer spending divided by points so far. Lower is better value.</p>
+    <div class="card"><div class="bars" id="bars"></div></div>
+  </section>
+
+  <section aria-labelledby="h-case">
+    <h2 id="h-case">One signing, a big share of the budget</h2>
+    <div class="card">
+      <div class="case">
+        <p style="margin:0;color:var(--ink-2)">Hoffenheim paid a club-record €18.5m for Nathan de Cat. That was <b>28% of everything they spent this summer</b>. He has played 30 Bundesliga minutes, 169 minutes in all, and is reported to be out for months. Hoffenheim sit 9th on 12 points. When so much of a budget sits in one player, one injury can wipe out most of the summer's investment.</p>
+        <div><div class="big">28%</div><div style="color:var(--ink-2)">of Hoffenheim's €66.2m summer spend on one player</div></div>
+      </div>
+    </div>
+    <p class="note">Minutes and injury as reported by Goal.com on 11 November 2026.</p>
+  </section>
+
+  <section aria-labelledby="h-fix">
+    <h2 id="h-fix">What clubs can learn</h2>
+    <div class="fixes">
+      <div class="fix"><h3>Selling is not a death sentence</h3><p>Leipzig sold €176m and are 4th. Freiburg made €45m net and are 3rd. Net spend and points barely move together (correlation 0.11). Clubs can sell their stars at the right price if they reinvest well.</p></div>
+      <div class="fix"><h3>Big fees need big minutes</h3><p>Leverkusen spent the most (€157m) and pay €9.8m per point, twice Bayern's rate. A fee only pays back when the player plays: track availability and fit before paying a premium.</p></div>
+      <div class="fix"><h3>Spread the risk</h3><p>Werder are 6th on €7.3m across 16 signings. Several affordable players spread injury and form risk better than one record fee, as Hoffenheim's 28% bet shows.</p></div>
+    </div>
+    <p class="note">Nine games is early: points will move, and spending here covers transfer fees only, not wages. The ranking will be worth checking again at the winter break.</p>
+  </section>
+
+  <section aria-labelledby="h-table">
+    <h2 id="h-table">All 18 clubs</h2>
+    <div class="card" style="overflow-x:auto"><table id="tbl"><thead><tr><th data-k="rank">#</th><th data-k="club">Club</th><th data-k="pts">Points</th><th data-k="spent">Spent €m</th><th data-k="earned">Sold €m</th><th data-k="net">Net €m</th><th data-k="eurPerPt">€m per point</th></tr></thead><tbody></tbody></table></div>
+    <p class="note">Click a column to sort.</p>
+  </section>
+
+  <footer>
+    <span>Data: summer 2026 transfer fees per club as compiled by <a href="https://neunzigplus.de/bundesliga/transferbilanz-der-bundesliga-2026-782-millionen-ausgegeben-723-eingenommen-alle-18-klubs-im-vergleich">neunzigplus</a> (3 September 2026). Points after 9 matchdays from Sportradar (11 November 2026). Nathan de Cat figures from <a href="https://www.goal.com/de">Goal.com</a>. Fees are as reported in the media and can differ from clubs' own accounts.</span>
+    <span>Independent analysis by Stephen tAMBI. Not affiliated with the DFL or any club.</span>
+  </footer>
+</main>
+
+<script>
+const D = /*__DATA__*/null;
+(() => {
+  const NS = 'http://www.w3.org/2000/svg';
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+  const short = c => c.replace('FC Bayern München', 'Bayern').replace('Borussia Dortmund', 'Dortmund').replace('Borussia Mönchengladbach', 'Gladbach').replace('Bayer Leverkusen', 'Leverkusen').replace('Eintracht Frankfurt', 'Frankfurt').replace('TSG Hoffenheim', 'Hoffenheim').replace('1. FSV Mainz 05', 'Mainz').replace('SC Paderborn 07', 'Paderborn').replace('FC Schalke 04', 'Schalke').replace('1. FC Köln', 'Köln').replace('Hamburger SV', 'HSV').replace('VfB Stuttgart', 'Stuttgart').replace('SV Elversberg', 'Elversberg').replace('Werder Bremen', 'Werder').replace('SC Freiburg', 'Freiburg').replace('RB Leipzig', 'Leipzig').replace('Union Berlin', 'Union').replace('FC Augsburg', 'Augsburg');
+  const corr = (a, b) => { const m = v => v.reduce((x, y) => x + y, 0) / v.length; const ma = m(a), mb = m(b); let s = 0, sa = 0, sb = 0; a.forEach((x, i) => { s += (x - ma) * (b[i] - mb); sa += (x - ma) ** 2; sb += (b[i] - mb) ** 2; }); return s / Math.sqrt(sa * sb); };
+  let mode = 'spent';
+  function scatter() {
+    const svg = document.getElementById('scatter'); svg.innerHTML = '';
+    const W = 900, H = 440, L = 56, R = 24, T = 20, B = 50;
+    const xs = D.map(d => d[mode]), xmin = mode === 'net' ? -120 : 0, xmax = mode === 'net' ? 100 : 170;
+    const x = v => L + (v - xmin) / (xmax - xmin) * (W - L - R), y = p => T + (H - T - B) * (1 - p / 24);
+    for (let p = 0; p <= 24; p += 4) { el('line', { x1: L, x2: W - R, y1: y(p), y2: y(p), stroke: css('--grid') }, svg); el('text', { x: L - 8, y: y(p) + 4, 'text-anchor': 'end' }, svg).textContent = p; }
+    for (let v = xmin; v <= xmax; v += mode === 'net' ? 40 : 40) { el('text', { x: x(v), y: H - 26, 'text-anchor': 'middle' }, svg).textContent = '€' + v + 'm'; }
+    if (mode === 'net') el('line', { x1: x(0), x2: x(0), y1: T, y2: H - B, stroke: css('--line'), 'stroke-dasharray': '4 4' }, svg);
+    el('text', { x: (W + L) / 2, y: H - 6, 'text-anchor': 'middle' }, svg).textContent = mode === 'net' ? 'Net spend (spent minus sold), € million' : 'Money spent on transfers, € million';
+    el('text', { x: 14, y: T + 4, transform: `rotate(-90 14 ${T + 4})`, 'text-anchor': 'end' }, svg).textContent = 'Points after 9 games';
+    // trend line
+    const ys = D.map(d => d.pts), mx = xs.reduce((a, b) => a + b) / xs.length, my = ys.reduce((a, b) => a + b) / ys.length;
+    const k = xs.reduce((s, v, i) => s + (v - mx) * (ys[i] - my), 0) / xs.reduce((s, v) => s + (v - mx) ** 2, 0);
+    el('line', { x1: x(xmin), y1: y(my + k * (xmin - mx)), x2: x(xmax), y2: y(my + k * (xmax - mx)), stroke: css('--muted'), 'stroke-dasharray': '6 5', opacity: .7 }, svg);
+    D.forEach(d => {
+      const v = d[mode], hi = ['Werder Bremen', 'Bayer Leverkusen', 'TSG Hoffenheim', 'RB Leipzig', 'SC Freiburg'].includes(d.club);
+      const col = d.club === 'Werder Bremen' || d.club === 'SC Freiburg' || (mode === 'net' && d.club === 'RB Leipzig') ? css('--cash') : d.club === 'Bayer Leverkusen' || d.club === 'TSG Hoffenheim' ? css('--cost') : css('--dot');
+      el('circle', { cx: x(v), cy: y(d.pts), r: hi ? 7 : 5.5, fill: col, stroke: css('--panel'), 'stroke-width': 2 }, svg);
+      const off = { 'FC Bayern München': [-10, -10, 'end'], 'Borussia Dortmund': [9, 16, 'start'], 'SC Paderborn 07': [-9, 4, 'end'], '1. FSV Mainz 05': [6, -9, 'start'], 'FC Augsburg': [0, 19, 'middle'], '1. FC Köln': [9, 4, 'start'], 'SV Elversberg': [-9, -8, 'end'], 'Hamburger SV': [0, 19, 'middle'], 'Eintracht Frankfurt': [9, -8, 'start'], 'VfB Stuttgart': [9, 16, 'start'] }[d.club] || [9, 4, 'start'];
+      const t = el('text', { x: x(v) + off[0], y: y(d.pts) + off[1], 'text-anchor': off[2], class: hi ? 'lab' : '' }, svg); t.textContent = short(d.club);
+    });
+    const r = corr(xs, ys).toFixed(2);
+    document.getElementById('corrText').innerHTML = mode === 'net'
+      ? `Correlation between net spend and points: <b>${r}</b>. Almost none. Leipzig sold more than anyone and are 4th.`
+      : `Correlation between money spent and points: <b>${r}</b>. Strong: the four biggest spenders are all in the top five.`;
+  }
+  document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => { mode = b.dataset.m; document.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false')); scatter(); }));
+
+  function bars() {
+    const el2 = document.getElementById('bars'); const rows = D.slice().sort((a, b) => a.eurPerPt - b.eurPerPt), max = Math.max(...rows.map(r => r.eurPerPt));
+    el2.innerHTML = rows.map(r => { const col = r.eurPerPt <= 1 ? 'var(--cash)' : r.eurPerPt >= 5 ? 'var(--cost)' : 'var(--dot)';
+      return `<div class="bar"><span>${r.club} <span style="color:var(--muted)">(${r.rank}.)</span></span><div class="track"><div class="fill" style="width:${r.eurPerPt / max * 100}%;background:${col}"></div></div><b>€${r.eurPerPt.toFixed(2)}m</b></div>`; }).join('');
+  }
+
+  let sortK = 'rank', asc = true;
+  function table() {
+    const rows = D.slice().sort((a, b) => (typeof a[sortK] === 'string' ? a[sortK].localeCompare(b[sortK]) : a[sortK] - b[sortK]) * (asc ? 1 : -1));
+    document.querySelector('#tbl tbody').innerHTML = rows.map(r => `<tr><td>${r.rank}</td><td>${r.club}</td><td>${r.pts}</td><td>${r.spent.toFixed(1)}</td><td>${r.earned.toFixed(1)}</td><td>${r.net > 0 ? '+' : ''}${r.net.toFixed(1)}</td><td>${r.eurPerPt.toFixed(2)}</td></tr>`).join('');
+  }
+  document.querySelectorAll('#tbl th').forEach(th => th.addEventListener('click', () => { const k = th.dataset.k; asc = sortK === k ? !asc : true; sortK = k; table(); }));
+
+  const draw = () => { scatter(); bars(); table(); };
+  draw();
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+})();
+</script>
+</body>
+</html>

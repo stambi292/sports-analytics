@@ -2,6 +2,8 @@
 // Add one entry per new project and run: node football/scripts/make_thumbnails.js
 const {chromium}=require('playwright');
 const T=[
+ {f:'og-did-the-money-buy-points.png',bg:'#0f2a1f',ink:'#fff',acc:'#3fcf86',sub:'#b9cfc3',kick:'BUNDESLIGA 2026/27 · SUMMER SPENDING VS POINTS AFTER 9 GAMES',t:'DID THE MONEY<br><span>BUY POINTS?</span>',
+  body:`<div class="stats"><div><em>€782m</em><small>spent this summer</small></div><div><em class="a">€0.49m</em><small>Werder, per point</small></div><div><em style="color:#f07a5f">€9.81m</em><small>Leverkusen, per point</small></div></div>`},
  {f:'og-is-frankfurt-in-crisis.png',bg:'#e1000f',ink:'#fff',acc:'#111111',sub:'#ffe3e5',kick:'BUNDESLIGA 2026/27 · EINTRACHT FRANKFURT AFTER 9 GAMES',t:'IS FRANKFURT<br><span>IN CRISIS?</span>',
   body:`<div class="stats"><div><em>12</em><small>points after 9</small></div><div><em class="a">20</em><small>goals conceded, most since 2010</small></div><div><em>1 in 3</em><small>with this start still made top 6</small></div></div>`},
  {f:'og-when-a-player-collapses.png',bg:'#141a22',ink:'#fff',acc:'#f0595d',sub:'#b7c0cc',kick:'SUDDEN DEATH IN FOOTBALL · FIFA REGISTRY 2014–18',t:'WHEN A PLAYER<br><span>COLLAPSES</span>',
