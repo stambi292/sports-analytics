@@ -106,6 +106,17 @@ a { color: var(--green-ink); }
   .track { flex-wrap: wrap; row-gap: 2px; }
   .track .g { flex-basis: 100%; }
 }
+:root { --tool-acc: var(--green-ink); }
+.build { display: grid; gap: 16px; }
+.build .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.build .chip { font: 600 14px var(--font-body); padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); }
+.build .chip b { color: var(--tool-acc); font-weight: 700; }
+.build .steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; counter-reset: s; }
+.build .step { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--tool-acc); border-radius: 8px; padding: 12px 14px; min-width: 0; }
+.build .step h3 { font: 600 18px var(--font-display); margin: 0 0 4px; }
+.build .step h3::before { counter-increment: s; content: counter(s) ". "; color: var(--tool-acc); }
+.build .step p { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.45; }
+@media (max-width: 760px) { .build .steps { grid-template-columns: minmax(0, 1fr); } }
 </style>
 </head>
 <body>
@@ -187,6 +198,12 @@ a { color: var(--green-ink); }
     <div class="verdict" id="verdict"></div>
   </section>
 
+  <section class="build" id="how-it-was-built">
+    <h2>How it was built</h2>
+    <p class="intro">The tools and steps behind this page, from raw data to the published analysis.</p>
+    <div class="chips"><span class="chip"><b>Python</b> · pandas, json</span><span class="chip"><b>xG data</b> · Understat season totals</span><span class="chip"><b>Event data</b> · StatsBomb open data</span><span class="chip"><b>Statistics</b> · Poisson model, goals vs xG</span><span class="chip"><b>JavaScript</b> · SVG shot map and charts</span><span class="chip"><b>Playwright</b> · desktop and phone checks</span><span class="chip"><b>GitHub Pages</b> · hosting</span></div>
+    <div class="steps"><div class="step"><h3>Collect</h3><p>Season xG, shots and minutes from Understat; every shot from StatsBomb event files for 10 matches.</p></div><div class="step"><h3>Clean</h3><p>Parsed match events to rebuild his minutes from line-ups and substitutions, and mapped shot locations to the pitch.</p></div><div class="step"><h3>Analyse</h3><p>Goals minus xG per season, xG per 90, shots per 90 and xG per shot, in Germany and abroad.</p></div><div class="step"><h3>Model</h3><p>A Poisson model turns xG per 90 and finishing ratio into the chance he scores in a match.</p></div><div class="step"><h3>Visualise</h3><p>Interactive shot map with filters, season charts and a match calculator.</p></div></div>
+  </section>
   <section>
     <h2>Method and sources</h2>
     <ul class="method">

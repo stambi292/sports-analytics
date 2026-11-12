@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Where Did Germany's Talent Go?</title>
+<meta name="description" content="Germany's golden era against today: World Cup results since 1990, the pipeline of young talent in Europe's top five leagues since 2014, which positions dried up, and five fixes with targets you can measure.">
+<meta name="author" content="Stephen tAMBI">
+<meta property="og:title" content="Where did Germany's talent go?">
+<meta property="og:description" content="Germany had 26 future stars aged 21 or under in 2017/18. Four years later: 7. France had 24, England 25. Where the pipeline broke, and how to fix it with data.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stambi292.github.io/sports-analytics/football/where-did-germanys-talent-go/">
+<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-where-did-germanys-talent-go.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: black masthead with a black-red-gold stripe, headline numbers, World Cup timeline, the young-talent pipeline, the elite pool, position gaps, playing time, Spain's model, five fixes, method. */
+:root {
+  --bg: #f6f5f1; --panel: #ffffff; --ink: #141414; --ink-2: #484848; --muted: #767676; --line: #e3e1db; --grid: #ecebe6;
+  --ger: #d4a106; --ger-ink: #8a6a00; --red: #dd0000; --esp: #c8102e; --fra: #2a5caa; --eng: #8c8c8c;
+  --mast: #111111; --on-mast: #ffffff; --on-mast-2: #c9c9c9; --soft: #fbf3d9;
+  --font-display: "Oswald", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111110; --panel: #1b1b19; --ink: #f1efe9; --ink-2: #c4c2bc; --muted: #8e8c86; --line: #2c2c29; --grid: #242421;
+  --ger: #f2c230; --ger-ink: #f2c230; --red: #ff4d4d; --esp: #ff5a6e; --fra: #6f9be6; --eng: #a8a8a8; --mast: #0a0a0a; --soft: #2b2510; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #111110; --panel: #1b1b19; --ink: #f1efe9; --ink-2: #c4c2bc; --muted: #8e8c86; --line: #2c2c29; --grid: #242421;
+  --ger: #f2c230; --ger-ink: #f2c230; --red: #ff4d4d; --esp: #ff5a6e; --fra: #6f9be6; --eng: #a8a8a8; --mast: #0a0a0a; --soft: #2b2510; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
+.inner { max-width: 1000px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+.mast { background: var(--mast); color: var(--on-mast); position: relative; }
+.mast::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 10px; background: linear-gradient(90deg, #000 0 33.3%, #dd0000 33.3% 66.6%, #ffce00 66.6%); }
+.mast .inner { padding-block: 22px 70px; display: grid; gap: 14px; }
+.back { color: var(--on-mast-2); text-decoration: none; font-weight: 600; font-size: 15px; }
+.eyebrow { font: 700 13px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: #ffce00; margin-top: 18px; }
+h1 { font: 700 clamp(44px, 8.5vw, 88px)/1 var(--font-display); text-transform: uppercase; margin: 0; max-width: 15ch; }
+.lede { margin: 4px 0 0; max-width: 64ch; color: var(--on-mast-2); font-size: 19px; }
+.byline { font-size: 14px; color: var(--on-mast-2); }
+h2 { font: 600 32px/1.1 var(--font-display); margin: 0 0 8px; text-wrap: balance; }
+.intro { margin: 0 0 18px; color: var(--ink-2); max-width: 68ch; }
+section { padding-block: 44px 4px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: -34px; position: relative; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--ger); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+.kpi b { display: block; font: 700 34px/1.05 var(--font-display); font-variant-numeric: tabular-nums; }
+.kpi span { color: var(--ink-2); font-size: 15px; line-height: 1.4; display: block; margin-top: 4px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: grid; gap: 16px; min-width: 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; color: var(--ink-2); align-items: center; }
+.legend i { display: inline-block; width: 14px; height: 4px; border-radius: 2px; vertical-align: 4px; margin-right: 6px; }
+.note { font-size: 14px; color: var(--muted); margin: 0; }
+svg text { font-family: var(--font-body); }
+.ctrls { display: flex; flex-wrap: wrap; gap: 8px; }
+.ctrls button { font: 600 14px var(--font-body); padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.ctrls button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+button:focus-visible { outline: 2px solid var(--ger); outline-offset: 2px; }
+.chartwrap { overflow-x: auto; }
+.tl { display: grid; grid-template-columns: repeat(10, minmax(64px, 1fr)); gap: 8px; min-width: 680px; align-items: end; }
+.tl .col { display: grid; gap: 6px; text-align: center; }
+.tl .bar { border-radius: 6px 6px 0 0; background: var(--grid); position: relative; }
+.tl .bar.g { background: var(--ger); } .tl .bar.w { background: var(--ink); }
+.tl .yr { font: 700 18px var(--font-display); }
+.tl .st { font-size: 12px; color: var(--ink-2); line-height: 1.25; min-height: 30px; }
+.tl .sm { font-size: 12px; color: var(--muted); line-height: 1.3; }
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.mini h3 { font: 600 20px var(--font-display); margin: 0 0 4px; }
+.mini p { margin: 0 0 6px; color: var(--ink-2); font-size: 15px; }
+.posgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.pos { border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: grid; gap: 6px; }
+.pos h4 { margin: 0; font: 600 18px var(--font-display); }
+.pos .pair { display: grid; grid-template-columns: 70px minmax(0, 1fr) 30px; gap: 8px; align-items: center; font-size: 13px; }
+.pos .pair span.b { height: 14px; border-radius: 0 3px 3px 0; display: block; }
+.pos .pair b { font: 700 16px var(--font-display); text-align: right; }
+.fixes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.fix { border-top: 4px solid var(--ger); gap: 8px; }
+.fix .tag { font: 700 12px var(--font-body); letter-spacing: .1em; text-transform: uppercase; color: var(--ger-ink); }
+.fix h3 { font: 600 22px/1.15 var(--font-display); margin: 0; }
+.fix p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.fix .target { background: var(--soft); border-radius: 6px; padding: 8px 10px; font-size: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+th { color: var(--muted); font-weight: 600; }
+.method { font-size: 15px; color: var(--ink-2); }
+.method li { margin-bottom: 6px; }
+footer { padding-block: 40px 60px; color: var(--muted); font-size: 14px; }
+#tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--bg); font-size: 13px; padding: 6px 9px; border-radius: 6px; opacity: 0; transition: opacity .1s; z-index: 5; max-width: 240px; }
+@media (max-width: 760px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .split, .fixes { grid-template-columns: minmax(0, 1fr); }
+  .posgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+:root { --tool-acc: var(--ger-ink); }
+.build { display: grid; gap: 16px; }
+.build .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.build .chip { font: 600 14px var(--font-body); padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); }
+.build .chip b { color: var(--tool-acc); font-weight: 700; }
+.build .steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; counter-reset: s; }
+.build .step { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--tool-acc); border-radius: 8px; padding: 12px 14px; min-width: 0; }
+.build .step h3 { font: 600 18px var(--font-display); margin: 0 0 4px; }
+.build .step h3::before { counter-increment: s; content: counter(s) ". "; color: var(--tool-acc); }
+.build .step p { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.45; }
+@media (max-width: 760px) { .build .steps { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+<header class="mast"><div class="inner">
+  <a class="back" href="../../">← Sports analytics</a>
+  <p class="eyebrow">Germany · golden era vs today</p>
+  <h1>Where did Germany's talent go?</h1>
+  <p class="lede">From 2006 to 2014 Germany reached three World Cup semi-finals and won the 2014 World Cup with a young squad built at home. Since then: two group-stage exits and a last-32 defeat to Paraguay. Ten years of player data show where the pipeline broke, and what would fix it.</p>
+  <p class="byline">By Stephen tAMBI · World Cups 1990–2026 · player ratings 2014/15–2023/24</p>
+</div></header>
+
+<main class="inner">
+  <div class="kpis" id="kpis"></div>
+
+  <section>
+    <h2>Then and now: Germany at the World Cup</h2>
+    <p class="intro">Bar height is how far Germany went. The golden era (2006–2014) was built on young players: up to 9 players aged 23 or under in the squad. The last three squads were older and went out early.</p>
+    <div class="card">
+      <div class="chartwrap"><div class="tl" id="tl"></div></div>
+      <p class="note">Source: Fjelstul World Cup Database (1990–2022); 2026 results and squad from match reports. "U23" = players aged 23 or under at the tournament.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>The pipeline broke after 2018</h2>
+    <p class="intro">Young players aged 21 or under in Europe's top five leagues with a potential rating of 83 or more: the future stars. Germany peaked at 26 in 2017/18, the year after the Confederations Cup and U21 Euro wins, then fell to 7. Switch countries to compare.</p>
+    <div class="card">
+      <div class="ctrls" id="ctrlYoung"></div>
+      <div class="chartwrap" id="young"></div>
+      <div class="legend" id="legYoung"></div>
+      <p class="note">Ratings from the FIFA / EA FC games (FIFA 15–22, FC 24); 2022/23 is missing. Game ratings are not truth, but they are judged the same way every year, which makes trends comparable.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Fewer world-class players than in 2018</h2>
+    <p class="intro">Players rated 80 or more in the top five leagues. Germany fell from 46 to 33. Spain has about twice as many every year.</p>
+    <div class="card">
+      <div class="ctrls" id="ctrlElite"></div>
+      <div class="chartwrap" id="elite"></div>
+      <div class="legend" id="legElite"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The missing positions: strikers and full-backs</h2>
+    <p class="intro">Players rated 80+ by position, Germany against Spain, averaged over all nine seasons. Germany produces midfielders and attacking players like Musiala and Wirtz. It barely produces full-backs and strikers. That is why a 33-year-old Füllkrug is still the answer up front.</p>
+    <div class="card">
+      <div class="posgrid" id="pos"></div>
+      <p class="note">Average number of players per season, 2014/15–2023/24. Position = first listed position in the game.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Young Germans play less in their own league</h2>
+    <p class="intro">Two measures of opportunity: the share of first-choice starters who are local, and how many local players aged 21 or under start for each club. In 2014/15 a Bundesliga club started almost one young German on average; since 2019 it has been closer to one in every two or three clubs. France gives its youngsters about one starting place per club every season.</p>
+    <div class="split">
+      <div class="card mini"><h3>Local share of starters</h3><p>Bundesliga starters who are German, against the other leagues' local share.</p><div id="startShare"></div></div>
+      <div class="card mini"><h3>Local U21 starters per club</h3><p>First-choice starters aged 21 or under from the league's own country.</p><div id="u21"></div></div>
+    </div>
+    <p class="note" style="margin-top:10px">"Starter" = listed in the first eleven of the club line-up in the game's database, a proxy for regular minutes.</p>
+  </section>
+
+  <section>
+    <h2>What Spain does differently</h2>
+    <p class="intro">Spain did not win by having more teenagers on the pitch: its clubs start young locals no more often than Bundesliga clubs. The difference is depth and trust in its own players. On average 58% of LaLiga starters are Spanish, against 43% Germans in the Bundesliga, and Spain produces world-class players in every position, including about 10 full-backs a season against Germany's 0 to 4. Spain then won Euro 2024 and the 2026 World Cup.</p>
+  </section>
+
+  <section>
+    <h2>Six fixes, each with a number to track</h2>
+    <p class="intro">Data cannot coach a player, but it can show where to invest and whether it works. Each fix comes with a target taken from Germany's own best years, so progress can be measured every season.</p>
+    <div class="fixes" id="fixes"></div>
+  </section>
+
+  <section class="build" id="how-it-was-built">
+    <h2>How it was built</h2>
+    <p class="intro">The tools and steps behind this page, from raw data to the published analysis.</p>
+    <div class="chips"><span class="chip"><b>Python</b> · pandas, NumPy</span><span class="chip"><b>Parquet</b> · PyArrow</span><span class="chip"><b>Git</b> · sparse clones of open-data repos</span><span class="chip"><b>Data</b> · 144,882 player ratings, 1,000+ World Cup squad rows</span><span class="chip"><b>JavaScript</b> · hand-built SVG charts</span><span class="chip"><b>Playwright</b> · desktop and phone checks</span><span class="chip"><b>GitHub Pages</b> · hosting</span></div>
+    <div class="steps"><div class="step"><h3>Collect</h3><p>Pulled 9 seasons of FIFA / EA FC ratings and the World Cup database from public GitHub repos, only the files needed.</p></div><div class="step"><h3>Clean</h3><p>Matched league names across game versions, kept the top five leagues and grouped 15 positions into 6.</p></div><div class="step"><h3>Analyse</h3><p>Counted future stars, world-class players and local starters by nation, position and season with pandas.</p></div><div class="step"><h3>Visualise</h3><p>Interactive line charts with country toggles, a World Cup timeline and position comparisons, all in plain JavaScript and SVG.</p></div><div class="step"><h3>Recommend</h3><p>Turned each finding into a fix with a measurable target from Germany's own best years.</p></div></div>
+  </section>
+  <section>
+    <h2>Method and sources</h2>
+    <ul class="method">
+      <li><b>World Cups 1990–2022:</b> squads, birth dates, results and goals from the Fjelstul World Cup Database (github.com/jfjelstul/worldcup). <b>2026:</b> results (7–1 Curaçao, 2–1 Ivory Coast, 1–2 Ecuador, 1–1 Paraguay, lost on penalties) and squad ages from match reports and squad lists.</li>
+      <li><b>Player ratings:</b> FIFA 15–22 (sofifa data, via github.com/eddwebster/football_analytics) and EA FC 24 squads (github.com/fpessolano/FantasyFootball). Top divisions of England, Spain, Germany, Italy and France only. FIFA 23 (2022/23) was not available.</li>
+      <li><b>Definitions:</b> "future star" = aged 21 or under with potential 83+; "world-class" = overall 80+; nationality as listed in the game.</li>
+      <li><b>Limits:</b> game ratings are a proxy, not scouting reports, and the starter flag is not real minutes. Real minutes by nationality and age (from the league's own data) would make every chart here sharper.</li>
+    </ul>
+  </section>
+</main>
+<footer class="inner">Stephen tAMBI · Sports analytics</footer>
+<div id="tip" role="status"></div>
+
+<script>
+const D = /*__DATA__*/null;
+const $ = id => document.getElementById(id);
+const COL = {Germany:'var(--ger)', Spain:'var(--esp)', France:'var(--fra)', England:'var(--eng)'};
+const tip = $('tip');
+function showTip(e, html){ tip.innerHTML = html; tip.style.opacity = 1; const x = Math.min(e.clientX + 12, innerWidth - 250); tip.style.left = x + 'px'; tip.style.top = (e.clientY + 12) + 'px'; }
+function hideTip(){ tip.style.opacity = 0; }
+const G = D.young.Germany, S = D.seasons;
+const peak = Math.max(...G), low = Math.min(...G.slice(G.indexOf(peak)));
+
+$('kpis').innerHTML = [
+  ['3 → 0', 'World Cup semi-finals: three in 2006–2014, none since'],
+  [`${peak} → ${low}`, `German future stars (21 or under, potential 83+): ${S[G.indexOf(peak)]} vs ${S[G.indexOf(peak)+G.slice(G.indexOf(peak)).indexOf(low)]}`],
+  [`${D.elitePos.Germany.FB.reduce((a,b)=>a+b,0)} vs ${D.elitePos.Spain.FB.reduce((a,b)=>a+b,0)}`, 'world-class full-backs (80+), Germany vs Spain, summed over 9 seasons'],
+  [`${D.league.BL.u21LocalStartersPerClub[0]} → ${D.league.BL.u21LocalStartersPerClub.at(-1)}`, 'young German starters per Bundesliga club, 2014/15 vs 2023/24'],
+].map(([b,s]) => `<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
+
+// World Cup timeline
+(function(){
+  const rows = D.wcGer, H = 150;
+  $('tl').innerHTML = rows.map(r => {
+    const h = Math.round(r.rank / 6 * H), gold = r.yr >= 2006 && r.yr <= 2014;
+    return `<div class="col"><div style="height:${H}px;display:flex;align-items:flex-end"><div class="bar ${r.stage==='Winner'?'w':(gold?'g':'')}" style="height:${h}px;width:100%" title="${r.yr}: ${r.stage}"></div></div>
+      <div class="yr">${r.yr}</div><div class="st">${r.stage}</div><div class="sm">${r.gf}–${r.ga} goals<br>age ${r.age}<br>${r.u23} U23</div></div>`; }).join('');
+})();
+
+// Line chart with country toggles
+function lineChart(el, ctrl, leg, series, unit){
+  let on = new Set(['Germany','Spain','France','England']);
+  const W = 860, H = 300, L = 40, R = 90, T = 16, B = 34;
+  function draw(){
+    const max = Math.ceil(Math.max(...Object.values(series).flat()) / 10) * 10;
+    const x = i => L + (W - L - R) * i / (S.length - 1), y = v => T + (H - T - B) * (1 - v / max);
+    let g = '';
+    for (let t = 0; t <= max; t += max / 5) g += `<line x1="${L}" x2="${W-R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--grid)"/><text x="${L-8}" y="${y(t)+4}" text-anchor="end" font-size="12" fill="var(--muted)">${t}</text>`;
+    S.forEach((s,i) => g += `<text x="${x(i)}" y="${H-10}" text-anchor="middle" font-size="12" fill="var(--muted)">${s.replace('20','').replace('/',"/")}</text>`);
+    Object.entries(series).forEach(([n, v]) => {
+      if (!on.has(n)) return;
+      const ger = n === 'Germany';
+      g += `<polyline points="${v.map((d,i)=>`${x(i)},${y(d)}`).join(' ')}" fill="none" stroke="${COL[n]}" stroke-width="${ger?4:2}" stroke-linejoin="round" stroke-linecap="round"/>`;
+      v.forEach((d,i) => g += `<circle cx="${x(i)}" cy="${y(d)}" r="${ger?5:4}" fill="${COL[n]}" stroke="var(--panel)" stroke-width="2"/><circle data-n="${n}" data-i="${i}" cx="${x(i)}" cy="${y(d)}" r="14" fill="transparent"/>`);
+    });
+    const ends = Object.entries(series).filter(([n]) => on.has(n)).map(([n,v]) => [n, v.at(-1)]).sort((a,b) => b[1]-a[1]);
+    let lastY = -99; ends.forEach(([n,v]) => { let yy = y(v) + 4; if (yy - lastY < 16) yy = lastY + 16; lastY = yy;
+      g += `<text x="${x(S.length-1)+10}" y="${yy}" font-size="13" font-weight="700" fill="var(--ink)">${n} ${v}</text>`; });
+    el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="min-width:600px;width:100%" role="img" aria-label="${unit} by season">${g}</svg>`;
+    el.querySelectorAll('circle[data-n]').forEach(c => { c.addEventListener('mousemove', e => showTip(e, `<b>${c.dataset.n}</b>, ${S[+c.dataset.i]}: ${series[c.dataset.n][+c.dataset.i]} ${unit}`)); c.addEventListener('mouseleave', hideTip); });
+  }
+  ctrl.innerHTML = Object.keys(series).map(n => `<button type="button" aria-pressed="true" data-n="${n}">${n}</button>`).join('');
+  ctrl.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    const n = b.dataset.n; if (n === 'Germany') return;
+    on.has(n) ? on.delete(n) : on.add(n); b.setAttribute('aria-pressed', on.has(n)); draw(); }));
+  leg.innerHTML = Object.keys(series).map(n => `<span><i style="background:${COL[n]}"></i>${n}</span>`).join('') + '<span>Germany always shown</span>';
+  draw();
+}
+lineChart($('young'), $('ctrlYoung'), $('legYoung'), D.young, 'future stars');
+lineChart($('elite'), $('ctrlElite'), $('legElite'), D.elite, 'players rated 80+');
+
+// Positions
+(function(){
+  const names = {GK:'Goalkeepers', CB:'Centre-backs', FB:'Full-backs', CM:'Central midfield', 'AM/W':'Attacking mid & wingers', ST:'Strikers'};
+  const avg = a => a.reduce((x,y)=>x+y,0) / a.length;
+  const max = Math.max(...Object.keys(names).flatMap(p => [avg(D.elitePos.Germany[p]), avg(D.elitePos.Spain[p])]));
+  $('pos').innerHTML = Object.entries(names).map(([p, nm]) => {
+    const g = avg(D.elitePos.Germany[p]), s = avg(D.elitePos.Spain[p]);
+    return `<div class="pos"><h4>${nm}</h4>
+      <div class="pair"><span>Germany</span><span class="b" style="width:${Math.max(3,g/max*100)}%;background:var(--ger)"></span><b>${g.toFixed(1)}</b></div>
+      <div class="pair"><span>Spain</span><span class="b" style="width:${Math.max(3,s/max*100)}%;background:var(--esp)"></span><b>${s.toFixed(1)}</b></div></div>`; }).join('');
+})();
+
+// League opportunity small multiples
+function smallLines(el, key, fmt, maxV){
+  const W = 420, H = 210, L = 34, R = 70, T = 12, B = 26, order = ['BL','L1','LaLiga','EPL'];
+  const lab = {BL:'Bundesliga', LaLiga:'LaLiga', L1:'Ligue 1', EPL:'Premier League'}, col = {BL:'var(--ger)', LaLiga:'var(--esp)', L1:'var(--fra)', EPL:'var(--eng)'};
+  const x = i => L + (W - L - R) * i / (S.length - 1), y = v => T + (H - T - B) * (1 - v / maxV);
+  let g = '';
+  for (let t = 0; t <= maxV; t += maxV / 4) g += `<line x1="${L}" x2="${W-R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--grid)"/><text x="${L-6}" y="${y(t)+4}" text-anchor="end" font-size="11" fill="var(--muted)">${fmt(t)}</text>`;
+  [0, S.length-1].forEach(i => g += `<text x="${x(i)}" y="${H-6}" text-anchor="middle" font-size="11" fill="var(--muted)">${S[i]}</text>`);
+  const ends = order.map(l => [l, D.league[l][key].at(-1)]).sort((a,b) => b[1]-a[1]); let lastY = -99; const ly = {};
+  ends.forEach(([l,v]) => { let yy = y(v) + 4; if (yy - lastY < 14) yy = lastY + 14; ly[l] = yy; lastY = yy; });
+  order.forEach(l => { const v = D.league[l][key], bl = l === 'BL';
+    g += `<polyline points="${v.map((d,i)=>`${x(i)},${y(d)}`).join(' ')}" fill="none" stroke="${col[l]}" stroke-width="${bl?3.5:2}" stroke-linejoin="round"/>`;
+    v.forEach((d,i) => g += `<circle data-l="${l}" data-i="${i}" cx="${x(i)}" cy="${y(d)}" r="10" fill="transparent"/>`);
+    g += `<text x="${W-R+6}" y="${ly[l]}" font-size="11" font-weight="${bl?700:500}" fill="var(--ink)">${lab[l]}</text>`; });
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img">${g}</svg>`;
+  el.querySelectorAll('circle[data-l]').forEach(c => { c.addEventListener('mousemove', e => showTip(e, `<b>${lab[c.dataset.l]}</b>, ${S[+c.dataset.i]}: ${fmt(D.league[c.dataset.l][key][+c.dataset.i])}`)); c.addEventListener('mouseleave', hideTip); });
+}
+smallLines($('startShare'), 'startersLocal', v => Math.round(v) + '%', 80);
+smallLines($('u21'), 'u21LocalStartersPerClub', v => (+v).toFixed(1), 1.2);
+
+// Fixes
+const ys = D.young.Germany, fb = D.elitePos.Germany.FB, st = D.elitePos.Germany.ST;
+$('fixes').innerHTML = [
+  ['Pipeline', 'Track the pipeline like a league table', `Publish a yearly count of German future stars, by position. Germany had ${Math.max(...ys)} in ${S[ys.indexOf(Math.max(...ys))]} and ${ys.at(-1)} in ${S.at(-1)}. What is not measured is not managed.`, `Target: back to 20+ future stars a year, the 2016–18 level.`],
+  ['Positions', 'Build strikers and full-backs on purpose', `Germany averaged ${(st.reduce((a,b)=>a+b,0)/st.length).toFixed(1)} world-class strikers and ${(fb.reduce((a,b)=>a+b,0)/fb.length).toFixed(1)} full-backs a season; Spain ${(D.elitePos.Spain.ST.reduce((a,b)=>a+b,0)/9).toFixed(1)} and ${(D.elitePos.Spain.FB.reduce((a,b)=>a+b,0)/9).toFixed(1)}. Academies should set position quotas and specialist coaches, as the 2000s reform did for technical midfielders.`, 'Target: 5+ world-class strikers and 5+ full-backs a season.'],
+  ['Minutes', 'Reward clubs that start young Germans', `A young German started for ${D.league.BL.u21LocalStartersPerClub[0]} per club in 2014/15, ${D.league.BL.u21LocalStartersPerClub.at(-1)} in 2023/24. France keeps it near 1. Tie part of the TV money to minutes played by German U21 players, and use the new U21 competition and 2. Bundesliga loans as a bridge.`, 'Target: 1 young German starter per Bundesliga club.'],
+  ['Trust', 'Raise the share of German starters', `${D.league.BL.startersLocal.at(-1)}% of Bundesliga starters are German, against ${D.league.LaLiga.startersLocal.at(-1)}% Spaniards in LaLiga. Cheap foreign signings for resale crowd out local players with higher long-term value to the league.`, 'Target: 50% German starters, the 2014/15 level.'],
+  ['One style', 'Copy Spain: one playing model from U15 to the senior team', 'Spain\'s youth teams, clubs and coaches share one way of playing, so young players fit straight in. The DFB can define a shared model and measure each age group against it with the same match data.', 'Target: youth team results and senior call-ups from the same age groups, tracked each year.'],
+  ['Infrastructure', 'Cut the wait for facilities', 'Leverkusen waited almost a decade for approval of a new training centre. Faster planning for academies is a policy fix, not a football one, and it compounds over a generation.', 'Target: approvals in under two years.'],
+].map(([t,h,p,tg]) => `<div class="card fix"><span class="tag">${t}</span><h3>${h}</h3><p>${p}</p><div class="target">${tg}</div></div>`).join('');
+</script>
+</body>
+</html>
