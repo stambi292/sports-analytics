@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Poacher</title>
+<meta name="description" content="Niclas Füllkrug has 9 Bundesliga goals in 8 games for Werder Bremen. Is it his peak or a fluke? Goals against expected goals for every season since 2017, his shot map, and how he compares with Germany's other strikers.">
+<meta name="author" content="Stephen tAMBI">
+<meta property="og:title" content="The Poacher: is Füllkrug's form real?">
+<meta property="og:description" content="9 goals in 8 games, the best scoring rate of his career. In Germany he has always beaten his expected goals; abroad he got fewer chances and missed them.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stambi292.github.io/sports-analytics/football/the-poacher/">
+<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-the-poacher.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Werder-green masthead, headline numbers, career rate, goals vs xG by season, why abroad failed, shot map, German strikers, match calculator, verdict, method. */
+:root {
+  --bg: #f4f7f5; --panel: #ffffff; --ink: #0f1f17; --ink-2: #3f5248; --muted: #6b7d73; --line: #dfe7e2; --grid: #e9efeb;
+  --green: #1d9053; --green-ink: #13703f; --green-soft: #dff1e6; --deep: #0b3d22; --mast: #1d9053; --on-mast: #ffffff; --on-mast-2: #d7f5e3;
+  --abroad: #b9c2bd; --miss: #9aa7a0; --warn: #c25b2b;
+  --font-display: "Oswald", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0d1511; --panel: #15201a; --ink: #eef4f0; --ink-2: #bfcdc5; --muted: #8a9a91; --line: #263229; --grid: #1e2a23;
+  --green: #36b26e; --green-ink: #5fd08f; --green-soft: #173323; --deep: #9be3b9; --mast: #0f5a32; --on-mast-2: #bfe9cf;
+  --abroad: #4a5650; --miss: #66756d; --warn: #f08a57; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0d1511; --panel: #15201a; --ink: #eef4f0; --ink-2: #bfcdc5; --muted: #8a9a91; --line: #263229; --grid: #1e2a23;
+  --green: #36b26e; --green-ink: #5fd08f; --green-soft: #173323; --deep: #9be3b9; --mast: #0f5a32; --on-mast-2: #bfe9cf;
+  --abroad: #4a5650; --miss: #66756d; --warn: #f08a57; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
+.inner { max-width: 1000px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+.mast { background: var(--mast); color: var(--on-mast); border-left: 10px solid #ffffff; }
+.mast .inner { padding-block: 22px 64px; display: grid; gap: 14px; }
+.back { color: var(--on-mast-2); text-decoration: none; font-weight: 600; font-size: 15px; }
+.eyebrow { font: 700 13px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--on-mast-2); margin-top: 18px; }
+h1 { font: 700 clamp(46px, 9vw, 92px)/1 var(--font-display); text-transform: uppercase; margin: 0; }
+h1 span { display: block; font-size: .42em; line-height: 1.15; margin-top: 10px; letter-spacing: .01em; color: var(--on-mast-2); }
+.lede { margin: 4px 0 0; max-width: 64ch; color: var(--on-mast-2); font-size: 19px; }
+.byline { font-size: 14px; color: var(--on-mast-2); }
+h2 { font: 600 32px/1.1 var(--font-display); margin: 0 0 8px; text-wrap: balance; }
+.intro { margin: 0 0 18px; color: var(--ink-2); max-width: 68ch; }
+section { padding-block: 44px 4px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: -34px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--green); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+.kpi b { display: block; font: 700 34px/1.05 var(--font-display); font-variant-numeric: tabular-nums; }
+.kpi span { color: var(--ink-2); font-size: 15px; line-height: 1.4; display: block; margin-top: 4px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: grid; gap: 16px; min-width: 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; color: var(--ink-2); align-items: center; }
+.legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; margin-right: 6px; }
+.legend i.ring { background: transparent; border: 2px solid var(--ink-2); border-radius: 50%; }
+.legend i.dot { border-radius: 50%; }
+.note { font-size: 14px; color: var(--muted); margin: 0; }
+svg text { font-family: var(--font-body); }
+.rows { display: grid; gap: 12px; }
+.row { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 14px; align-items: center; }
+.row .lab { font-weight: 700; font-size: 15px; line-height: 1.25; }
+.row .lab small { display: block; font-weight: 500; color: var(--muted); font-size: 13px; }
+.track { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.bar { height: 30px; border-radius: 0 5px 5px 0; flex: none; }
+.v { font: 700 22px var(--font-display); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.g { font-size: 13px; color: var(--muted); line-height: 1.25; min-width: 0; }
+.de { background: var(--green); } .ab { background: var(--abroad); } .now { background: var(--deep); }
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.mini h3 { font: 600 20px var(--font-display); margin: 0 0 4px; }
+.mini p { margin: 0 0 10px; color: var(--ink-2); font-size: 15px; }
+.cmp { display: grid; gap: 8px; }
+.cmp div { display: grid; grid-template-columns: 92px minmax(0, 1fr) 54px; gap: 10px; align-items: center; font-size: 14px; }
+.cmp span.b { height: 22px; border-radius: 0 4px 4px 0; display: block; }
+.cmp b { font: 700 18px var(--font-display); text-align: right; font-variant-numeric: tabular-nums; }
+.ctrls { display: flex; flex-wrap: wrap; gap: 8px; }
+.ctrls button { font: 600 14px var(--font-body); padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.ctrls button[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: #fff; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+.pitchwrap { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.facts { display: grid; gap: 10px; }
+.fact { border-left: 4px solid var(--green); padding: 2px 0 2px 12px; }
+.fact b { font: 700 26px var(--font-display); display: block; line-height: 1.1; }
+.fact span { color: var(--ink-2); font-size: 15px; }
+#tip { min-height: 48px; font-size: 14px; color: var(--ink-2); background: var(--bg); border-radius: 6px; padding: 8px 10px; }
+.calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; align-items: center; }
+.calc label { font-weight: 700; font-size: 15px; display: grid; gap: 6px; }
+.calc input[type=range] { width: 100%; accent-color: var(--green); }
+.calc select { font: 600 15px var(--font-body); padding: 7px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+.out { background: var(--green-soft); border-radius: 10px; padding: 18px; display: grid; gap: 6px; }
+.out b { font: 700 54px/1 var(--font-display); color: var(--green-ink); }
+.out span { color: var(--ink-2); font-size: 15px; }
+.verdict { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.verdict .card { gap: 8px; border-top: 4px solid var(--green); }
+.verdict .tag { font: 700 12px var(--font-body); letter-spacing: .1em; text-transform: uppercase; color: var(--green-ink); }
+.verdict h3 { font: 600 22px/1.15 var(--font-display); margin: 0; }
+.verdict p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.method { font-size: 15px; color: var(--ink-2); }
+.method li { margin-bottom: 6px; }
+footer { padding-block: 40px 60px; color: var(--muted); font-size: 14px; }
+a { color: var(--green-ink); }
+@media (max-width: 760px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .split, .pitchwrap, .calc, .verdict { grid-template-columns: minmax(0, 1fr); }
+  .row { grid-template-columns: 110px minmax(0, 1fr); }
+  .track { flex-wrap: wrap; row-gap: 2px; }
+  .track .g { flex-basis: 100%; }
+}
+</style>
+</head>
+<body>
+<header class="mast"><div class="inner">
+  <a class="back" href="../../">← Sports analytics</a>
+  <p class="eyebrow">Bundesliga 2026/27 · Werder Bremen · Germany</p>
+  <h1>The Poacher<span>Is Füllkrug's form real, or a fluke?</span></h1>
+  <p class="lede">Germany have scored 3 goals in 4 Nations League games. Niclas Füllkrug has 9 in 8 for Werder, at 33, after two lost years in London and Milan. Ten seasons of goals, expected goals and shots show what is skill, what is luck, and what to expect next.</p>
+  <p class="byline">By Stephen tAMBI · Data to ~10 November 2026</p>
+</div></header>
+
+<main class="inner">
+  <div class="kpis" id="kpis"></div>
+
+  <section>
+    <h2>The best scoring rate of his career</h2>
+    <p class="intro">League goals per game at every club. In Germany he has always scored; abroad he did not. This season he is scoring at more than twice his old best.</p>
+    <div class="card">
+      <div class="legend"><span><i class="de"></i>Germany</span><span><i class="ab"></i>Abroad</span><span><i class="now"></i>2026/27</span></div>
+      <div class="rows" id="clubs"></div>
+      <p class="note">League games only. Source: Wikipedia (career), VAVEL (2026/27).</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Goals against expected goals, season by season</h2>
+    <p class="intro">Expected goals (xG) measures the quality of each chance: how often an average player would score it. A striker who scores more than his xG is finishing better than average.</p>
+    <div class="card">
+      <div class="legend"><span><i style="background:var(--green)"></i>Goals</span><span><i style="background:var(--abroad)"></i>Expected goals (xG)</span></div>
+      <div id="seasons" style="overflow-x:auto"></div>
+      <p class="note" id="seasonsNote"></p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why abroad went wrong: fewer chances, then bad luck</h2>
+    <p class="intro">Two things broke at West Ham and Milan. He got fewer shots per game, and in 2025/26 he missed chances worth more than four goals.</p>
+    <div class="split" id="abroad"></div>
+  </section>
+
+  <section>
+    <h2>Where the goals come from</h2>
+    <p class="intro">Every shot he took for Germany at the 2022 World Cup and Euro 2024, and in two Dortmund–Leverkusen games, from StatsBomb's free event data. Bigger circles are better chances. Tap a shot for details.</p>
+    <div class="card">
+      <div class="ctrls" id="filters"></div>
+      <div class="pitchwrap">
+        <div><div id="pitch"></div><div id="tip">Tap or hover a shot.</div></div>
+        <div class="facts" id="facts"></div>
+      </div>
+      <div class="legend"><span><i class="dot" style="background:var(--green)"></i>Goal</span><span><i class="ring"></i>No goal</span><span>Circle size = xG</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Who should lead Germany's line?</h2>
+    <p class="intro">Expected goals per 90 minutes for Germany's main forwards in the 2025/26 Bundesliga (900+ minutes), against Füllkrug's Bundesliga career. More xG per 90 means a player gets into scoring positions more often.</p>
+    <div class="card">
+      <div class="rows" id="peers"></div>
+      <p class="note">Source: Understat via public snapshot. Füllkrug did not play in the Bundesliga in 2025/26, so his 2017–24 Bundesliga career is shown. xG here includes penalties.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>If he starts: what to expect from one game</h2>
+    <p class="intro">Pick his minutes and a version of Füllkrug. The chance he scores at least once comes from his expected goals per 90 and how well he finishes against them.</p>
+    <div class="card calc">
+      <div style="display:grid;gap:16px">
+        <label>Minutes on the pitch: <span id="minLab">90</span><input id="mins" type="range" min="10" max="90" step="5" value="90"></label>
+        <label>Which Füllkrug?
+          <select id="prof"></select>
+        </label>
+      </div>
+      <div class="out" aria-live="polite"><b id="pct">–</b><span id="pctTxt"></span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Verdict: peak, not fluke, but it will cool</h2>
+    <div class="verdict" id="verdict"></div>
+  </section>
+
+  <section>
+    <h2>Method and sources</h2>
+    <ul class="method">
+      <li><b>Season goals, xG, shots and minutes:</b> Understat, through the public striker-explorer snapshot on GitHub. Understat covers the top five leagues only, so 2014–17 (Nürnberg, 2. Bundesliga Hannover) and 2021/22 (Werder in 2. Bundesliga) are missing.</li>
+      <li><b>2026/27:</b> 9 goals in 656 minutes over 8 games (VAVEL, ~10 Nov 2026). No public xG yet, so the regression estimate uses his career chance rate.</li>
+      <li><b>Shot map:</b> StatsBomb open data, free for non-commercial use with credit to StatsBomb. 20 shots, 10 games, about 470 minutes.</li>
+      <li><b>Career goals per game:</b> Wikipedia, league games only.</li>
+      <li><b>Calculator:</b> goals in a game are treated as a Poisson count, so the chance of at least one goal is 1 − e<sup>−λ</sup>, where λ = xG per 90 × minutes ÷ 90 × finishing ratio (goals ÷ xG).</li>
+    </ul>
+  </section>
+</main>
+<footer class="inner">Stephen tAMBI · Sports analytics · Data, not opinion. Player photos are not used on this page.</footer>
+
+<script>
+const D = /*__DATA__*/null;
+const $ = id => document.getElementById(id);
+const f1 = x => x.toFixed(1), f2 = x => x.toFixed(2);
+
+// KPIs
+$('kpis').innerHTML = [
+  [`${D.now.goals} in ${D.now.games}`, `league goals for Werder this season, ${f2(D.now.g90)} per 90 minutes`],
+  [`${D.germany.goals} vs ${f1(D.germany.xg)}`, `Bundesliga goals vs expected goals, 2017–24: he finishes ${Math.round((D.germany.ratio-1)*100)}% above average`],
+  [`${D.abroad.goals} vs ${f1(D.abroad.xg)}`, `goals vs expected goals in England and Italy, 2024–26`],
+  [`${D.now.expected_at_career_rate}`, `goals he "should" have this season at his career chance rate, against ${D.now.goals} scored`],
+].map(([b,s]) => `<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
+
+// Club goals per game
+const maxC = Math.max(...D.clubs.map(c => c[2]/c[3]));
+$('clubs').innerHTML = D.clubs.map(([c,s,g,a,k]) => { const r = g/a;
+  return `<div class="row"><p class="lab">${c}<small>${s}</small></p><div class="track"><div class="bar ${k}" style="width:${Math.max(2, r/maxC*68)}%"></div><span class="v">${f2(r)}</span><span class="g">${g} in ${a}</span></div></div>`; }).join('');
+
+// Goals vs xG by season (grouped bars, SVG)
+(function(){
+  const S = D.seasons, W = 860, H = 300, L = 40, B = 56, T = 20;
+  const max = 18, cw = (W - L - 10) / S.length, bw = Math.min(26, cw/3);
+  const y = v => T + (H - T - B) * (1 - v/max);
+  let g = '';
+  for (let t = 0; t <= max; t += 3) g += `<line x1="${L}" x2="${W-10}" y1="${y(t)}" y2="${y(t)}" stroke="var(--grid)"/><text x="${L-8}" y="${y(t)+4}" text-anchor="end" font-size="12" fill="var(--muted)">${t}</text>`;
+  S.forEach((s,i) => {
+    const cx = L + cw*i + cw/2, gc = s.abroad ? 'var(--miss)' : 'var(--green)';
+    g += `<g><title>${s.season} ${s.team}: ${s.goals} goals from ${s.xg} xG in ${s.mins} minutes</title>
+      <rect x="${cx-bw-2}" y="${y(s.goals)}" width="${bw}" height="${y(0)-y(s.goals)}" rx="3" fill="${gc}"/>
+      <rect x="${cx+2}" y="${y(s.xg)}" width="${bw}" height="${y(0)-y(s.xg)}" rx="3" fill="var(--abroad)"/>
+      <text x="${cx-bw/2-2}" y="${y(s.goals)-5}" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">${s.goals}</text>
+      <text x="${cx+bw/2+2}" y="${y(s.xg)-5}" text-anchor="middle" font-size="11" fill="var(--muted)">${f1(s.xg)}</text>
+      <text x="${cx}" y="${H-B+18}" text-anchor="middle" font-size="12" font-weight="700" fill="var(--ink)">${s.season}</text>
+      <text x="${cx}" y="${H-B+34}" text-anchor="middle" font-size="11" fill="var(--muted)">${s.team.replace('AC Milan + West Ham','Milan + WHU').replace('Werder Bremen','Werder').replace('Hannover 96','Hannover')}</text>
+      <text x="${cx}" y="${H-B+50}" text-anchor="middle" font-size="11" font-weight="700" fill="${s.diff>=0?'var(--green-ink)':'var(--warn)'}">${s.diff>=0?'+':''}${f1(s.diff)}</text></g>`;
+  });
+  $('seasons').innerHTML = `<svg viewBox="0 0 ${W} ${H}" style="min-width:640px;width:100%" role="img" aria-label="Goals and expected goals by season">${g}</svg>`;
+  const pos = S.filter(s => !s.abroad && s.diff > 0).length, de = S.filter(s => !s.abroad).length;
+  $('seasonsNote').textContent = `The bottom number is goals minus xG. He beat his xG in ${pos} of ${de} Bundesliga seasons. Understat has no data for the 2. Bundesliga seasons or for 2026/27 yet.`;
+})();
+
+// Abroad: chances and finishing
+(function(){
+  const rows = D.seasons;
+  const mk = (title, text, key, fmt, max) => `<div class="card mini"><h3>${title}</h3><p>${text}</p><div class="cmp">${rows.map(s =>
+    `<div><span>${s.season}</span><span class="b" style="width:${Math.max(2, Math.abs(s[key])/max*100)}%;background:${key==='diff' ? (s[key]>=0?'var(--green)':'var(--warn)') : (s.abroad?'var(--abroad)':'var(--green)')}"></span><b>${fmt(s[key])}</b></div>`).join('')}</div></div>`;
+  $('abroad').innerHTML =
+    mk('Chances: xG per 90', `In Germany ${f2(D.germany.xg90)} per 90. Abroad ${f2(D.abroad.xg90)}: about ${Math.round((1-D.abroad.xg90/D.germany.xg90)*100)}% less, and only ${f2(D.abroad.sh90)} shots per 90 against ${f2(D.germany.sh90)}.`, 'xg90', f2, 0.6) +
+    mk('Finishing: goals minus xG', `Abroad the chances were just as good per shot (${f2(D.abroad.xgsh)} xG against ${f2(D.germany.xgsh)}), but in 2025/26 he scored 1 from 4.4 xG. That is the worst gap of his career.`, 'diff', x => (x>=0?'+':'')+f1(x), 3.6);
+})();
+
+// Shot map (StatsBomb 120x80 pitch, attacking right; draw final third)
+(function(){
+  const sh = D.shots, sx = 7.5, W = 56*sx, H = 25*sx;
+  const px = s => (s.y - 12) * sx, py = s => (120 - s.x) * sx + 6;
+  let mode = 'All';
+  function draw(){
+    let g = `<rect x="0" y="0" width="${W}" height="${H+12}" fill="var(--green-soft)" rx="6"/>`;
+    const line = 'stroke="var(--green)" stroke-width="2" fill="none" opacity=".55"';
+    g += `<line x1="0" y1="6" x2="${W}" y2="6" ${line}/>`;
+    g += `<rect x="${6*sx}" y="6" width="${44*sx}" height="${18*sx}" ${line}/>`;
+    g += `<rect x="${18*sx}" y="6" width="${20*sx}" height="${6*sx}" ${line}/>`;
+    g += `<circle cx="${28*sx}" cy="${12*sx+6}" r="2.5" fill="var(--green)" opacity=".6"/>`;
+    g += `<path d="M ${22*sx} ${18*sx+6} A ${10*sx} ${10*sx} 0 0 0 ${34*sx} ${18*sx+6}" ${line}/>`;
+    g += `<rect x="${24*sx}" y="0" width="${8*sx}" height="6" fill="var(--ink)" opacity=".5"/>`;
+    sh.map((s,i)=>[s,i]).sort((a,b)=>b[0].xg-a[0].xg).forEach(([s,i]) => {
+      const show = mode === 'All' || mode === s.body || (mode === 'Goals' && s.goal);
+      const r = 4 + Math.sqrt(s.xg) * 20;
+      g += `<circle data-i="${i}" cx="${px(s)}" cy="${py(s)}" r="${r}" tabindex="0" style="cursor:pointer;opacity:${show?1:.12}"
+        fill="${s.goal?'var(--green)':'transparent'}" stroke="${s.goal?'var(--deep)':'var(--ink-2)'}" stroke-width="2"><title>${s.game}, ${s.min}': ${s.out}</title></circle>`;
+    });
+    $('pitch').innerHTML = `<svg viewBox="0 0 ${W} ${H+12}" width="100%" role="img" aria-label="Shot map of Füllkrug's shots">${g}</svg>`;
+    $('pitch').querySelectorAll('circle[data-i]').forEach(c => {
+      const sel = () => { const s = sh[+c.dataset.i]; $('tip').innerHTML = `<b>${s.game}</b>, ${s.min}'. ${s.body === 'Head' ? 'Header' : 'Shot with the foot'}, xG ${f2(s.xg)}: <b>${s.goal ? 'Goal' : s.out.replace('Off T','Off target').replace('Wayward','Wide')}</b>`; };
+      c.addEventListener('mouseenter', sel); c.addEventListener('click', sel); c.addEventListener('focus', sel);
+    });
+  }
+  $('filters').innerHTML = ['All','Foot','Head','Goals'].map(m => `<button type="button" aria-pressed="${m==='All'}">${m === 'Head' ? 'Headers' : m}</button>`).join('');
+  $('filters').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    mode = {All:'All',Foot:'Foot',Headers:'Head',Goals:'Goals'}[b.textContent];
+    $('filters').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); draw(); }));
+  draw();
+  const B = D.sb;
+  $('facts').innerHTML = [
+    [`${B.inbox} of ${B.n}`, 'shots from inside the penalty area. He does not shoot from distance.'],
+    [`${B.goals} vs ${f2(B.xg)}`, `goals vs expected goals: ${B.goals - Math.round(B.xg)} more than an average finisher would score.`],
+    [`${B.g90}`, `goals per 90 in these ${B.games} games, mostly from the bench.`],
+    [`${B.heads} of ${B.n}`, `shots were headers, but only ${B.headGoals} went in. His feet do most of the scoring.`],
+  ].map(([b,s]) => `<div class="fact"><b>${b}</b><span>${s}</span></div>`).join('');
+})();
+
+// German forwards
+(function(){
+  const max = Math.max(...D.peers.map(p => p.xg90));
+  $('peers').innerHTML = D.peers.map(p => `<div class="row"><p class="lab">${p.name}<small>${p.team}</small></p><div class="track"><div class="bar" style="width:${p.xg90/max*68}%;background:${p.me?'var(--deep)':'var(--green)'}"></div><span class="v">${f2(p.xg90)}</span><span class="g">${p.goals} goals, ${f2(p.g90)} per 90</span></div></div>`).join('');
+})();
+
+// Calculator
+(function(){
+  const P = [
+    {k:'career', l:'Bundesliga career, 2017–24', xg90:D.germany.xg90, fin:D.germany.ratio},
+    {k:'best', l:'Best season, Werder 2022/23', xg90:D.seasons.find(s=>s.season==='2022/23').xg90, fin:+(16/13.4).toFixed(2)},
+    {k:'abroad', l:'Abroad, 2024–26', xg90:D.abroad.xg90, fin:D.abroad.ratio},
+    {k:'now', l:'2026/27 form (goals per 90)', xg90:D.now.g90, fin:1},
+  ];
+  $('prof').innerHTML = P.map((p,i) => `<option value="${i}">${p.l}</option>`).join('');
+  function run(){
+    const m = +$('mins').value, p = P[+$('prof').value]; $('minLab').textContent = m;
+    const lam = p.xg90 * m / 90 * p.fin, pr = 1 - Math.exp(-lam);
+    $('pct').textContent = Math.round(pr*100) + '%';
+    $('pctTxt').textContent = `chance he scores at least once in ${m} minutes (${f2(lam)} expected goals${p.k==='now' ? ', if his hot streak simply continued' : ''}).`;
+  }
+  $('mins').addEventListener('input', run); $('prof').addEventListener('change', run); run();
+})();
+
+// Verdict
+$('verdict').innerHTML = [
+  ['Not a fluke', 'He scores in Germany. Always has.', `${D.germany.goals} Bundesliga goals from ${f1(D.germany.xg)} xG since 2017, ahead of his chances in ${D.seasons.filter(s=>!s.abroad&&s.diff>0).length} of ${D.seasons.filter(s=>!s.abroad).length} seasons. The flop abroad was fewer chances plus one very unlucky year, not a lost ability.`],
+  ['Peak', 'The best scoring run of his career', `${f2(D.now.g90)} goals per 90 is more than double his best full season (${f2(D.seasons.find(s=>s.season==='2022/23').g90)} in 2022/23). Back at Werder, this is his peak.`],
+  ['Will cool', 'Expect about one goal every two games', `At his career chance rate he "should" have about ${D.now.expected_at_career_rate} goals, not ${D.now.goals}. Even if the rate drops back to ${f2(D.germany.g90)} per 90, that is still among the best German strikers.`],
+].map(([t,h,p]) => `<div class="card"><span class="tag">${t}</span><h3>${h}</h3><p>${p}</p></div>`).join('');
+</script>
+</body>
+</html>

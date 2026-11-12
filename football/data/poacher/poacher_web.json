@@ -1,0 +1,477 @@
+{
+ "seasons": [
+  {
+   "season": "2017/18",
+   "team": "Hannover 96",
+   "league": "Bundesliga",
+   "abroad": false,
+   "mins": 2387,
+   "goals": 14,
+   "xg": 11.4,
+   "shots": 87,
+   "npg": 11,
+   "xg90": 0.43,
+   "g90": 0.53,
+   "sh90": 3.28,
+   "xgsh": 0.131,
+   "diff": 2.6
+  },
+  {
+   "season": "2018/19",
+   "team": "Hannover 96",
+   "league": "Bundesliga",
+   "abroad": false,
+   "mins": 1114,
+   "goals": 2,
+   "xg": 3.4,
+   "shots": 37,
+   "npg": 1,
+   "xg90": 0.27,
+   "g90": 0.16,
+   "sh90": 2.99,
+   "xgsh": 0.092,
+   "diff": -1.4
+  },
+  {
+   "season": "2019/20",
+   "team": "Werder Bremen",
+   "league": "Bundesliga",
+   "abroad": false,
+   "mins": 396,
+   "goals": 4,
+   "xg": 1.4,
+   "shots": 17,
+   "npg": 4,
+   "xg90": 0.32,
+   "g90": 0.91,
+   "sh90": 3.86,
+   "xgsh": 0.082,
+   "diff": 2.6
+  },
+  {
+   "season": "2020/21",
+   "team": "Werder Bremen",
+   "league": "Bundesliga",
+   "abroad": false,
+   "mins": 875,
+   "goals": 6,
+   "xg": 5.0,
+   "shots": 35,
+   "npg": 4,
+   "xg90": 0.51,
+   "g90": 0.62,
+   "sh90": 3.6,
+   "xgsh": 0.143,
+   "diff": 1.0
+  },
+  {
+   "season": "2022/23",
+   "team": "Werder Bremen",
+   "league": "Bundesliga",
+   "abroad": false,
+   "mins": 2482,
+   "goals": 16,
+   "xg": 13.4,
+   "shots": 80,
+   "npg": 11,
+   "xg90": 0.49,
+   "g90": 0.58,
+   "sh90": 2.9,
+   "xgsh": 0.168,
+   "diff": 2.6
+  },
+  {
+   "season": "2023/24",
+   "team": "Dortmund",
+   "league": "Bundesliga",
+   "abroad": false,
+   "mins": 2453,
+   "goals": 12,
+   "xg": 14.8,
+   "shots": 58,
+   "npg": 9,
+   "xg90": 0.54,
+   "g90": 0.44,
+   "sh90": 2.13,
+   "xgsh": 0.255,
+   "diff": -2.8
+  },
+  {
+   "season": "2024/25",
+   "team": "West Ham",
+   "league": "EPL",
+   "abroad": true,
+   "mins": 775,
+   "goals": 3,
+   "xg": 2.2,
+   "shots": 16,
+   "npg": 3,
+   "xg90": 0.26,
+   "g90": 0.35,
+   "sh90": 1.86,
+   "xgsh": 0.138,
+   "diff": 0.8
+  },
+  {
+   "season": "2025/26",
+   "team": "AC Milan + West Ham",
+   "league": "Serie A / EPL",
+   "abroad": true,
+   "mins": 1042,
+   "goals": 1,
+   "xg": 4.4,
+   "shots": 25,
+   "npg": 1,
+   "xg90": 0.38,
+   "g90": 0.09,
+   "sh90": 2.16,
+   "xgsh": 0.176,
+   "diff": -3.4
+  }
+ ],
+ "germany": {
+  "mins": 9707,
+  "goals": 54,
+  "xg": 49.4,
+  "shots": 314,
+  "g90": 0.5,
+  "xg90": 0.46,
+  "sh90": 2.91,
+  "xgsh": 0.157,
+  "ratio": 1.09
+ },
+ "abroad": {
+  "mins": 1817,
+  "goals": 4,
+  "xg": 6.6,
+  "shots": 41,
+  "g90": 0.2,
+  "xg90": 0.33,
+  "sh90": 2.03,
+  "xgsh": 0.161,
+  "ratio": 0.61
+ },
+ "now": {
+  "goals": 9,
+  "mins": 656,
+  "games": 8,
+  "g90": 1.23,
+  "expected_at_career_rate": 3.4
+ },
+ "shots": [
+  {
+   "x": 111.0,
+   "y": 36.0,
+   "xg": 0.164,
+   "goal": true,
+   "body": "Foot",
+   "out": "Goal",
+   "game": "Dortmund 1–1 Leverkusen",
+   "min": 80
+  },
+  {
+   "x": 111.8,
+   "y": 47.0,
+   "xg": 0.047,
+   "goal": false,
+   "body": "Head",
+   "out": "Off T",
+   "game": "Spain 2–1 Germany (Euro 24)",
+   "min": 63
+  },
+  {
+   "x": 110.7,
+   "y": 39.3,
+   "xg": 0.078,
+   "goal": false,
+   "body": "Head",
+   "out": "Off T",
+   "game": "Spain 2–1 Germany (Euro 24)",
+   "min": 71
+  },
+  {
+   "x": 109.2,
+   "y": 42.6,
+   "xg": 0.101,
+   "goal": false,
+   "body": "Foot",
+   "out": "Post",
+   "game": "Spain 2–1 Germany (Euro 24)",
+   "min": 76
+  },
+  {
+   "x": 104.6,
+   "y": 29.1,
+   "xg": 0.046,
+   "goal": false,
+   "body": "Foot",
+   "out": "Off T",
+   "game": "Spain 2–1 Germany (Euro 24)",
+   "min": 108
+  },
+  {
+   "x": 108.4,
+   "y": 43.4,
+   "xg": 0.052,
+   "goal": false,
+   "body": "Head",
+   "out": "Saved",
+   "game": "Spain 2–1 Germany (Euro 24)",
+   "min": 116
+  },
+  {
+   "x": 110.1,
+   "y": 42.4,
+   "xg": 0.086,
+   "goal": false,
+   "body": "Head",
+   "out": "Off T",
+   "game": "Spain 2–1 Germany (Euro 24)",
+   "min": 122
+  },
+  {
+   "x": 104.1,
+   "y": 39.3,
+   "xg": 0.114,
+   "goal": true,
+   "body": "Foot",
+   "out": "Goal",
+   "game": "Germany 5–1 Scotland (Euro 24)",
+   "min": 67
+  },
+  {
+   "x": 115.2,
+   "y": 44.6,
+   "xg": 0.363,
+   "goal": false,
+   "body": "Foot",
+   "out": "Saved",
+   "game": "Costa Rica 2–4 Germany (WC 22)",
+   "min": 75
+  },
+  {
+   "x": 114.8,
+   "y": 42.5,
+   "xg": 0.51,
+   "goal": true,
+   "body": "Foot",
+   "out": "Goal",
+   "game": "Costa Rica 2–4 Germany (WC 22)",
+   "min": 88
+  },
+  {
+   "x": 101.1,
+   "y": 39.1,
+   "xg": 0.047,
+   "goal": false,
+   "body": "Foot",
+   "out": "Blocked",
+   "game": "Costa Rica 2–4 Germany (WC 22)",
+   "min": 94
+  },
+  {
+   "x": 117.9,
+   "y": 32.7,
+   "xg": 0.134,
+   "goal": false,
+   "body": "Head",
+   "out": "Off T",
+   "game": "Costa Rica 2–4 Germany (WC 22)",
+   "min": 95
+  },
+  {
+   "x": 113.6,
+   "y": 41.4,
+   "xg": 0.163,
+   "goal": true,
+   "body": "Head",
+   "out": "Goal",
+   "game": "Switzerland 1–1 Germany (Euro 24)",
+   "min": 91
+  },
+  {
+   "x": 113.8,
+   "y": 27.1,
+   "xg": 0.059,
+   "goal": false,
+   "body": "Foot",
+   "out": "Off T",
+   "game": "Leverkusen 1–1 Dortmund",
+   "min": 67
+  },
+  {
+   "x": 112.0,
+   "y": 40.9,
+   "xg": 0.236,
+   "goal": false,
+   "body": "Head",
+   "out": "Off T",
+   "game": "Leverkusen 1–1 Dortmund",
+   "min": 94
+  },
+  {
+   "x": 113.5,
+   "y": 40.6,
+   "xg": 0.228,
+   "goal": false,
+   "body": "Head",
+   "out": "Off T",
+   "game": "Germany 2–0 Hungary (Euro 24)",
+   "min": 86
+  },
+  {
+   "x": 111.2,
+   "y": 41.5,
+   "xg": 0.373,
+   "goal": false,
+   "body": "Foot",
+   "out": "Wayward",
+   "game": "Spain 1–1 Germany (WC 22)",
+   "min": 72
+  },
+  {
+   "x": 111.3,
+   "y": 42.8,
+   "xg": 0.065,
+   "goal": false,
+   "body": "Head",
+   "out": "Off T",
+   "game": "Spain 1–1 Germany (WC 22)",
+   "min": 73
+  },
+  {
+   "x": 110.8,
+   "y": 51.9,
+   "xg": 0.164,
+   "goal": true,
+   "body": "Foot",
+   "out": "Goal",
+   "game": "Spain 1–1 Germany (WC 22)",
+   "min": 82
+  },
+  {
+   "x": 106.9,
+   "y": 41.0,
+   "xg": 0.032,
+   "goal": false,
+   "body": "Head",
+   "out": "Off T",
+   "game": "Germany 1–2 Japan (WC 22)",
+   "min": 89
+  }
+ ],
+ "sb": {
+  "n": 20,
+  "goals": 5,
+  "xg": 3.06,
+  "mins": 472,
+  "games": 10,
+  "inbox": 19,
+  "sixyd": 3,
+  "heads": 10,
+  "headGoals": 1,
+  "g90": 0.95
+ },
+ "peers": [
+  {
+   "name": "Jonathan Burkardt",
+   "team": "Frankfurt",
+   "mins": 1351,
+   "goals": 13,
+   "xg90": 0.87,
+   "g90": 0.87
+  },
+  {
+   "name": "Deniz Undav",
+   "team": "VfB Stuttgart",
+   "mins": 2261,
+   "goals": 19,
+   "xg90": 0.76,
+   "g90": 0.76
+  },
+  {
+   "name": "Phillip Tietz",
+   "team": "Augsburg / Mainz",
+   "mins": 1811,
+   "goals": 6,
+   "xg90": 0.58,
+   "g90": 0.3
+  },
+  {
+   "name": "Niclas Füllkrug",
+   "team": "Bundesliga career, 2017–24",
+   "mins": 9707,
+   "goals": 54,
+   "xg90": 0.46,
+   "g90": 0.5,
+   "me": true
+  },
+  {
+   "name": "Serge Gnabry",
+   "team": "Bayern",
+   "mins": 1280,
+   "goals": 8,
+   "xg90": 0.44,
+   "g90": 0.56
+  },
+  {
+   "name": "Karim Adeyemi",
+   "team": "Dortmund",
+   "mins": 1218,
+   "goals": 7,
+   "xg90": 0.39,
+   "g90": 0.52
+  }
+ ],
+ "clubs": [
+  [
+   "Nürnberg",
+   "2014–16",
+   17,
+   54,
+   "de"
+  ],
+  [
+   "Hannover 96",
+   "2016–19",
+   21,
+   75,
+   "de"
+  ],
+  [
+   "Werder Bremen",
+   "2019–23",
+   45,
+   90,
+   "de"
+  ],
+  [
+   "Dortmund",
+   "2023–24",
+   12,
+   29,
+   "de"
+  ],
+  [
+   "West Ham",
+   "2024–26",
+   3,
+   26,
+   "ab"
+  ],
+  [
+   "AC Milan",
+   "2026",
+   1,
+   20,
+   "ab"
+  ],
+  [
+   "Werder Bremen",
+   "2026/27",
+   9,
+   8,
+   "now"
+  ]
+ ]
+}

@@ -2,6 +2,8 @@
 // Add one entry per new project and run: node football/scripts/make_thumbnails.js
 const {chromium}=require('playwright');
 const T=[
+ {f:'og-the-poacher.png',bg:'#1d9053',ink:'#fff',acc:'#0b3d22',sub:'#d7f5e3',kick:'BUNDESLIGA 2026/27 · NICLAS FÜLLKRUG, WERDER BREMEN',t:'THE POACHER<br><span>PEAK OR FLUKE?</span>',
+  body:`<div class="stats"><div><em>9 in 8</em><small>league goals this season</small></div><div><em class="a">54 vs 49.4</em><small>Bundesliga goals vs xG</small></div><div><em>1 vs 4.4</em><small>abroad, 2025/26</small></div></div>`},
  {f:'og-the-injury-bill.png',bg:'#0e1f3d',ink:'#fff',acc:'#ff6b7c',sub:'#b8c5dc',kick:'BUNDESLIGA · WAGES PAID TO INJURED PLAYERS, 2024/25',t:'THE INJURY<br><span>BILL</span>',
   body:`<div class="stats"><div><em class="a">€110.9m</em><small>wages to injured players</small></div><div><em>23%</em><small>of it was Bayern's</small></div><div><em>31 days</em><small>Hoffenheim's average absence</small></div></div>`},
  {f:'og-did-the-money-buy-points.png',bg:'#0f2a1f',ink:'#fff',acc:'#3fcf86',sub:'#b9cfc3',kick:'BUNDESLIGA 2026/27 · SUMMER SPENDING VS POINTS AFTER 9 GAMES',t:'DID THE MONEY<br><span>BUY POINTS?</span>',
