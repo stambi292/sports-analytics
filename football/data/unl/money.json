@@ -1,0 +1,23 @@
+{
+ "_note": "All € million. Sources: UEFA financial reports 2018/19 (pp. 6-8, 17, 24-25), 2020/21 (pp. 8, 17, 33), 2022/23 (pp. 10, 18-19), 2024/25 (pp. 10-11, 20-21).",
+ "cycles": [
+  {"label": "2014–18", "total": 1033.3, "seasons": 4, "nl": false},
+  {"label": "2018–22", "total": 1937.2, "seasons": 4, "nl": true},
+  {"label": "2022–28", "total": 3000, "seasons": 6, "nl": true, "forecast": true}
+ ],
+ "annual": [
+  {"season": "2018/19", "revenue": 604.6, "distributed": 551.6},
+  {"season": "2019/20", "revenue": 279.3, "distributed": 278.4, "note": "COVID: games postponed"},
+  {"season": "2020/21", "revenue": 647.3, "distributed": 577.4},
+  {"season": "2021/22", "revenue": 390.9, "distributed": 402.0, "derived_revenue": true},
+  {"season": "2022/23", "revenue": 494.9, "distributed": 455.1},
+  {"season": "2023/24", "revenue": 486.8},
+  {"season": "2024/25", "revenue": 505.8}
+ ],
+ "nl_editions": [
+  {"season": "2018/19", "starting": 73.875, "group_winners": 22.5, "finals": 20.172, "total": 116.547},
+  {"season": "2022/23", "starting": 83.25, "group_winners": 21.0, "finals": 19.492, "total": 123.742},
+  {"season": "2024/25", "starting": 82.5, "group_winners": 21.0, "finals": 25.5, "total": 129.0}
+ ],
+ "fees": [["A", 2.25], ["B", 1.5], ["C", 1.125], ["D", 0.75]]
+}

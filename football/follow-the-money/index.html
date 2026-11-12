@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Follow the Money</title>
+<meta name="description" content="Did UEFA create the Nations League to make money? National-team income per season almost doubled, from €258m to €484m. But 91–92% of it is paid out to the 55 national associations. What the countries earn, how many friendlies disappeared, and whether the games got closer.">
+<meta name="author" content="Stephen tAMBI">
+<meta property="og:title" content="Follow the Money: who wins from the Nations League?">
+<meta property="og:description" content="UEFA's national-team income almost doubled after the Nations League arrived. 92% of it went back to the 55 associations. Friendlies between European teams fell 40%.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stambi292.github.io/sports-analytics/football/follow-the-money/">
+<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-follow-the-money.png?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: deep-navy masthead with cyan rule, KPIs, money per season, where it goes, what countries earn, games per team, closer games, reading, stack, method. */
+:root {
+  --bg: #f3f5f9; --panel: #ffffff; --ink: #0c1730; --ink-2: #3a4763; --muted: #64718a; --line: #dbe1ec; --grid: #e8ecf3;
+  --mast: #0a1f44; --on-mast: #ffffff; --on-mast-2: #c6d3ea; --acc: #00b2e3; --acc-ink: #0077a3; --acc-soft: #dff3fa;
+  --navy: #0a1f44; --mid: #7d8db0; --light: #c9d2e3; --gold: #c99a2e;
+  --font-display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0a1120; --panel: #111b2e; --ink: #edf1f8; --ink-2: #bcc7da; --muted: #8592aa; --line: #243049; --grid: #1a2438;
+  --mast: #0a1f44; --on-mast-2: #b7c6e2; --acc: #2cc3ee; --acc-ink: #5fd2f2; --acc-soft: #12304a;
+  --navy: #9fb3da; --mid: #5f6f92; --light: #33415c; --gold: #e0b450; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0a1120; --panel: #111b2e; --ink: #edf1f8; --ink-2: #bcc7da; --muted: #8592aa; --line: #243049; --grid: #1a2438;
+  --mast: #0a1f44; --on-mast-2: #b7c6e2; --acc: #2cc3ee; --acc-ink: #5fd2f2; --acc-soft: #12304a;
+  --navy: #9fb3da; --mid: #5f6f92; --light: #33415c; --gold: #e0b450; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
+.inner { max-width: 1000px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+.mast { background: var(--mast); color: var(--on-mast); border-bottom: 10px solid var(--acc); }
+.mast .inner { padding-block: 22px 64px; display: grid; gap: 14px; }
+.back { color: var(--on-mast-2); text-decoration: none; font-weight: 600; font-size: 15px; }
+.eyebrow { font: 700 13px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--on-mast-2); margin-top: 18px; }
+h1 { font: 800 clamp(58px, 12vw, 120px)/.9 var(--font-display); text-transform: uppercase; margin: 0; }
+h1 span { display: block; font-size: .34em; line-height: 1.15; margin-top: 12px; font-weight: 700; color: var(--acc); text-wrap: balance; }
+.lede { margin: 4px 0 0; max-width: 64ch; color: var(--on-mast-2); font-size: 19px; }
+.byline { font-size: 14px; color: var(--on-mast-2); }
+h2 { font: 700 36px/1.05 var(--font-display); margin: 0 0 8px; text-wrap: balance; }
+.intro { margin: 0 0 18px; color: var(--ink-2); max-width: 68ch; }
+section { padding-block: 44px 4px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: -34px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--acc); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+.kpi b { display: block; font: 800 38px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.kpi span { color: var(--ink-2); font-size: 15px; line-height: 1.4; display: block; margin-top: 6px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: grid; gap: 16px; min-width: 0; }
+.note { font-size: 14px; color: var(--muted); margin: 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; color: var(--ink-2); }
+.legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; margin-right: 6px; }
+.cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-items: end; height: 300px; padding-top: 30px; }
+.col { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 8px; height: 100%; min-width: 0; }
+.col .b { width: min(140px, 80%); background: var(--mid); border-radius: 6px 6px 0 0; position: relative; }
+.col .b.nl { background: var(--acc); }
+.col .b.fc { background: repeating-linear-gradient(45deg, var(--acc) 0 8px, var(--acc-soft) 8px 14px); }
+.col .v { font: 800 32px/1 var(--font-display); }
+.col .l { font-size: 15px; color: var(--ink-2); text-align: center; line-height: 1.3; }
+.split { display: grid; gap: 12px; }
+.srow { display: grid; grid-template-columns: 5em minmax(0, 1fr) 4.4em; gap: 12px; align-items: center; font-size: 15px; }
+.srow .track { display: flex; height: 26px; border-radius: 4px; overflow: hidden; background: var(--grid); }
+.srow .paid { background: var(--acc); } .srow .kept { background: var(--mid); }
+.srow .pct { font: 700 22px var(--font-display); text-align: right; }
+.fees { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.fee { border: 1px solid var(--line); border-radius: 8px; padding: 14px; text-align: center; min-width: 0; }
+.fee .lg { font: 700 14px var(--font-body); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.fee b { display: block; font: 800 40px/1.1 var(--font-display); color: var(--acc-ink); }
+.fee span { font-size: 14px; color: var(--ink-2); }
+.wrap { overflow-x: auto; }
+table.t { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 15px; font-variant-numeric: tabular-nums; }
+table.t th, table.t td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: right; }
+table.t th { font-size: 13px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+table.t th:first-child, table.t td:first-child { text-align: left; }
+table.t tr:last-child td { font-weight: 700; }
+.chart { width: 100%; height: auto; display: block; }
+.chart text { font-family: var(--font-body); font-size: 13px; fill: var(--muted); }
+.cmp { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.cm { border: 1px solid var(--line); border-radius: 8px; padding: 16px; min-width: 0; }
+.cm h3 { margin: 0 0 6px; font: 700 22px var(--font-display); }
+.cm .big { font: 800 44px/1 var(--font-display); }
+.cm.hl { border: 2px solid var(--acc); }
+.cm p { margin: 6px 0 0; font-size: 14px; color: var(--ink-2); }
+.reading { display: grid; gap: 14px; }
+.reading > div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+.reading b.h { display: block; font: 700 24px/1.1 var(--font-display); margin-bottom: 6px; }
+.reading p { margin: 0; color: var(--ink-2); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line); background: var(--panel); border-radius: 6px; padding: 6px 12px; font-size: 14px; font-weight: 600; }
+.method { padding-left: 20px; color: var(--ink-2); font-size: 15px; display: grid; gap: 8px; }
+.method a { color: var(--acc-ink); }
+footer { padding-block: 40px 56px; font-size: 14px; color: var(--muted); }
+@media (max-width: 760px) {
+  .kpis, .fees { grid-template-columns: repeat(2, minmax(0, 1fr)); } .kpi b { font-size: 32px; } .fee b { font-size: 30px; }
+  .cmp { grid-template-columns: 1fr; }
+  .cols { height: 240px; gap: 10px; } .col .v { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="inner">
+    <a class="back" href="../../">← Sports analytics</a>
+    <div class="eyebrow">UEFA Nations League · money, games and who benefits · 2010–2025</div>
+    <h1>Follow the money<span>Did UEFA create the Nations League to make money?</span></h1>
+    <p class="lede">The Nations League replaced most friendlies in 2018. UEFA's own financial reports show what happened to the money, and every international result since 2010 shows what happened to the games.</p>
+    <div class="byline">Stephen tAMBI · data to 2024/25</div>
+  </div>
+</header>
+<main class="inner">
+  <div class="kpis" id="kpis"></div>
+
+  <section>
+    <h2>The money almost doubled</h2>
+    <p class="intro">UEFA sells TV and sponsorship rights for all European national-team games as one package, in cycles. Per season, the package was worth almost twice as much once the Nations League was in it.</p>
+    <div class="card">
+      <div class="cols" id="cycles"></div>
+      <div class="legend"><span><i style="background:var(--mid)"></i>Before the Nations League</span><span><i style="background:var(--acc)"></i>With the Nations League</span><span><i style="background:repeating-linear-gradient(45deg,var(--acc) 0 4px,var(--acc-soft) 4px 7px)"></i>Forecast</span></div>
+      <p class="note">€ million per season: each cycle's total divided by its seasons (2014–18: €1,033m over 4; 2018–22: €1,937m over 4; 2022–28: about €3bn over 6, forecast). The package covers Euro and World Cup qualifiers, the Nations League and some friendlies, so not all of the rise is the Nations League.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>But most of it goes to the countries</h2>
+    <p class="intro">Yes, the countries make money too. UEFA passes almost all national-team income on to its 55 member associations. What it keeps covers running the competitions.</p>
+    <div class="card"><div class="split" id="split"></div>
+      <div class="legend"><span><i style="background:var(--acc)"></i>Paid to the 55 associations</span><span><i style="background:var(--mid)"></i>Kept by UEFA</span></div>
+      <p class="note">National-team revenue and the amount UEFA recorded as distributions to associations in the same season. Seasons with complete figures in the reports.</p></div>
+  </section>
+
+  <section>
+    <h2>What a country earns from the Nations League</h2>
+    <p class="intro">Every team gets a fee just for playing, set by its league. Winning the group pays the fee again. The four finalists share €16.5m more plus ticket money.</p>
+    <div class="card">
+      <div class="fees" id="fees"></div>
+      <div class="wrap"><table class="t" id="editions"></table></div>
+      <p class="note">€ million. The per-league fees are worked out from UEFA's totals: these four amounts reproduce the starting-fee and group-winner totals of all three editions exactly. Separate from this, each association also receives a share of the qualifier and media income above.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Fewer friendlies, a bit more football</h2>
+    <p class="intro" id="gamesIntro"></p>
+    <div class="card">
+      <div class="wrap"><svg class="chart" style="min-width:640px" id="games" viewBox="0 0 900 320" role="img" aria-label="Games per European national team per year, by type, 2010 to 2025"></svg></div>
+      <div class="legend"><span><i style="background:var(--light)"></i>Friendlies</span><span><i style="background:var(--mid)"></i>Qualifiers</span><span><i style="background:var(--acc)"></i>Nations League</span><span><i style="background:var(--gold)"></i>Euros and World Cups</span></div>
+      <p class="note">Average games per UEFA national team per calendar year. 2020: COVID; 2021: the postponed Euro and catch-up games.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Are the games closer?</h2>
+    <p class="intro">The sporting argument was fairer matchups: strong against strong, weak against weak. Games between two European teams since 2019:</p>
+    <div class="card"><div class="cmp" id="cmp"></div>
+      <p class="note">Margin = goals between winner and loser. Close = decided by 0 or 1 goal. Blowout = 3 goals or more.</p></div>
+  </section>
+
+  <section>
+    <h2>What the numbers say</h2>
+    <div class="reading" id="reading"></div>
+  </section>
+
+  <section class="build" id="how-it-was-built">
+    <h2>Tech stack</h2>
+    <div class="chips"><span class="chip">Python</span><span class="chip">CSV</span><span class="chip">Financial reports</span><span class="chip">JavaScript</span><span class="chip">SVG</span><span class="chip">HTML/CSS</span><span class="chip">Playwright</span><span class="chip">GitHub Pages</span></div>
+  </section>
+
+  <section>
+    <h2>Method and sources</h2>
+    <ul class="method">
+      <li><b>Money:</b> UEFA financial reports <a href="https://editorial.uefa.com/resources/025a-0f8430656913-10ccbab24e1d-1000/2018_19_uefa_financial_report.pdf">2018/19</a>, <a href="https://editorial.uefa.com/resources/0275-151e1a55c231-ef1c32b881dc-1000/en_ln_uefa_financial_report_2020-2021.pdf">2020/21</a>, <a href="https://editorial.uefa.com/resources/028a-1a2134203eb5-f59fe74100ae-1000/uefa--financial--report--2022-23--en.pdf">2022/23</a> and <a href="https://editorial.uefa.com/resources/02a1-1fcc539a26d9-78ac6793e755-1000/20260113_enclosure_04_financial_report_2024-25_en.pdf">2024/25</a>. Revenue and distributions are as recognised in each season's accounts, not cash paid. 2021/22 revenue is derived from the 2022/23 report ("€104m higher than 2021/22").</li>
+      <li><b>Games:</b> every international result 2010–2025 from the open international results dataset (martj42 on GitHub). UEFA teams = the 55 that have played in the Nations League. Qualifiers = Euro and World Cup qualifying.</li>
+      <li><b>Not measured:</b> TV audiences and attendances, which UEFA does not publish game by game, and players' club workloads.</li>
+    </ul>
+  </section>
+</main>
+<footer class="inner">Stephen tAMBI · Sports analytics · Data, not opinion.</footer>
+
+<script>
+const D = {"money": {"_note": "All € million. Sources: UEFA financial reports 2018/19 (pp. 6-8, 17, 24-25), 2020/21 (pp. 8, 17, 33), 2022/23 (pp. 10, 18-19), 2024/25 (pp. 10-11, 20-21).", "cycles": [{"label": "2014–18", "total": 1033.3, "seasons": 4, "nl": false}, {"label": "2018–22", "total": 1937.2, "seasons": 4, "nl": true}, {"label": "2022–28", "total": 3000, "seasons": 6, "nl": true, "forecast": true}], "annual": [{"season": "2018/19", "revenue": 604.6, "distributed": 551.6}, {"season": "2019/20", "revenue": 279.3, "distributed": 278.4, "note": "COVID: games postponed"}, {"season": "2020/21", "revenue": 647.3, "distributed": 577.4}, {"season": "2021/22", "revenue": 390.9, "distributed": 402.0, "derived_revenue": true}, {"season": "2022/23", "revenue": 494.9, "distributed": 455.1}, {"season": "2023/24", "revenue": 486.8}, {"season": "2024/25", "revenue": 505.8}], "nl_editions": [{"season": "2018/19", "starting": 73.875, "group_winners": 22.5, "finals": 20.172, "total": 116.547}, {"season": "2022/23", "starting": 83.25, "group_winners": 21.0, "finals": 19.492, "total": 123.742}, {"season": "2024/25", "starting": 82.5, "group_winners": 21.0, "finals": 25.5, "total": 129.0}], "fees": [["A", 2.25], ["B", 1.5], ["C", 1.125], ["D", 0.75]]}, "games": {"teams": 55, "years": [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025], "uefa_v_uefa": {"friendly": [87, 77, 102, 75, 82, 58, 117, 49, 82, 20, 39, 61, 65, 30, 87, 40], "nations_league": [0, 0, 0, 0, 0, 0, 0, 0, 138, 4, 162, 4, 160, 4, 158, 28], "qualifier": [94, 154, 99, 169, 103, 164, 108, 170, 0, 250, 12, 250, 8, 230, 9, 192], "tournament": [10, 0, 31, 0, 6, 0, 51, 0, 15, 0, 0, 51, 8, 0, 51, 0]}, "per_team": {"friendly": [4.78, 3.78, 4.71, 3.87, 4.53, 2.58, 4.75, 2.69, 4.67, 1.04, 1.55, 2.82, 3.29, 1.56, 3.51, 1.98], "nations_league": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5.02, 0.15, 5.89, 0.15, 5.82, 0.15, 5.75, 1.02], "qualifier": [3.42, 5.6, 3.6, 6.15, 3.75, 5.96, 3.93, 6.18, 0.0, 9.09, 0.44, 9.09, 0.29, 8.36, 0.33, 6.98], "tournament": [0.98, 0.0, 1.13, 0.0, 0.96, 0.0, 1.85, 0.0, 1.2, 0.0, 0.0, 1.85, 1.02, 0.0, 1.85, 0.0], "other": [0.15, 0.49, 0.16, 0.27, 0.15, 0.07, 0.22, 0.33, 0.18, 0.0, 0.0, 0.13, 0.16, 0.0, 0.31, 0.04]}, "margins": {"friendly_before": {"n": 647, "avg": 1.38, "blowout": 14.8, "close": 63.4}, "qualifier_before": {"n": 1061, "avg": 1.79, "blowout": 24.4, "close": 52.7}, "friendly_after": {"n": 342, "avg": 1.57, "blowout": 21.9, "close": 61.4}, "qualifier_after": {"n": 951, "avg": 2.03, "blowout": 29.5, "close": 47.1}, "nations_league_after": {"n": 520, "avg": 1.36, "blowout": 15.6, "close": 64.0}}, "per_team_total": [9.33, 9.87, 9.6, 10.29, 9.39, 8.61, 10.75, 9.2, 11.07, 10.28, 7.88, 14.04, 10.58, 10.07, 11.75, 10.02]}, "s": {"per_season": [258, 484, 500], "share_paid": [91, 92], "friendlies_uu": [81, 49, -40], "games_per_team": [9.5, 10.6], "friendly_share": [41, 21]}};
+const $ = id => document.getElementById(id);
+const M = D.money, G = D.games, S = D.s;
+const eur = x => '€' + Math.round(x) + 'm';
+
+$('kpis').innerHTML = [
+  [`${eur(S.per_season[0])} → ${eur(S.per_season[1])}`, 'UEFA national-team income per season, before and with the Nations League'],
+  [`${S.share_paid[1]}%`, 'of it paid out to the 55 national associations (2022/23)'],
+  ['€2.25m', 'per League A team just for playing, doubled for group winners'],
+  [`${S.friendlies_uu[2]}%`, 'friendlies between European teams per year'],
+].map(([b, s]) => `<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
+
+const maxC = Math.max(...S.per_season);
+$('cycles').innerHTML = M.cycles.map((c, i) => `<div class="col"><div class="v">${eur(S.per_season[i])}</div>
+  <div class="b ${c.forecast ? 'fc' : c.nl ? 'nl' : ''}" style="height:${S.per_season[i] / maxC * 78}%"></div><div class="l">${c.label}${c.forecast ? '<br><small>forecast</small>' : ''}</div></div>`).join('');
+
+$('split').innerHTML = M.annual.filter(a => a.distributed && a.distributed <= a.revenue && !a.note).map(a => {
+  const p = a.distributed / a.revenue * 100;
+  return `<div class="srow"><div>${a.season}</div><div class="track"><div class="paid" style="width:${p}%"></div><div class="kept" style="width:${100 - p}%"></div></div><div class="pct">${Math.round(p)}%</div></div>
+  <div class="note" style="margin:-6px 0 4px 5.75em">${eur(a.revenue)} in, ${eur(a.distributed)} paid out</div>`;
+}).join('');
+
+$('fees').innerHTML = M.fees.map(([l, f]) => `<div class="fee"><div class="lg">League ${l}</div><b>€${f}m</b><span>to play · €${+(2 * f).toFixed(3)}m as group winner</span></div>`).join('');
+$('editions').innerHTML = `<tr><th>Edition</th><th>Fees to play</th><th>Group winners</th><th>Finals + tickets</th><th>Total</th></tr>` +
+  M.nl_editions.map(e => `<tr><td>${e.season}</td><td>${e.starting.toFixed(1)}</td><td>${e.group_winners.toFixed(1)}</td><td>${e.finals.toFixed(1)}</td><td>${e.total.toFixed(1)}</td></tr>`).join('');
+
+// Games chart
+$('gamesIntro').textContent = `Friendlies used to be ${S.friendly_share[0]}% of a European team's games; since 2019 they are ${S.friendly_share[1]}%. Games between two European teams that were friendlies fell from ${S.friendlies_uu[0]} to ${S.friendlies_uu[1]} a year. The total went up a little: ${S.games_per_team[0]} games a team per year in 2014–17, ${S.games_per_team[1]} in 2022–25.`;
+(() => {
+  const svg = $('games'), W = 900, H = 320, L = 40, R = 10, T = 14, B = 34, yrs = G.years;
+  const keys = [['friendly', 'var(--light)'], ['qualifier', 'var(--mid)'], ['nations_league', 'var(--acc)'], ['tournament', 'var(--gold)']];
+  const tot = yrs.map((_, i) => keys.reduce((a, [k]) => a + G.per_team[k][i], 0));
+  const ymax = 15, bw = (W - L - R) / yrs.length;
+  const Y = v => H - B - v / ymax * (H - T - B);
+  let s = '';
+  for (let g = 0; g <= ymax; g += 5) s += `<line x1="${L}" x2="${W - R}" y1="${Y(g)}" y2="${Y(g)}" stroke="var(--grid)"/><text x="${L - 6}" y="${Y(g) + 4}" text-anchor="end">${g}</text>`;
+  yrs.forEach((yr, i) => {
+    let acc = 0; const x = L + i * bw + bw * .15, w = bw * .7;
+    keys.forEach(([k, c]) => { const v = G.per_team[k][i]; if (v > 0) s += `<rect x="${x}" y="${Y(acc + v)}" width="${w}" height="${Y(acc) - Y(acc + v)}" fill="${c}"><title>${yr} ${k.replace('_', ' ')}: ${v}</title></rect>`; acc += v; });
+    if (i % 2 === 0 || yrs.length < 10) s += `<text x="${x + w / 2}" y="${H - 12}" text-anchor="middle">${yr}</text>`;
+  });
+  const xi = L + yrs.indexOf(2018) * bw;
+  s += `<line x1="${xi}" x2="${xi}" y1="${T}" y2="${H - B}" stroke="var(--ink)" stroke-dasharray="4 4"/><text x="${xi + 6}" y="${T + 12}" style="fill:var(--ink)">Nations League starts</text>`;
+  svg.innerHTML = s;
+})();
+
+const mg = G.margins;
+$('cmp').innerHTML = [['Nations League', mg.nations_league_after, true], ['Qualifiers', mg.qualifier_after], ['Friendlies', mg.friendly_after]].map(([n, m, hl]) =>
+  `<div class="cm ${hl ? 'hl' : ''}"><h3>${n}</h3><div class="big">${Math.round(m.close)}%</div><p>close games · ${Math.round(m.blowout)}% blowouts · average margin ${m.avg} goals · ${m.n} games</p></div>`).join('');
+
+$('reading').innerHTML = [
+  ['Money was a motive, and it worked', `National-team income per season went from ${eur(S.per_season[0])} to ${eur(S.per_season[1])} once the Nations League joined the package. Competitive games sell for more than friendlies; that was part of the plan.`],
+  ['But the countries got most of it', `In 2018/19 and 2022/23, UEFA paid ${S.share_paid[0]}% and ${S.share_paid[1]}% of national-team income to the associations. A League D team gets €0.75m just for playing; for small associations that is real money they never made from friendlies.`],
+  ['Players were not handed many more games', `About one extra game a team per year (${S.games_per_team[0]} → ${S.games_per_team[1]}). The bigger change is what the games are: friendlies dropped from ${S.friendly_share[0]}% to ${S.friendly_share[1]}% of the schedule.`],
+  ['The games are closer than qualifiers', `${Math.round(mg.nations_league_after.close)}% of Nations League games are decided by one goal or fewer, against ${Math.round(mg.qualifier_after.close)}% of qualifiers, which still pit giants against minnows. Whether fans watch more is not in public data.`],
+].map(([h, p]) => `<div><b class="h">${h}</b><p>${p}</p></div>`).join('');
+</script>
+</body>
+</html>

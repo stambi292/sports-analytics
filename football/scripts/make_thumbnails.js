@@ -2,6 +2,8 @@
 // Add one entry per new project and run: node football/scripts/make_thumbnails.js
 const {chromium}=require('playwright');
 const T=[
+ {f:'og-follow-the-money.png',bg:'#0a1f44',ink:'#fff',acc:'#00b2e3',sub:'#c6d3ea',kick:'UEFA NATIONS LEAGUE · MONEY AND GAMES · 2010–2025',t:'FOLLOW THE<br><span>MONEY</span>',
+  body:`<div class="stats"><div><em>€484m</em><small>a season, up from €258m</small></div><div><em class="a">92%</em><small>paid to the 55 associations</small></div><div><em>−40%</em><small>friendlies</small></div></div>`},
  {f:'og-the-115.png',bg:'#6cabdd',ink:'#1c2c5b',acc:'#ffffff',sub:'#1c2c5b',kick:'PREMIER LEAGUE · MANCHESTER CITY · 115 CHARGES',t:'THE 115<br><span>WHAT COULD IT COST CITY?</span>',
   body:`<div class="stats"><div><em class="a">5 of 8</em><small>titles a 3-point penalty flips</small></div><div><em>−6</em><small>Everton, for one breach</small></div><div><em>3rd → 20th</em><small>City now, at −15</small></div></div>`},
  {f:'og-where-did-germanys-talent-go.png',bg:'#ffffff',ink:'#111111',acc:'#111111',sub:'#555555',kick:'GERMANY · GOLDEN ERA VS TODAY · 2014/15–2023/24',t:"WHERE DID GERMANY'S<br><span>TALENT GO?</span>",
