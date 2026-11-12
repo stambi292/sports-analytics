@@ -2,7 +2,7 @@
 // Add one entry per new project and run: node football/scripts/make_thumbnails.js
 const {chromium}=require('playwright');
 const T=[
- {f:'og-the-115.png',bg:'#1c2c5b',ink:'#fff',acc:'#6cabdd',sub:'#c9dcf0',kick:'PREMIER LEAGUE · MANCHESTER CITY · 115 CHARGES',t:'THE 115<br><span>WHAT COULD IT COST CITY?</span>',
+ {f:'og-the-115.png',bg:'#6cabdd',ink:'#1c2c5b',acc:'#ffffff',sub:'#1c2c5b',kick:'PREMIER LEAGUE · MANCHESTER CITY · 115 CHARGES',t:'THE 115<br><span>WHAT COULD IT COST CITY?</span>',
   body:`<div class="stats"><div><em class="a">5 of 8</em><small>titles a 3-point penalty flips</small></div><div><em>−6</em><small>Everton, for one breach</small></div><div><em>3rd → 20th</em><small>City now, at −15</small></div></div>`},
  {f:'og-where-did-germanys-talent-go.png',bg:'#ffffff',ink:'#111111',acc:'#111111',sub:'#555555',kick:'GERMANY · GOLDEN ERA VS TODAY · 2014/15–2023/24',t:"WHERE DID GERMANY'S<br><span>TALENT GO?</span>",
   body:`<div class="stats"><div><em class="a">26 → 7</em><small>future stars, 2017/18 vs 2021/22</small></div><div><em>1.7 vs 10.2</em><small>world-class full-backs a season, GER vs ESP</small></div></div>`},

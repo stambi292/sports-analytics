@@ -10,7 +10,7 @@
 <meta property="og:description" content="5 of City's 8 titles were won by margins a 3-point penalty would erase. Everton lost 6 points for one breach. Slide a deduction through this season's table.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://stambi292.github.io/sports-analytics/football/the-115/">
-<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-the-115.png">
+<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-the-115.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="627">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,35 +19,35 @@
 /* Layout: navy masthead with sky-blue rule, KPIs, charges, precedents, title margins (with slider), this season simulator, season table, reading, method. */
 :root {
   --bg: #f3f6fa; --panel: #ffffff; --ink: #0f1a2e; --ink-2: #3c4a62; --muted: #66748a; --line: #dbe3ee; --grid: #e8eef5;
-  --sky: #6cabdd; --sky-ink: #1f6aa5; --sky-soft: #e2effa; --navy: #1c2c5b; --on-navy: #ffffff; --on-navy-2: #c9dcf0;
+  --sky: #6cabdd; --sky-ink: #1f6aa5; --sky-soft: #e2effa; --navy: #1c2c5b; --mast: #6cabdd; --on-mast: #1c2c5b; --mast-rule: #1c2c5b;
   --other: #c3ccd8; --warn: #c2412b; --warn-soft: #fbe7e2; --ok: #2f7d4f;
   --font-display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
   --font-body: "Public Sans", "Segoe UI", Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #0b1220; --panel: #121c2e; --ink: #edf2f9; --ink-2: #bccadd; --muted: #8796ad; --line: #24324a; --grid: #1b2638;
-  --sky: #7bbbea; --sky-ink: #8cc6f0; --sky-soft: #16304a; --navy: #142146; --on-navy-2: #b9cde6;
+  --sky: #7bbbea; --sky-ink: #8cc6f0; --sky-soft: #16304a; --navy: #142146; --mast: #5b9fd4; --on-mast: #0f1a3a; --mast-rule: #0b1530;
   --other: #3a4860; --warn: #f07a62; --warn-soft: #3a1d18; --ok: #5cc38a; color-scheme: dark; } }
 :root[data-theme="dark"] {
   --bg: #0b1220; --panel: #121c2e; --ink: #edf2f9; --ink-2: #bccadd; --muted: #8796ad; --line: #24324a; --grid: #1b2638;
-  --sky: #7bbbea; --sky-ink: #8cc6f0; --sky-soft: #16304a; --navy: #142146; --on-navy-2: #b9cde6;
+  --sky: #7bbbea; --sky-ink: #8cc6f0; --sky-soft: #16304a; --navy: #142146; --mast: #5b9fd4; --on-mast: #0f1a3a; --mast-rule: #0b1530;
   --other: #3a4860; --warn: #f07a62; --warn-soft: #3a1d18; --ok: #5cc38a; color-scheme: dark; }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
 .inner { max-width: 1000px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
-.mast { background: var(--navy); color: var(--on-navy); border-bottom: 10px solid var(--sky); }
+.mast { background: var(--mast); color: var(--on-mast); border-bottom: 10px solid var(--mast-rule); }
 .mast .inner { padding-block: 22px 64px; display: grid; gap: 14px; }
-.back { color: var(--on-navy-2); text-decoration: none; font-weight: 600; font-size: 15px; }
-.eyebrow { font: 700 13px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--on-navy-2); margin-top: 18px; }
+.back { color: var(--on-mast); text-decoration: none; font-weight: 600; font-size: 15px; }
+.eyebrow { font: 700 13px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--on-mast); margin-top: 18px; }
 h1 { font: 800 clamp(64px, 13vw, 132px)/.9 var(--font-display); text-transform: uppercase; margin: 0; }
-h1 span { display: block; font-size: .32em; line-height: 1.15; margin-top: 12px; font-weight: 700; color: var(--sky); text-wrap: balance; }
-.lede { margin: 4px 0 0; max-width: 64ch; color: var(--on-navy-2); font-size: 19px; }
-.byline { font-size: 14px; color: var(--on-navy-2); }
+h1 span { display: block; font-size: .32em; line-height: 1.15; margin-top: 12px; font-weight: 700; color: var(--on-mast); text-wrap: balance; }
+.lede { margin: 4px 0 0; max-width: 64ch; color: var(--on-mast); font-size: 19px; }
+.byline { font-size: 14px; color: var(--on-mast); }
 h2 { font: 700 36px/1.05 var(--font-display); margin: 0 0 8px; text-wrap: balance; }
 .intro { margin: 0 0 18px; color: var(--ink-2); max-width: 68ch; }
 section { padding-block: 44px 4px; }
 .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: -34px; }
-.kpi { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--sky); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--navy); border-radius: 8px; padding: 14px 16px; min-width: 0; }
 .kpi b { display: block; font: 800 40px/1 var(--font-display); font-variant-numeric: tabular-nums; }
 .kpi span { color: var(--ink-2); font-size: 15px; line-height: 1.4; display: block; margin-top: 6px; }
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: grid; gap: 16px; min-width: 0; }
