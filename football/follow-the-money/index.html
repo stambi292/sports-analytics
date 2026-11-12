@@ -10,7 +10,7 @@
 <meta property="og:description" content="UEFA's national-team income almost doubled after the Nations League arrived. 92% of it went back to the 55 associations. Friendlies between European teams fell 40%.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://stambi292.github.io/sports-analytics/football/follow-the-money/">
-<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-follow-the-money.png?v=2">
+<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-follow-the-money.png?v=3">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="627">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,28 +19,28 @@
 /* Layout: deep-navy masthead with cyan rule, KPIs, money per season, where it goes, what countries earn, games per team, closer games, reading, stack, method. */
 :root {
   --bg: #f3f5f9; --panel: #ffffff; --ink: #0c1730; --ink-2: #3a4763; --muted: #64718a; --line: #dbe1ec; --grid: #e8ecf3;
-  --mast: #0a1f44; --on-mast: #ffffff; --on-mast-2: #c6d3ea; --acc: #00b2e3; --acc-ink: #0077a3; --acc-soft: #dff3fa;
-  --navy: #0a1f44; --mid: #7d8db0; --light: #c9d2e3; --gold: #c99a2e;
+  --mast: #0d2148; --on-mast: #ffffff; --on-mast-2: #c8d4ea; --acc: #144391; --acc-ink: #144391; --acc-soft: #e3eaf6;
+  --navy: #0d2148; --mid: #3e5566; --light: #c5ced8; --gold: #fdc301; --red: #e30918; --green: #009e4c; --yellow: #fdc301;
   --font-display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
   --font-body: "Public Sans", "Segoe UI", Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #0a1120; --panel: #111b2e; --ink: #edf1f8; --ink-2: #bcc7da; --muted: #8592aa; --line: #243049; --grid: #1a2438;
-  --mast: #0a1f44; --on-mast-2: #b7c6e2; --acc: #2cc3ee; --acc-ink: #5fd2f2; --acc-soft: #12304a;
-  --navy: #9fb3da; --mid: #5f6f92; --light: #33415c; --gold: #e0b450; color-scheme: dark; } }
+  --mast: #0d2148; --on-mast-2: #b9c8e4; --acc: #5b8ee0; --acc-ink: #8db1ee; --acc-soft: #16284a;
+  --navy: #9fb3da; --mid: #6c8296; --light: #33415c; --gold: #fdc301; --red: #ff4a52; --green: #2dbd73; --yellow: #fdc301; color-scheme: dark; } }
 :root[data-theme="dark"] {
   --bg: #0a1120; --panel: #111b2e; --ink: #edf1f8; --ink-2: #bcc7da; --muted: #8592aa; --line: #243049; --grid: #1a2438;
-  --mast: #0a1f44; --on-mast-2: #b7c6e2; --acc: #2cc3ee; --acc-ink: #5fd2f2; --acc-soft: #12304a;
-  --navy: #9fb3da; --mid: #5f6f92; --light: #33415c; --gold: #e0b450; color-scheme: dark; }
+  --mast: #0d2148; --on-mast-2: #b9c8e4; --acc: #5b8ee0; --acc-ink: #8db1ee; --acc-soft: #16284a;
+  --navy: #9fb3da; --mid: #6c8296; --light: #33415c; --gold: #fdc301; --red: #ff4a52; --green: #2dbd73; --yellow: #fdc301; color-scheme: dark; }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
 .inner { max-width: 1000px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
-.mast { background: var(--mast); color: var(--on-mast); border-bottom: 10px solid var(--acc); }
+.mast { background: var(--mast); color: var(--on-mast); border-bottom: 10px solid; border-image: linear-gradient(90deg, #e30918 0 25%, #144391 25% 50%, #fdc301 50% 75%, #009e4c 75%) 1; }
 .mast .inner { padding-block: 22px 64px; display: grid; gap: 14px; }
 .back { color: var(--on-mast-2); text-decoration: none; font-weight: 600; font-size: 15px; }
 .eyebrow { font: 700 13px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--on-mast-2); margin-top: 18px; }
 h1 { font: 800 clamp(58px, 12vw, 120px)/.9 var(--font-display); text-transform: uppercase; margin: 0; }
-h1 span { display: block; font-size: .34em; line-height: 1.15; margin-top: 12px; font-weight: 700; color: var(--acc); text-wrap: balance; }
+h1 span { display: block; font-size: .34em; line-height: 1.15; margin-top: 12px; font-weight: 700; color: var(--yellow); text-wrap: balance; }
 .lede { margin: 4px 0 0; max-width: 64ch; color: var(--on-mast-2); font-size: 19px; }
 .byline { font-size: 14px; color: var(--on-mast-2); }
 h2 { font: 700 36px/1.05 var(--font-display); margin: 0 0 8px; text-wrap: balance; }
@@ -48,6 +48,7 @@ h2 { font: 700 36px/1.05 var(--font-display); margin: 0 0 8px; text-wrap: balanc
 section { padding-block: 44px 4px; }
 .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: -34px; }
 .kpi { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--acc); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+.kpi:nth-child(1) { border-top-color: var(--red); } .kpi:nth-child(3) { border-top-color: var(--yellow); } .kpi:nth-child(4) { border-top-color: var(--green); }
 .kpi b { display: block; font: 800 38px/1 var(--font-display); font-variant-numeric: tabular-nums; }
 .kpi span { color: var(--ink-2); font-size: 15px; line-height: 1.4; display: block; margin-top: 6px; }
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: grid; gap: 16px; min-width: 0; }
@@ -64,7 +65,7 @@ section { padding-block: 44px 4px; }
 .split { display: grid; gap: 12px; }
 .srow { display: grid; grid-template-columns: 5em minmax(0, 1fr) 4.4em; gap: 12px; align-items: center; font-size: 15px; }
 .srow .track { display: flex; height: 26px; border-radius: 4px; overflow: hidden; background: var(--grid); }
-.srow .paid { background: var(--acc); } .srow .kept { background: var(--mid); }
+.srow .paid { background: var(--green); } .srow .kept { background: var(--mid); }
 .srow .pct { font: 700 22px var(--font-display); text-align: right; }
 .fees { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .fee { border: 1px solid var(--line); border-radius: 8px; padding: 14px; text-align: center; min-width: 0; }
@@ -128,7 +129,7 @@ footer { padding-block: 40px 56px; font-size: 14px; color: var(--muted); }
     <h2>But most of it goes to the countries</h2>
     <p class="intro">Yes, the countries make money too. UEFA passes almost all national-team income on to its 55 member associations. What it keeps covers running the competitions.</p>
     <div class="card"><div class="split" id="split"></div>
-      <div class="legend"><span><i style="background:var(--acc)"></i>Paid to the 55 associations</span><span><i style="background:var(--mid)"></i>Kept by UEFA</span></div>
+      <div class="legend"><span><i style="background:var(--green)"></i>Paid to the 55 associations</span><span><i style="background:var(--mid)"></i>Kept by UEFA</span></div>
       <p class="note">National-team revenue and the amount UEFA recorded as distributions to associations in the same season. Seasons with complete figures in the reports.</p></div>
   </section>
 
