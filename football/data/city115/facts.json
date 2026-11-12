@@ -1,0 +1,18 @@
+{
+ "charges": [
+  {"cat": "Inaccurate financial information", "n": 54, "years": "2009/10–2017/18"},
+  {"cat": "Failing to cooperate with the investigation", "n": 35, "years": "during the investigation; charged Feb 2023"},
+  {"cat": "Inaccurate player and manager pay", "n": 14, "years": "2009/10–2017/18"},
+  {"cat": "Premier League profit and sustainability rules", "n": 7, "years": "2015/16–2017/18"},
+  {"cat": "UEFA rules, including financial fair play", "n": 5, "years": "2013/14–2017/18"}
+ ],
+ "precedents": [
+  {"club": "Juventus", "league": "Serie A", "season": "2022/23", "pts": 10, "why": "False accounting on transfer deals"},
+  {"club": "Everton", "league": "Premier League", "season": "2023/24", "pts": 6, "why": "One breach of profit and sustainability rules (10 cut to 6 on appeal)"},
+  {"club": "Nottingham Forest", "league": "Premier League", "season": "2023/24", "pts": 4, "why": "One breach of profit and sustainability rules"},
+  {"club": "Everton", "league": "Premier League", "season": "2023/24", "pts": 2, "why": "A second breach, the following year's accounts"}
+ ],
+ "now": {"date": "12 November 2026", "games": 10, "table": [
+  ["Arsenal",27],["Brighton",22],["Man City",21],["Liverpool",18],["Chelsea",16],["Everton",16],["Bournemouth",15],["Brentford",14],["Leeds",14],["Aston Villa",13],
+  ["Tottenham",12],["Newcastle",12],["Hull",11],["Ipswich",11],["Fulham",10],["Nott'm Forest",9],["Coventry",9],["Man United",8],["Sunderland",8],["Crystal Palace",7]]}
+}

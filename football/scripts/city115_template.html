@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The 115</title>
+<meta name="description" content="Manchester City were reportedly found guilty on 114 of 115 Premier League charges. What could it cost? The charges by type, what one breach cost Everton, Forest and Juventus, how thin City's title margins were, and a points-deduction simulator for this season.">
+<meta name="author" content="Stephen tAMBI">
+<meta property="og:title" content="The 115: what could the charges cost Man City?">
+<meta property="og:description" content="5 of City's 8 titles were won by margins a 3-point penalty would erase. Everton lost 6 points for one breach. Slide a deduction through this season's table.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stambi292.github.io/sports-analytics/football/the-115/">
+<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-the-115.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: navy masthead with sky-blue rule, KPIs, charges, precedents, title margins (with slider), this season simulator, season table, reading, method. */
+:root {
+  --bg: #f3f6fa; --panel: #ffffff; --ink: #0f1a2e; --ink-2: #3c4a62; --muted: #66748a; --line: #dbe3ee; --grid: #e8eef5;
+  --sky: #6cabdd; --sky-ink: #1f6aa5; --sky-soft: #e2effa; --navy: #1c2c5b; --on-navy: #ffffff; --on-navy-2: #c9dcf0;
+  --other: #c3ccd8; --warn: #c2412b; --warn-soft: #fbe7e2; --ok: #2f7d4f;
+  --font-display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0b1220; --panel: #121c2e; --ink: #edf2f9; --ink-2: #bccadd; --muted: #8796ad; --line: #24324a; --grid: #1b2638;
+  --sky: #7bbbea; --sky-ink: #8cc6f0; --sky-soft: #16304a; --navy: #142146; --on-navy-2: #b9cde6;
+  --other: #3a4860; --warn: #f07a62; --warn-soft: #3a1d18; --ok: #5cc38a; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0b1220; --panel: #121c2e; --ink: #edf2f9; --ink-2: #bccadd; --muted: #8796ad; --line: #24324a; --grid: #1b2638;
+  --sky: #7bbbea; --sky-ink: #8cc6f0; --sky-soft: #16304a; --navy: #142146; --on-navy-2: #b9cde6;
+  --other: #3a4860; --warn: #f07a62; --warn-soft: #3a1d18; --ok: #5cc38a; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
+.inner { max-width: 1000px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+.mast { background: var(--navy); color: var(--on-navy); border-bottom: 10px solid var(--sky); }
+.mast .inner { padding-block: 22px 64px; display: grid; gap: 14px; }
+.back { color: var(--on-navy-2); text-decoration: none; font-weight: 600; font-size: 15px; }
+.eyebrow { font: 700 13px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--on-navy-2); margin-top: 18px; }
+h1 { font: 800 clamp(64px, 13vw, 132px)/.9 var(--font-display); text-transform: uppercase; margin: 0; }
+h1 span { display: block; font-size: .32em; line-height: 1.15; margin-top: 12px; font-weight: 700; color: var(--sky); text-wrap: balance; }
+.lede { margin: 4px 0 0; max-width: 64ch; color: var(--on-navy-2); font-size: 19px; }
+.byline { font-size: 14px; color: var(--on-navy-2); }
+h2 { font: 700 36px/1.05 var(--font-display); margin: 0 0 8px; text-wrap: balance; }
+.intro { margin: 0 0 18px; color: var(--ink-2); max-width: 68ch; }
+section { padding-block: 44px 4px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: -34px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--sky); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+.kpi b { display: block; font: 800 40px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.kpi span { color: var(--ink-2); font-size: 15px; line-height: 1.4; display: block; margin-top: 6px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: grid; gap: 16px; min-width: 0; }
+.note { font-size: 14px; color: var(--muted); margin: 0; }
+.bars { display: grid; gap: 12px; }
+.bar { display: grid; grid-template-columns: minmax(0, 15em) minmax(0, 1fr) 3.4em; gap: 12px; align-items: center; }
+.bar .lab { font-size: 15px; line-height: 1.3; min-width: 0; }
+.bar .lab small { display: block; color: var(--muted); font-size: 13px; }
+.bar .track { height: 22px; background: var(--grid); border-radius: 0 4px 4px 0; position: relative; }
+.bar .fill { height: 100%; background: var(--sky); border-radius: 0 4px 4px 0; }
+.bar .fill.navy { background: var(--navy); }
+:root[data-theme="dark"] .bar .fill.navy { background: var(--sky-ink); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .bar .fill.navy { background: var(--sky-ink); } }
+.bar .val { font: 700 22px var(--font-display); font-variant-numeric: tabular-nums; text-align: right; }
+.callout { background: var(--sky-soft); border-left: 4px solid var(--sky); border-radius: 0 8px 8px 0; padding: 14px 16px; font-size: 16px; }
+.callout b { font-weight: 700; }
+.ctrl { display: grid; gap: 8px; }
+.ctrl label { font-weight: 600; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.ctrl label output { font: 800 30px/1 var(--font-display); color: var(--sky-ink); }
+input[type=range] { width: 100%; accent-color: var(--sky-ink); height: 28px; }
+.quick { display: flex; flex-wrap: wrap; gap: 8px; }
+.quick button { font: 600 14px var(--font-body); border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 999px; padding: 6px 12px; cursor: pointer; min-height: 36px; }
+.quick button[aria-pressed=true] { background: var(--navy); color: #fff; border-color: var(--navy); }
+.titles { display: grid; gap: 8px; }
+.trow { display: grid; grid-template-columns: 4.6em minmax(0, 1fr) 9.5em; gap: 10px; align-items: center; font-size: 15px; }
+.trow .season { font-weight: 700; font-variant-numeric: tabular-nums; }
+.trow .track { height: 26px; position: relative; background: var(--grid); border-radius: 0 4px 4px 0; }
+.trow .fill { height: 100%; background: var(--sky); border-radius: 0 4px 4px 0; display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; font: 700 16px var(--font-display); color: var(--navy); min-width: 26px; }
+.trow.lost .fill { background: var(--warn); color: #fff; }
+.trow .who { font-size: 14px; color: var(--ink-2); line-height: 1.25; }
+.trow.lost .who { color: var(--warn); font-weight: 600; }
+.trow .cut { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--ink); }
+.tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 1px 6px; border-radius: 3px; background: var(--sky-soft); color: var(--sky-ink); margin-left: 6px; vertical-align: 1px; }
+.table { display: grid; gap: 4px; }
+.trow2 { display: grid; grid-template-columns: 2em minmax(0, 9em) minmax(0, 1fr) 2.6em; gap: 10px; align-items: center; font-size: 14px; }
+.trow2 .rk { color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; }
+.trow2 .t { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.trow2 .track { height: 16px; }
+.trow2 .fill { height: 100%; background: var(--other); border-radius: 0 3px 3px 0; transition: width .25s; }
+.trow2.city .t { font-weight: 700; }
+.trow2.city .fill { background: var(--sky); }
+.trow2 .p { font: 700 17px var(--font-display); text-align: right; font-variant-numeric: tabular-nums; }
+.zone { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 4px; margin-top: 4px; }
+.zone.down { color: var(--warn); border-top-color: var(--warn); }
+.result { font-size: 18px; } .result b { font: 800 30px var(--font-display); color: var(--sky-ink); }
+.wrap { overflow-x: auto; }
+table.seasons { border-collapse: collapse; width: 100%; min-width: 620px; font-size: 15px; font-variant-numeric: tabular-nums; }
+table.seasons th, table.seasons td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: right; }
+table.seasons th { font-size: 13px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+table.seasons th:first-child, table.seasons td:first-child { text-align: left; }
+table.seasons tr.champ td:first-child::after { content: " ★ champions"; color: var(--sky-ink); font-weight: 700; font-size: 12px; }
+table.seasons tr.split td { border-top: 3px solid var(--navy); }
+.reading { display: grid; gap: 14px; }
+.reading > div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+.reading b.h { display: block; font: 700 24px/1.1 var(--font-display); margin-bottom: 6px; }
+.reading p { margin: 0; color: var(--ink-2); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line); background: var(--panel); border-radius: 6px; padding: 6px 12px; font-size: 14px; font-weight: 600; }
+.method { padding-left: 20px; color: var(--ink-2); font-size: 15px; display: grid; gap: 8px; }
+.method a { color: var(--sky-ink); }
+footer { padding-block: 40px 56px; font-size: 14px; color: var(--muted); }
+@media (max-width: 760px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .kpi b { font-size: 32px; }
+  .bar { grid-template-columns: minmax(0, 1fr) 3em; } .bar .lab { grid-column: 1 / -1; }
+  .trow { grid-template-columns: 4.2em minmax(0, 1fr); } .trow .who { grid-column: 2; }
+}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="inner">
+    <a class="back" href="../../">← Sports analytics</a>
+    <div class="eyebrow">Premier League · Manchester City · the 115 charges</div>
+    <h1>The 115<span>What could the charges cost Manchester City?</span></h1>
+    <p class="lede">In September an independent commission reportedly found City guilty on 114 of 115 charges. No punishment has been set and City have appealed. The numbers show what is at stake: in titles, in this season's table, and against what one breach cost other clubs.</p>
+    <div class="byline">Stephen tAMBI · data to 12 November 2026</div>
+  </div>
+</header>
+<main class="inner">
+  <div class="kpis" id="kpis"></div>
+
+  <section>
+    <h2>What City were charged with</h2>
+    <p class="intro">115 charges in five groups. Almost half are about inaccurate financial information. The second biggest group is not about money at all: failing to cooperate with the investigation.</p>
+    <div class="card"><div class="bars" id="charges"></div>
+      <p class="note">Charge groups as announced by the Premier League in February 2023. The verdict was reported by The Athletic; the Premier League has not commented, and it is not known which single charge was not proven.</p></div>
+  </section>
+
+  <section>
+    <h2>What one breach has cost others</h2>
+    <p class="intro">Financial cases have already cost clubs points. Each of these was for a single case, not a hundred.</p>
+    <div class="card"><div class="bars" id="precedents"></div>
+      <p class="note">Points deducted. Everton's two deductions in 2023/24 totalled 8 points. Juventus is Serie A; the others are Premier League.</p></div>
+  </section>
+
+  <section>
+    <h2>How thin were City's titles?</h2>
+    <p class="intro">For each league title, the smallest deduction that would have handed it to the runner-up, using the real final table. Slide the deduction to see how many titles would change hands.</p>
+    <div class="card">
+      <div class="ctrl"><label for="tSlide">Points deducted in each title season <output id="tOut">3</output></label>
+        <input type="range" id="tSlide" min="0" max="20" value="3" aria-describedby="tRes">
+        <div class="quick" id="tQuick"></div></div>
+      <div class="result" id="tRes" aria-live="polite"></div>
+      <div class="titles" id="titles"></div>
+      <p class="note">Bar = points City would have needed to lose. Ties on points are decided by goal difference, as in the real table. <span class="tag">charged</span> = season covered by the finance charges (2009/10–2017/18). A counterfactual: it assumes every other result stays the same, and no English title has ever been stripped.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>This season: slide a deduction</h2>
+    <p class="intro" id="nowIntro"></p>
+    <div class="card">
+      <div class="ctrl"><label for="nSlide">Points deducted from City now <output id="nOut">0</output></label>
+        <input type="range" id="nSlide" min="0" max="30" value="0" aria-describedby="nRes">
+        <div class="quick" id="nQuick"></div></div>
+      <div class="result" id="nRes" aria-live="polite"></div>
+      <div class="table" id="nowTable"></div>
+      <p class="note">Points only: where City would be level with other clubs, the place is shown as a range because goal difference decides it. The table will move as the season goes on.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Every season since 2009/10</h2>
+    <p class="intro">How many points City would have had to lose to drop out of the top four, or to be relegated. Relegation needed between <b id="relMin"></b> and <b id="relMax"></b> points in any one season.</p>
+    <div class="card"><div class="wrap"><table class="seasons" id="seasons"></table></div>
+      <p class="note">Built from every Premier League result. "To lose the title" counts the points needed to finish second; "top 4" to finish fifth; "relegated" to finish 18th. The line marks the end of the finance-charge period.</p></div>
+  </section>
+
+  <section>
+    <h2>What the numbers say</h2>
+    <div class="reading" id="reading"></div>
+  </section>
+
+  <section class="build" id="how-it-was-built">
+    <h2>Tech stack</h2>
+    <div class="chips"><span class="chip">Python</span><span class="chip">CSV</span><span class="chip">football-data.co.uk</span><span class="chip">JavaScript</span><span class="chip">HTML/CSS</span><span class="chip">Playwright</span><span class="chip">GitHub Pages</span></div>
+  </section>
+
+  <section>
+    <h2>Method and sources</h2>
+    <ul class="method">
+      <li><b>Season tables 2009/10–2025/26:</b> rebuilt from every match result (football-data.co.uk, via the datasets/football-datasets repository). Ranking by points, then goal difference, then goals scored.</li>
+      <li><b>Deduction needed:</b> the smallest whole number of points that, taken from City alone, moves City below the given place in the final table.</li>
+      <li><b>2026/27 table:</b> points after 10 games, 12 November 2026.</li>
+      <li><b>Charges:</b> Premier League announcement, February 2023, as summarised by <a href="https://www.si.com/soccer/man-city-charges-premier-league-multi-year-investigation-explained">Sports Illustrated</a> and <a href="https://www.lbc.co.uk/news/sport/what-114-charges-manchester-city/">LBC</a>. Verdict: reported by The Athletic, September 2026 (<a href="https://www.aljazeera.com/sports/2026/9/29/man-citys-premier-league-charges-whats-the-latest-and-what-comes-next">Al Jazeera</a>). Appeal to be heard by January (<a href="https://www.aljazeera.com/sports/2026/10/14/manchester-city-appeal-over-charges-to-be-heard-by-january-says-regulator">Al Jazeera</a>).</li>
+      <li><b>Precedents:</b> Everton 10 points cut to 6 on appeal (<a href="https://www.skysports.com/football/news/11095/13075486/everton-10-point-deduction-reduced-to-six-after-appeal">Sky Sports</a>); Juventus 10 points, May 2023 (<a href="https://www.eurosport.co.uk/football/juventus-hit-with-10-point-penalty-over-alleged-false-accounting-in-blow-to-champions-league-hopes_sto9618567/story.shtml">Eurosport</a>); Nottingham Forest 4 points and Everton's second 2 points, 2023/24.</li>
+    </ul>
+  </section>
+</main>
+<footer class="inner">Stephen tAMBI · Sports analytics · Data, not opinion. City deny wrongdoing and have appealed; nothing here is a prediction of the sanction.</footer>
+
+<script>
+const D = /*__DATA__*/null;
+const $ = id => document.getElementById(id);
+const titles = D.seasons.filter(s => s.pos === 1);
+const total = D.charges.reduce((a, c) => a + c.n, 0);
+
+$('kpis').innerHTML = [
+  ['114 / 115', 'charges City were reportedly found guilty on'],
+  [`${D.thin} of ${D.titles}`, 'league titles a 3-point deduction would have flipped'],
+  ['6', 'points Everton lost for one breach'],
+  ['0', 'points deducted so far: City have appealed'],
+].map(([b, s]) => `<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
+
+const maxC = Math.max(...D.charges.map(c => c.n));
+$('charges').innerHTML = D.charges.map((c, i) => `<div class="bar"><div class="lab">${c.cat}<small>${c.years}</small></div>
+  <div class="track"><div class="fill ${i === 1 ? 'navy' : ''}" style="width:${c.n / maxC * 100}%"></div></div><div class="val">${c.n}</div></div>`).join('');
+
+$('precedents').innerHTML = D.precedents.map(p => `<div class="bar"><div class="lab">${p.club} <small>${p.league} ${p.season} · ${p.why}</small></div>
+  <div class="track"><div class="fill navy" style="width:${p.pts / 10 * 100}%"></div></div><div class="val">−${p.pts}</div></div>`).join('');
+
+// Titles
+function drawTitles(d) {
+  $('tOut').textContent = d;
+  const lost = titles.filter(t => t.lose_title <= d);
+  const lostC = lost.filter(t => t.in_charge_period).length;
+  $('tRes').innerHTML = `<b>${lost.length} of ${titles.length}</b> titles would change hands${lost.length ? ` (${lostC} from the charged seasons)` : ''}.`;
+  $('titles').innerHTML = titles.map(t => {
+    const l = t.lose_title <= d;
+    return `<div class="trow ${l ? 'lost' : ''}"><div class="season">${t.season}</div>
+      <div class="track"><div class="fill" style="width:${Math.max(t.lose_title / 20 * 100, 5)}%">${t.lose_title}</div>${d ? `<div class="cut" style="left:${Math.min(d / 20, 1) * 100}%"></div>` : ''}</div>
+      <div class="who">${l ? '→ ' + t.new_champion : t.runner_up + ' 2nd'}${t.in_charge_period ? '<span class="tag">charged</span>' : ''}</div></div>`;
+  }).join('');
+  [...$('tQuick').children].forEach(b => b.setAttribute('aria-pressed', +b.dataset.v === d));
+}
+$('tQuick').innerHTML = [[0, 'None'], [3, '−3'], [6, '−6 (Everton)'], [10, '−10 (Juventus)'], [20, '−20']].map(([v, l]) => `<button type="button" data-v="${v}">${l}</button>`).join('');
+$('tQuick').onclick = e => { const v = e.target.dataset.v; if (v != null) { $('tSlide').value = v; drawTitles(+v); } };
+$('tSlide').oninput = e => drawTitles(+e.target.value);
+drawTitles(3);
+
+// This season
+const T = D.now.table;
+const cityPts = T.find(r => r[0] === 'Man City')[1];
+$('nowIntro').textContent = `After ${D.now.games} games City are 3rd on ${cityPts} points. A deduction would normally hit the season it is handed down in. Here is what it would do to today's table.`;
+const maxP = Math.max(...T.map(r => r[1]));
+function drawNow(d) {
+  $('nOut').textContent = d;
+  const rows = T.map(([t, p]) => ({ t, p: t === 'Man City' ? Math.max(cityPts - d, 0) : p, city: t === 'Man City' }));
+  const me = rows.find(r => r.city);
+  const above = rows.filter(r => !r.city && r.p > me.p).length, level = rows.filter(r => !r.city && r.p === me.p).length;
+  rows.sort((a, b) => b.p - a.p || (a.city ? 1 : 0) - (b.city ? 1 : 0));
+  const best = above + 1, worst = above + level + 1;
+  const place = best === worst ? ord(best) : `${ord(best)}–${ord(worst)}`;
+  const zone = worst >= 18 && best >= 18 ? 'in the relegation zone' : worst >= 18 ? 'level with the relegation zone' : best <= 4 ? 'in the top four' : '';
+  $('nRes').innerHTML = `City on <b>${me.p}</b> points: <b>${place}</b>${zone ? ', ' + zone : ''}.`;
+  $('nowTable').innerHTML = rows.map((r, i) => `${i === 4 ? '<div class="zone">Top 4 above this line</div>' : ''}${i === 17 ? '<div class="zone down">Relegation zone</div>' : ''}
+    <div class="trow2 ${r.city ? 'city' : ''}"><div class="rk">${i + 1}</div><div class="t">${r.t}</div><div class="track"><div class="fill" style="width:${r.p / maxP * 100}%"></div></div><div class="p">${r.p}</div></div>`).join('');
+  [...$('nQuick').children].forEach(b => b.setAttribute('aria-pressed', +b.dataset.v === d));
+}
+const ord = n => n + (n % 10 === 1 && n !== 11 ? 'st' : n % 10 === 2 && n !== 12 ? 'nd' : n % 10 === 3 && n !== 13 ? 'rd' : 'th');
+$('nQuick').innerHTML = [[0, 'None'], [4, '−4 (Forest)'], [6, '−6 (Everton)'], [10, '−10 (Juventus)'], [15, '−15'], [21, 'All 21']].map(([v, l]) => `<button type="button" data-v="${v}">${l}</button>`).join('');
+$('nQuick').onclick = e => { const v = e.target.dataset.v; if (v != null) { $('nSlide').value = v; drawNow(+v); } };
+$('nSlide').oninput = e => drawNow(+e.target.value);
+drawNow(0);
+
+// Seasons table
+$('relMin').textContent = D.relegate_min; $('relMax').textContent = D.relegate_max;
+$('seasons').innerHTML = `<tr><th>Season</th><th>Place</th><th>Points</th><th>To lose the title</th><th>To leave top 4</th><th>To be relegated</th></tr>` +
+  D.seasons.map((s, i) => `<tr class="${s.pos === 1 ? 'champ' : ''} ${i > 0 && !s.in_charge_period && D.seasons[i - 1].in_charge_period ? 'split' : ''}">
+  <td>${s.season}</td><td>${s.pos}</td><td>${s.pts}</td><td>${s.lose_title ?? '–'}</td><td>${s.out_top4 || '–'}</td><td>${s.relegated}</td></tr>`).join('');
+
+// Reading
+const lostIn = d => titles.filter(t => t.lose_title <= d).length;
+const now6 = (() => { const p = cityPts - 6; const a = T.filter(r => r[0] !== 'Man City' && r[1] > p).length, l = T.filter(r => r[0] !== 'Man City' && r[1] === p).length; return [a + 1, a + l + 1]; })();
+const now15 = (() => { const p = cityPts - 15; return T.filter(r => r[0] !== 'Man City' && r[1] > p).length + 1; })();
+$('reading').innerHTML = [
+  ['The titles were won on thin margins', `${lostIn(3)} of City's ${titles.length} titles would flip with a 3-point penalty. 2011/12 was won on goal difference alone: 1 point hands it to Manchester United. Only 2017/18 (20 points) and 2020/21 (13) were won comfortably. But England has never stripped a title, so this shows the stakes, not a likely outcome.`],
+  ['A deduction now would bite hard, but early', `The Everton penalty (−6) would drop City from 3rd to ${ord(now6[0])}–${ord(now6[1])}. −15 puts them ${ord(now15)}, bottom. After 10 games City would still have 28 games to recover: Everton finished 15th in 2023/24 despite losing 8 points.`],
+  ['The count is not the size of the case', `Multiplying 114 charges by Everton's 6 points gives 684 points, which some have quoted. Tribunals do not add up penalties per charge; they judge how serious the case is overall. 35 of the charges are about cooperation, not money.`],
+  ['Nothing is decided', 'The verdict was reported, not announced. City deny wrongdoing and have appealed, with the appeal due to be heard by January. Every number here is a scenario on real tables, not a forecast of the sanction.'],
+].map(([h, p]) => `<div><b class="h">${h}</b><p>${p}</p></div>`).join('');
+</script>
+</body>
+</html>
