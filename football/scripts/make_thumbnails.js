@@ -2,7 +2,7 @@
 // Add one entry per new project and run: node football/scripts/make_thumbnails.js
 const {chromium}=require('playwright');
 const T=[
- {f:'og-where-did-germanys-talent-go.png',bg:'#111111',ink:'#fff',acc:'#ffce00',sub:'#c9c9c9',kick:'GERMANY · GOLDEN ERA VS TODAY · 2014/15–2023/24',t:"WHERE DID GERMANY'S<br><span>TALENT GO?</span>",
+ {f:'og-where-did-germanys-talent-go.png',bg:'#ffffff',ink:'#111111',acc:'#111111',sub:'#555555',kick:'GERMANY · GOLDEN ERA VS TODAY · 2014/15–2023/24',t:"WHERE DID GERMANY'S<br><span>TALENT GO?</span>",
   body:`<div class="stats"><div><em class="a">26 → 7</em><small>future stars, 2017/18 vs 2021/22</small></div><div><em>1.7 vs 10.2</em><small>world-class full-backs a season, GER vs ESP</small></div></div>`},
  {f:'og-the-poacher.png',bg:'#1d9053',ink:'#fff',acc:'#0b3d22',sub:'#d7f5e3',kick:'BUNDESLIGA 2026/27 · NICLAS FÜLLKRUG, WERDER BREMEN',t:'THE POACHER<br><span>PEAK OR FLUKE?</span>',
   body:`<div class="stats"><div><em>9 in 8</em><small>league goals this season</small></div><div><em class="a">54 vs 49.4</em><small>Bundesliga goals vs xG</small></div><div><em>1 vs 4.4</em><small>abroad, 2025/26</small></div></div>`},
