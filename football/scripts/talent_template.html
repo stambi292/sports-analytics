@@ -97,7 +97,7 @@ footer { padding-block: 40px 60px; color: var(--muted); font-size: 14px; }
 :root { --tool-acc: var(--ger-ink); }
 .build { display: grid; gap: 16px; }
 .build .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.build .chip { font: 600 14px var(--font-body); padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); }
+.build .chip { font: 600 15px var(--font-body); padding: 8px 14px; border-radius: 6px; border: 1.5px solid var(--tool-acc); background: var(--panel); }
 .build .chip b { color: var(--tool-acc); font-weight: 700; }
 .build .steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; counter-reset: s; }
 .build .step { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--tool-acc); border-radius: 8px; padding: 12px 14px; min-width: 0; }
@@ -180,10 +180,8 @@ footer { padding-block: 40px 60px; color: var(--muted); font-size: 14px; }
   </section>
 
   <section class="build" id="how-it-was-built">
-    <h2>How it was built</h2>
-    <p class="intro">The tools and steps behind this page, from raw data to the published analysis.</p>
-    <div class="chips"><span class="chip"><b>Python</b> · pandas, NumPy</span><span class="chip"><b>Parquet</b> · PyArrow</span><span class="chip"><b>Git</b> · sparse clones of open-data repos</span><span class="chip"><b>Data</b> · 144,882 player ratings, 1,000+ World Cup squad rows</span><span class="chip"><b>JavaScript</b> · hand-built SVG charts</span><span class="chip"><b>Playwright</b> · desktop and phone checks</span><span class="chip"><b>GitHub Pages</b> · hosting</span></div>
-    <div class="steps"><div class="step"><h3>Collect</h3><p>Pulled 9 seasons of FIFA / EA FC ratings and the World Cup database from public GitHub repos, only the files needed.</p></div><div class="step"><h3>Clean</h3><p>Matched league names across game versions, kept the top five leagues and grouped 15 positions into 6.</p></div><div class="step"><h3>Analyse</h3><p>Counted future stars, world-class players and local starters by nation, position and season with pandas.</p></div><div class="step"><h3>Visualise</h3><p>Interactive line charts with country toggles, a World Cup timeline and position comparisons, all in plain JavaScript and SVG.</p></div><div class="step"><h3>Recommend</h3><p>Turned each finding into a fix with a measurable target from Germany's own best years.</p></div></div>
+    <h2>Tech stack</h2>
+    <div class="chips"><span class="chip">Python</span><span class="chip">pandas</span><span class="chip">NumPy</span><span class="chip">PyArrow</span><span class="chip">Parquet</span><span class="chip">Git</span><span class="chip">JavaScript</span><span class="chip">SVG</span><span class="chip">HTML/CSS</span><span class="chip">Playwright</span><span class="chip">GitHub Pages</span></div>
   </section>
   <section>
     <h2>Method and sources</h2>

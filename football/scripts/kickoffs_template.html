@@ -95,7 +95,7 @@ footer a { color: var(--ink-2); }
 :root { --tool-acc: var(--red-ink); }
 .build { display: grid; gap: 16px; }
 .build .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.build .chip { font: 600 14px var(--font-body); padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); }
+.build .chip { font: 600 15px var(--font-body); padding: 8px 14px; border-radius: 6px; border: 1.5px solid var(--tool-acc); background: var(--panel); }
 .build .chip b { color: var(--tool-acc); font-weight: 700; }
 .build .steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; counter-reset: s; }
 .build .step { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--tool-acc); border-radius: 8px; padding: 12px 14px; min-width: 0; }
@@ -181,10 +181,8 @@ footer a { color: var(--ink-2); }
     <span>Independent analysis by Stephen tAMBI. Not affiliated with LALIGA or any club.</span>
   </footer>
   <section class="build" id="how-it-was-built">
-    <h2>How it was built</h2>
-    <p class="intro">The tools and steps behind this page, from raw data to the published analysis.</p>
-    <div class="chips"><span class="chip"><b>Python</b> · pandas, json</span><span class="chip"><b>Data</b> · 4,270 LALIGA matches, openfootball</span><span class="chip"><b>Geo</b> · haversine distances between 30+ stadiums</span><span class="chip"><b>Fairness metrics</b> · slot share by club</span><span class="chip"><b>JavaScript</b> · heatmap, charts and trip planner</span><span class="chip"><b>Playwright</b> · desktop and phone checks</span><span class="chip"><b>GitHub Pages</b> · hosting</span></div>
-    <div class="steps"><div class="step"><h3>Collect</h3><p>Twelve seasons of LALIGA fixtures with dates and kick-off times from openfootball.</p></div><div class="step"><h3>Clean</h3><p>Unified club names across seasons and attached stadium coordinates.</p></div><div class="step"><h3>Analyse</h3><p>Late and weeknight share by season and club, and away-trip distance for every match.</p></div><div class="step"><h3>Visualise</h3><p>A week-by-hour heatmap, trend chart, fairness ranking and an away-fan trip planner.</p></div><div class="step"><h3>Recommend</h3><p>Scheduling fixes for the league, each tied to a number from the data.</p></div></div>
+    <h2>Tech stack</h2>
+    <div class="chips"><span class="chip">Python</span><span class="chip">pandas</span><span class="chip">Haversine</span><span class="chip">JSON</span><span class="chip">JavaScript</span><span class="chip">SVG</span><span class="chip">HTML/CSS</span><span class="chip">Playwright</span><span class="chip">GitHub Pages</span></div>
   </section>
 </main>
 
