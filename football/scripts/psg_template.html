@@ -75,6 +75,20 @@ section { padding-block: 44px 4px; }
 .cm h3 { margin: 0 0 8px; font-size: 15px; font-weight: 600; color: var(--ink-2); }
 .cm .big { font: 800 38px/1 var(--font-display); } .cm .big small { font-size: .5em; color: var(--muted); }
 .cm p { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
+.road { display: grid; gap: 6px; }
+.rd { display: grid; grid-template-columns: 4.4em minmax(0, 9.5em) minmax(0, 1fr) minmax(0, 8.5em); gap: 10px; align-items: center; font-size: 14px; }
+.rd .se { font-weight: 700; font-variant-numeric: tabular-nums; }
+.rd .co { color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rd .track { height: 24px; position: relative; }
+.rd .fill { height: 100%; border-radius: 0 4px 4px 0; background: var(--other); display: flex; align-items: center; padding-left: 8px; font: 700 15px var(--font-display); color: var(--ink); white-space: nowrap; }
+.rd.le .fill { background: var(--navy); color: #fff; }
+.rd .ex { font-weight: 600; font-size: 13px; }
+.rd.won .ex { color: var(--red-ink); font-weight: 800; }
+.rd .pain { grid-column: 3 / -1; font-size: 13px; color: var(--red-ink); margin-top: -4px; font-style: italic; }
+.coaches { display: flex; flex-wrap: wrap; gap: 8px; }
+.coach { border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: 14px; font-weight: 600; color: var(--muted); text-decoration: line-through; text-decoration-color: var(--red); }
+.coach.le { text-decoration: none; color: #fff; background: var(--navy); border-color: var(--navy); }
+@media (max-width: 760px) { .rd { grid-template-columns: 4em minmax(0, 1fr) 6.5em; } .rd .co { display: none; } .rd .pain { grid-column: 2 / -1; } }
 .reading { display: grid; gap: 14px; }
 .reading > div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
 .reading b.h { display: block; font: 700 24px/1.1 var(--font-display); margin-bottom: 6px; }
@@ -103,6 +117,13 @@ footer { padding-block: 40px 56px; font-size: 14px; color: var(--muted); }
 </header>
 <main class="inner">
   <div class="kpis" id="kpis"></div>
+
+  <section>
+    <h2>The €2.3 billion road</h2>
+    <p class="intro" id="roadIntro"></p>
+    <div class="card"><div class="coaches" id="coaches"></div><div class="road" id="road"></div>
+      <p class="note">Gross transfer spend per season, € million (FootballTransfers, Transfermarkt figures, to 2024/25). Coach in charge, best signing and how far PSG went in the Champions League.</p></div>
+  </section>
 
   <section>
     <h2>How far PSG got, every season</h2>
@@ -165,6 +186,15 @@ $('kpis').innerHTML = [
   [`${U.now.won} of ${U.now.played}`, 'wins in this season\'s league phase, top of the table'],
 ].map(([b, s]) => `<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
 
+
+const ST = D.story, ss = ST.seasons;
+$('roadIntro').textContent = `Qatar Sports Investments bought PSG in 2011. Since then: €${ST.totals.gross.toLocaleString('en')} million spent on transfers (€${ST.totals.net.toLocaleString('en')}m after sales), eight coaches and twelve Champions League campaigns that ended in pain, before Luis Enrique's team won it twice.`;
+const co = [...new Set(ss.flatMap(s => s.coach.split(' / ')))];
+$('coaches').innerHTML = co.map(c => `<span class="coach ${c === 'Luis Enrique' ? 'le' : ''}">${c}</span>`).join('');
+const mxs = Math.max(...ss.map(s => s.spend || 0));
+$('road').innerHTML = ss.map(s => `<div class="rd ${s.coach === 'Luis Enrique' ? 'le' : ''} ${s.stage === 5 ? 'won' : ''}"><div class="se">${s.season}</div><div class="co">${s.coach}</div>
+  <div class="track"><div class="fill" style="width:${s.spend ? Math.max(s.spend / mxs * 100, 14) : 14}%">${s.spend ? '€' + Math.round(s.spend) + 'm' : 'n/a'}${s.sign ? ' · ' + s.sign : ''}</div></div>
+  <div class="ex">${s.stage === 5 ? '🏆 ' : ''}${s.ucl}</div>${s.pain ? `<div class="pain">${s.pain}</div>` : ''}</div>`).join('');
 const stg = ['', 'Last 16', 'Quarters', 'Semis', 'Final', 'Won'];
 const rows = [...U.seasons, { season: '2026/27', era: 'now', exit: `${U.now.won}/${U.now.played}`, stage: 1 }];
 $('ladder').innerHTML = rows.map(s => `<div class="rung ${s.era === 'team' ? 'team' : ''} ${s.stage === 5 ? 'win' : ''} ${s.era === 'now' ? 'now' : ''}">
@@ -196,6 +226,7 @@ $('nowIntro').textContent = `No club has won three Champions Leagues in a row si
 $('three').innerHTML = [['2024/25 league phase', t[0].league_phase, 'then 5 ties won, 24 goals for, 6 against'], ['2025/26 league phase', t[1].league_phase, 'then 5 ties won, 24 goals for, 11 against'], ['2026/27 so far', '1st', `${U.now.pts} points from ${U.now.played} games, goal difference +${U.now.gd}`]].map(([h, b, p]) => `<div class="cm"><h3>${h}</h3><div class="big">${b}</div><p>${p}</p></div>`).join('');
 
 $('reading').innerHTML = [
+  ['Money was never the difference', `PSG spent big in every era. Their most expensive summer was not Neymar's but the 2023/24 rebuild (€390m), Luis Enrique's first. The stars' seasons cost €1.27bn and brought no Champions League; what changed was what the money bought: a pressing team instead of three superstars.`],
   ['The stars won games, the team wins ties', `With Neymar and Mbappé, PSG won half their knockout ties. Since, all ${S.ties_team[1]}. Knockouts reward a team that controls games for 180 minutes, not moments of individual brilliance.`],
   ['Control is the new weapon', `PSG's share of shots rose from ${S.stars.shots}% to ${S.team.shots}%, the highest in 16 seasons of data. A pressing team that keeps the ball gives better opponents less to work with.`],
   ['Built to finish, not to start', 'Two titles from 15th and 11th in the league phase. PSG peak in spring, when the trophy is decided.'],
