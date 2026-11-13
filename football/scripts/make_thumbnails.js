@@ -2,6 +2,8 @@
 // Add one entry per new project and run: node football/scripts/make_thumbnails.js
 const {chromium}=require('playwright');
 const T=[
+ {f:'og-peps-student.png',bg:'#db0007',ink:'#fff',acc:'#ffffff',sub:'#ffe1e1',kick:'ARSENAL · ARTETA VS GUARDIOLA · 2016–2026',t:"PEP'S STUDENT<br><span>NFL PLAYBOOK</span>",
+  body:`<div class="stats"><div><em>19</em><small>corner goals, a record</small></div><div><em>46%</em><small>of wins by one goal (City 30%)</small></div><div><em>0</em><small>corner goals after the crackdown</small></div></div>`},
  {f:'og-why-spain.png',bg:'#c60b1e',ink:'#fff',acc:'#ffc400',sub:'#ffe9b0',kick:'SPAIN NATIONAL TEAM · EVERY RESULT SINCE 1990',t:'WHY SPAIN<br><span>THE BEST IN THE WORLD</span>',
   body:`<div class="stats"><div><em>44</em><small>competitive games unbeaten</small></div><div><em class="a">2358</em><small>Elo, number one</small></div><div><em>1 in 18</em><small>defeats vs the top 10</small></div></div>`},
  {f:'og-follow-the-money.png',bg:'#0d2148',ink:'#fff',acc:'#fdc301',sub:'#c8d4ea',kick:'UEFA NATIONS LEAGUE · MONEY AND GAMES · 2010–2025',t:'FOLLOW THE<br><span>MONEY</span>',

@@ -1,0 +1,14 @@
+{
+ "_note": "Opta Analyst figures. Corner-goal counts differ slightly between outlets by definition (second phases, own goals); these follow Opta.",
+ "corners": [
+  {"label": "Arsenal 2023/24", "n": 16, "team": "ars"},
+  {"label": "Arsenal 2024/25", "n": 14, "team": "ars"},
+  {"label": "Arsenal 2025/26", "n": 19, "team": "ars", "record": true},
+  {"label": "Man City 2021/22 (Guardiola's best)", "n": 15, "team": "mci"},
+  {"label": "West Brom 2016/17 (old record)", "n": 16, "team": "oth"},
+  {"label": "Arsenal 2026/27, first 7 games", "n": 0, "team": "ars", "now": true}
+ ],
+ "share": {"arsenal_2526": 35.9, "old_record": 29.7, "old_record_team": "Man United 2007/08", "league_2526": 29.3},
+ "crackdown": {"xg_per_corner": [0.064, 0.047], "openplay_xg_pg": [1.06, 1.24], "corner_share_league": [18.0, 9.8]},
+ "now": {"pts": 27, "games": 10, "pos": 1}
+}

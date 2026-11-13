@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pep's Student</title>
+<meta name="description" content="Arteta learned under Guardiola, but his Arsenal win differently: a record 19 corner goals, the fewest goals conceded, and more one-goal wins. Then the Premier League cracked down on corner blocking. The numbers, season by season.">
+<meta name="author" content="Stephen tAMBI">
+<meta property="og:title" content="Pep's Student, NFL Playbook: how Arteta's Arsenal win">
+<meta property="og:description" content="19 corner goals, a Premier League record. 46% of wins by one goal, against 30% for Guardiola's City. Then the crackdown: 0 corner goals in 7 games, and still top.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stambi292.github.io/sports-analytics/football/peps-student/">
+<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-peps-student.png?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Arsenal-red masthead with navy rule, KPIs, points by season, two ways to win, corner record, crackdown, season table, reading, stack, method. */
+:root {
+  --bg: #f7f5f3; --panel: #ffffff; --ink: #161320; --ink-2: #474255; --muted: #736d80; --line: #e4e0e6; --grid: #efecf0;
+  --red: #db0007; --red-ink: #b80006; --navy: #063672; --navy-ink: #063672; --gold: #9c824a; --other: #bdb6c4;
+  --font-display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121019; --panel: #1b1824; --ink: #f2eff6; --ink-2: #c9c3d3; --muted: #9a93a6; --line: #312c3d; --grid: #25212e;
+  --red: #ff3b3f; --red-ink: #ff6a6d; --navy: #6f9be0; --navy-ink: #9bbcf0; --gold: #d2b77b; --other: #4d475a; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #121019; --panel: #1b1824; --ink: #f2eff6; --ink-2: #c9c3d3; --muted: #9a93a6; --line: #312c3d; --grid: #25212e;
+  --red: #ff3b3f; --red-ink: #ff6a6d; --navy: #6f9be0; --navy-ink: #9bbcf0; --gold: #d2b77b; --other: #4d475a; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
+.inner { max-width: 1000px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+.mast { background: #db0007; color: #fff; border-bottom: 10px solid #063672; }
+.mast .inner { padding-block: 22px 64px; display: grid; gap: 14px; }
+.back { color: #ffe1e1; text-decoration: none; font-weight: 600; font-size: 15px; }
+.eyebrow { font: 700 13px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: #ffe1e1; margin-top: 18px; }
+h1 { font: 800 clamp(60px, 12vw, 124px)/.9 var(--font-display); text-transform: uppercase; margin: 0; }
+h1 span { display: block; font-size: .34em; line-height: 1.15; margin-top: 12px; font-weight: 700; color: #fff; opacity: .92; text-wrap: balance; }
+.lede { margin: 4px 0 0; max-width: 64ch; color: #fff3f3; font-size: 19px; }
+.byline { font-size: 14px; color: #ffe1e1; }
+h2 { font: 700 36px/1.05 var(--font-display); margin: 0 0 8px; text-wrap: balance; }
+.intro { margin: 0 0 18px; color: var(--ink-2); max-width: 68ch; }
+section { padding-block: 44px 4px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: -34px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--red); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+.kpi:nth-child(even) { border-top-color: var(--navy); }
+.kpi b { display: block; font: 800 40px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.kpi span { color: var(--ink-2); font-size: 15px; line-height: 1.4; display: block; margin-top: 6px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: grid; gap: 16px; min-width: 0; }
+.note { font-size: 14px; color: var(--muted); margin: 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; color: var(--ink-2); }
+.legend i { display: inline-block; width: 18px; height: 4px; border-radius: 2px; vertical-align: 4px; margin-right: 6px; }
+.wrap { overflow-x: auto; }
+.chart { width: 100%; height: auto; display: block; min-width: 640px; }
+.chart text { font-family: var(--font-body); font-size: 13px; fill: var(--muted); }
+.vs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+.side { border-radius: 10px; padding: 18px; border: 1px solid var(--line); min-width: 0; }
+.side h3 { margin: 0 0 4px; font: 800 28px/1 var(--font-display); }
+.side.ars h3 { color: var(--red-ink); } .side.mci h3 { color: #4a90c8; }
+.side p { margin: 0 0 12px; font-size: 14px; color: var(--muted); }
+.row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 15px; }
+.row b { font: 800 24px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.row.win b { color: var(--red-ink); }
+.side.mci .row.win b { color: #2f78b5; }
+.bars { display: grid; gap: 10px; }
+.bar { display: grid; grid-template-columns: minmax(0, 15em) minmax(0, 1fr) 2.6em; gap: 12px; align-items: center; font-size: 15px; }
+.bar .track { height: 26px; background: var(--grid); border-radius: 0 4px 4px 0; position: relative; }
+.bar .fill { height: 100%; border-radius: 0 4px 4px 0; background: var(--other); }
+.bar.ars .fill { background: var(--red); } .bar.mci .fill { background: #6cabdd; }
+.bar.now .lab { font-weight: 700; }
+.bar .v { font: 800 24px var(--font-display); text-align: right; }
+.bar .rec { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--ink); }
+.cmp { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.cm { border: 1px solid var(--line); border-radius: 10px; padding: 16px; min-width: 0; }
+.cm h3 { margin: 0 0 8px; font-size: 15px; font-weight: 600; color: var(--ink-2); }
+.cm .big { font: 800 40px/1 var(--font-display); }
+.cm .big small { font-size: .5em; color: var(--muted); font-weight: 700; }
+.cm p { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
+table.t { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 15px; font-variant-numeric: tabular-nums; }
+table.t th, table.t td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: right; }
+table.t th { font-size: 13px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+table.t th:first-child, table.t td:first-child, table.t th:nth-child(2), table.t td:nth-child(2) { text-align: left; }
+table.t tr.ars td:nth-child(2) { color: var(--red-ink); font-weight: 700; }
+table.t tr.first td { border-top: 2px solid var(--line); }
+.reading { display: grid; gap: 14px; }
+.reading > div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+.reading b.h { display: block; font: 700 24px/1.1 var(--font-display); margin-bottom: 6px; }
+.reading p { margin: 0; color: var(--ink-2); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line); background: var(--panel); border-radius: 6px; padding: 6px 12px; font-size: 14px; font-weight: 600; }
+.method { padding-left: 20px; color: var(--ink-2); font-size: 15px; display: grid; gap: 8px; }
+.method a { color: var(--red-ink); }
+footer { padding-block: 40px 56px; font-size: 14px; color: var(--muted); }
+@media (max-width: 760px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .kpi b { font-size: 32px; }
+  .vs, .cmp { grid-template-columns: 1fr; }
+  .bar { grid-template-columns: minmax(0, 1fr) 2.6em; } .bar .lab { grid-column: 1 / -1; }
+}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="inner">
+    <a class="back" href="../../">← Sports analytics</a>
+    <div class="eyebrow">Arsenal · Mikel Arteta vs Pep Guardiola · Premier League 2016–2026</div>
+    <h1>Pep's student<span>Same school, an NFL playbook: how Arteta's Arsenal win</span></h1>
+    <p class="lede">Arteta spent three years as Guardiola's assistant at City. His Arsenal won the 2025/26 title, but not the way City did. They win by conceding nothing and scoring from corners. Then the Premier League changed how referees treat corners.</p>
+    <div class="byline">Stephen tAMBI · data to 12 November 2026</div>
+  </div>
+</header>
+<main class="inner">
+  <div class="kpis" id="kpis"></div>
+
+  <section>
+    <h2>From 8th to champions</h2>
+    <p class="intro">Points per season. Arteta took over in December 2019, midway through the season. In 2025/26 they finished above City for the second year running, and won the league.</p>
+    <div class="card"><div class="wrap"><svg class="chart" id="pts" viewBox="0 0 900 340" role="img" aria-label="Premier League points per season, Arsenal and Manchester City, 2016/17 to 2025/26"></svg></div>
+      <div class="legend"><span><i style="background:var(--red)"></i>Arsenal</span><span><i style="background:#6cabdd"></i>Man City</span></div>
+      <p class="note">Built from every Premier League result. 2019/20: Arteta took over mid-season.</p></div>
+  </section>
+
+  <section>
+    <h2>Two ways to win</h2>
+    <p class="intro" id="vsIntro"></p>
+    <div class="card"><div class="vs" id="vs"></div>
+      <p class="note">Per league game. "One-goal wins" and "wins by 3+" are shares of all wins. Guardiola's City 2017/18–2021/22 (four titles in five seasons); Arteta's Arsenal 2023/24–2025/26.</p></div>
+  </section>
+
+  <section>
+    <h2>The NFL playbook</h2>
+    <p class="intro" id="cornerIntro"></p>
+    <div class="card"><div class="bars" id="corners"></div>
+      <p class="note">Premier League goals from corners, Opta. The line marks the old record of 16. Outlets count corner goals slightly differently (second balls, own goals), so totals vary by one or two.</p></div>
+  </section>
+
+  <section>
+    <h2>Then the referees changed the rules</h2>
+    <p class="intro">For 2026/27, referees were told to punish holding, pulling and blocking at corners much more strictly. Arsenal's blocking routines were the most famous in the league.</p>
+    <div class="card"><div class="cmp" id="crack"></div>
+      <p class="note">2025/26 vs 2026/27 to 24 October (Opta Analyst). The guidance is a likely factor, not a proven cause.</p></div>
+  </section>
+
+  <section>
+    <h2>Every season</h2>
+    <div class="card"><div class="wrap"><table class="t" id="tbl"></table></div></div>
+  </section>
+
+  <section>
+    <h2>What the numbers say</h2>
+    <div class="reading" id="reading"></div>
+  </section>
+
+  <section class="build" id="how-it-was-built">
+    <h2>Tech stack</h2>
+    <div class="chips"><span class="chip">Python</span><span class="chip">CSV</span><span class="chip">football-data.co.uk</span><span class="chip">Opta Analyst</span><span class="chip">JavaScript</span><span class="chip">SVG</span><span class="chip">HTML/CSS</span><span class="chip">Playwright</span><span class="chip">GitHub Pages</span></div>
+  </section>
+
+  <section>
+    <h2>Method and sources</h2>
+    <ul class="method">
+      <li><b>Points, goals, clean sheets, winning margins:</b> rebuilt from every Premier League result 2016/17–2025/26 (football-data.co.uk, via the datasets/football-datasets repository).</li>
+      <li><b>Corners and set pieces:</b> Opta Analyst, <a href="https://theanalyst.com/articles/arsenal-most-goals-from-corners-premier-league-season-record">corner record</a> (April 2026), <a href="https://theanalyst.com/articles/arsenal-open-play-set-pieces-stats-premier-league">set-piece share</a> (May 2026) and <a href="https://theanalyst.com/articles/arsenal-corner-struggles-no-goals-premier-league-title">"Why aren't Arsenal scoring any corners?"</a> (October 2026). The 35.9% set-piece share was projected with two games left.</li>
+      <li><b>The 2026/27 corner guidance:</b> <a href="https://backpagefc.com/stories/arsenal-set-piece-machine-jover-premier-league-rule-change-2026">Back Page FC</a>. 2026/27 table: 12 November 2026.</li>
+    </ul>
+  </section>
+</main>
+<footer class="inner">Stephen tAMBI · Sports analytics · Data, not opinion.</footer>
+
+<script>
+const D = /*__DATA__*/null;
+const $ = id => document.getElementById(id);
+const S = D.seasons, P = D.sp, st = D.styles;
+const ars = S.filter(s => s.team === 'Arsenal'), mci = S.filter(s => s.team === 'Man City');
+const a26 = ars[ars.length - 1];
+$('kpis').innerHTML = [
+  ['19', 'goals from corners in 2025/26, a Premier League record'],
+  [a26.ga, 'goals conceded in the title season, the fewest in the league'],
+  [`${st.arteta.one}%`, `of Arteta's wins are by one goal; ${st.pep.one}% for Guardiola's City`],
+  [`0 · ${P.now.pts} pts`, 'corner goals in the first 7 games of 2026/27, and still top'],
+].map(([b, s]) => `<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
+
+(() => {
+  const W = 900, H = 340, L = 44, R = 44, T = 16, B = 30, lo = 50, hi = 100;
+  const n = ars.length, X = i => L + i / (n - 1) * (W - L - R), Y = v => T + (hi - v) / (hi - lo) * (H - T - B);
+  let s = '';
+  for (let g = lo; g <= hi; g += 10) s += `<line x1="${L}" x2="${W - R}" y1="${Y(g)}" y2="${Y(g)}" stroke="var(--grid)"/><text x="${L - 6}" y="${Y(g) + 4}" text-anchor="end">${g}</text>`;
+  ars.forEach((a, i) => s += `<text x="${X(i)}" y="${H - 8}" text-anchor="middle">${a.season}</text>`);
+  const xa = X(ars.findIndex(a => a.y === 2019));
+  s += `<line x1="${xa}" x2="${xa}" y1="${T}" y2="${H - B}" stroke="var(--ink)" stroke-dasharray="4 4"/><text x="${xa + 6}" y="${T + 12}" style="fill:var(--ink)">Arteta arrives</text>`;
+  [[mci, '#6cabdd'], [ars, 'var(--red)']].forEach(([arr, c]) => {
+    s += `<polyline points="${arr.map((a, i) => `${X(i)},${Y(a.pts)}`).join(' ')}" fill="none" stroke="${c}" stroke-width="3.5" stroke-linejoin="round"/>`;
+    arr.forEach((a, i) => s += `<circle cx="${X(i)}" cy="${Y(a.pts)}" r="${a.pos === 1 ? 7 : 4}" fill="${a.pos === 1 ? c : 'var(--panel)'}" stroke="${c}" stroke-width="2.5"><title>${a.team} ${a.season}: ${a.pts} pts, ${a.pos}${a.pos === 1 ? ' (champions)' : ''}</title></circle>`);
+  });
+  s += `<text x="${X(n - 1) - 6}" y="${Y(a26.pts) - 12}" text-anchor="end" style="fill:var(--red-ink);font-weight:700">Champions, ${a26.pts}</text>`;
+  $('pts').innerHTML = s;
+})();
+
+$('vsIntro').textContent = `Same school, different results. Guardiola's City scored ${st.pep.gf} goals a game and won ${st.pep.big}% of games by three or more. Arteta's Arsenal score less (${st.arteta.gf}), concede about the same, and win close: ${st.arteta.one}% of their wins are by a single goal.`;
+const rowsVs = [['Goals scored per game', 'gf', 'hi'], ['Goals conceded per game', 'ga', 'lo'], ['Clean sheets', 'cs', 'hi', '%'], ['One-goal wins', 'one', 'n', '%'], ['Wins by 3+', 'big', 'n', '%'], ['Points per game', 'ppg', 'hi']];
+$('vs').innerHTML = [['mci', "Guardiola's City", '2017/18–2021/22 · 4 titles in 5', st.pep, st.arteta], ['ars', "Arteta's Arsenal", '2023/24–2025/26 · 1 title in 3', st.arteta, st.pep]].map(([c, n, sub, me, ot]) =>
+  `<div class="side ${c}"><h3>${n}</h3><p>${sub}</p>${rowsVs.map(([l, k, dir, u = '']) => {
+    const better = dir === 'hi' ? me[k] > ot[k] : dir === 'lo' ? me[k] < ot[k] : false;
+    return `<div class="row ${better ? 'win' : ''}"><span>${l}</span><b>${me[k]}${u}</b></div>`; }).join('')}</div>`).join('');
+
+$('cornerIntro').textContent = `Arsenal treat corners like rehearsed plays: blockers, screens and runners, designed by set-piece coach Nicolas Jover (who came from City). In the title season about ${P.share.arsenal_2526}% of their non-penalty goals came from set pieces. No champion had ever been above ${P.share.old_record}% (${P.share.old_record_team}).`;
+$('corners').innerHTML = P.corners.map(c => `<div class="bar ${c.team} ${c.now ? 'now' : ''}"><div class="lab">${c.label}${c.record ? ' · record' : ''}</div>
+  <div class="track"><div class="fill" style="width:${c.n / 20 * 100}%"></div><div class="rec" style="left:${16 / 20 * 100}%"></div></div><div class="v">${c.n}</div></div>`).join('');
+
+const cr = P.crackdown;
+$('crack').innerHTML = [
+  ['Expected goals per Arsenal corner', cr.xg_per_corner, 3, 'Down 27%: fewer clean chances from each corner.'],
+  ['Arsenal open-play expected goals per game', cr.openplay_xg_pg, 2, 'Up 17%: they create more from normal play.'],
+  ["Share of all league goals from corners", cr.corner_share_league, 1, 'Across the whole league, %. Everyone scores fewer.'],
+].map(([h, [a, b], d, p]) => `<div class="cm"><h3>${h}</h3><div class="big">${a.toFixed(d)} <small>→</small> ${b.toFixed(d)}</div><p>${p}</p></div>`).join('');
+
+$('tbl').innerHTML = `<tr><th>Season</th><th>Team</th><th>Place</th><th>Points</th><th>Scored</th><th>Conceded</th><th>Clean sheets</th><th>1-goal wins</th></tr>` +
+  ars.map((a, i) => [a, mci[i]]).flat().map((s, i) => `<tr class="${s.team === 'Arsenal' ? 'ars' : ''} ${i % 2 === 0 ? 'first' : ''}"><td>${i % 2 === 0 ? s.season : ''}</td><td>${s.team}</td><td>${s.pos}</td><td>${s.pts}</td><td>${s.gf}</td><td>${s.ga}</td><td>${s.cs}</td><td>${s.one} of ${s.w}</td></tr>`).join('');
+
+$('reading').innerHTML = [
+  ['The student kept the defence, not the attack', `Both concede under a goal a game (${st.pep.ga} vs ${st.arteta.ga}). The difference is at the other end: City scored ${st.pep.gf} a game, Arsenal ${st.arteta.gf}. Arteta replaced Guardiola's goal machine with control and set pieces.`],
+  ['Close wins are a style, not luck', `In the title season ${a26.one} of Arsenal's ${a26.w} wins came by one goal. When you rarely concede, 1–0 is enough, and one corner can decide a game.`],
+  ['The playbook was copied, then restricted', `Arsenal broke the corner record with 19. For 2026/27 referees cracked down on blocking at corners; Arsenal scored none in their first seven games. Corners now produce 9.8% of all league goals, down from 18%.`],
+  ['And they are still top', `${P.now.pts} points from ${P.now.games} games without a single corner goal in that early run, with more created from open play. That suggests the team was never only about corners.`],
+].map(([h, t]) => `<div><b class="h">${h}</b><p>${t}</p></div>`).join('');
+</script>
+</body>
+</html>
