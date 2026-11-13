@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Can Data Beat the Bookmaker?</title>
+<meta name="description" content="Two prediction models tested against Bet365 on 7,600 Premier League matches, 2006/07 to 2025/26, using only data available before each kick-off.">
+<meta name="author" content="Stephen tAMBI">
+<meta property="og:title" content="Can data beat the bookmaker?">
+<meta property="og:description" content="Two models vs Bet365 on 7,600 Premier League matches. The models won 1 season in 20, and betting their picks lost 5%.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stambi292.github.io/sports-analytics/football/can-data-beat-the-bookmaker/">
+<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-can-data-beat-the-bookmaker.png?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Premier League purple masthead with green/pink rule, KPI row, how-the-test-works steps, scoreboard,
+   season-by-season dot plot, calibration, margin by season, £10-a-bet returns, long shots, reading, stack, method. */
+:root {
+  --bg: #f6f4f8; --panel: #ffffff; --ink: #1d0a22; --ink-2: #47374d; --muted: #6e6274; --line: #e3dce8; --grid: #efeaf3;
+  --pl: #37003c; --book: #37003c; --model: #e90052; --elo: #c27c00; --good: #00875a; --bad: #d1004a; --neutral: #b9adc0;
+  --font-display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #120814; --panel: #1c1020; --ink: #f5eef8; --ink-2: #d2c4d8; --muted: #9c8ca3; --line: #352638; --grid: #26182a;
+  --book: #c9a6ff; --model: #ff4f93; --elo: #f2b43a; --good: #00e58a; --bad: #ff4f93; --neutral: #4b3c50; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #120814; --panel: #1c1020; --ink: #f5eef8; --ink-2: #d2c4d8; --muted: #9c8ca3; --line: #352638; --grid: #26182a;
+  --book: #c9a6ff; --model: #ff4f93; --elo: #f2b43a; --good: #00e58a; --bad: #ff4f93; --neutral: #4b3c50; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
+.inner { max-width: 1000px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+.mast { background: #37003c; color: #fff; border-bottom: 10px solid; border-image: linear-gradient(90deg, #00ff85 0 50%, #e90052 50%) 1; }
+.mast .inner { padding-block: 22px 64px; display: grid; gap: 14px; }
+.back { color: #d9c2dd; text-decoration: none; font-weight: 600; font-size: 15px; }
+.eyebrow { font: 700 13px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: #00ff85; margin-top: 18px; }
+h1 { font: 800 clamp(54px, 10.5vw, 112px)/.9 var(--font-display); text-transform: uppercase; margin: 0; }
+h1 span { display: block; font-size: .36em; line-height: 1.15; margin-top: 12px; font-weight: 700; color: #00ff85; text-wrap: balance; }
+.lede { margin: 4px 0 0; max-width: 64ch; color: #f1e6f3; font-size: 19px; }
+.byline { font-size: 14px; color: #d9c2dd; }
+h2 { font: 700 36px/1.05 var(--font-display); margin: 0 0 8px; text-wrap: balance; }
+.intro { margin: 0 0 18px; color: var(--ink-2); max-width: 68ch; }
+section { padding-block: 44px 4px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: -34px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--model); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+.kpi:nth-child(even) { border-top-color: var(--book); }
+.kpi b { display: block; font: 800 40px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.kpi span { color: var(--ink-2); font-size: 15px; line-height: 1.4; display: block; margin-top: 6px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: grid; gap: 16px; min-width: 0; }
+.note { font-size: 14px; color: var(--muted); margin: 0; }
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.step { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px; min-width: 0; }
+.step i { font: 800 15px var(--font-display); font-style: normal; color: #fff; background: var(--pl); border-radius: 4px; padding: 1px 8px; }
+.step b { display: block; font: 700 22px/1.1 var(--font-display); margin: 10px 0 6px; }
+.step p { margin: 0; color: var(--ink-2); font-size: 15px; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; font-variant-numeric: tabular-nums; }
+th, td { text-align: right; padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+th { font-size: 13px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+tr.win td { font-weight: 700; } tr.win td:first-child::after { content: " ★"; color: var(--good); }
+.sw { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; vertical-align: -1px; }
+.wrap { overflow-x: auto; }
+.chart { width: 100%; height: auto; display: block; min-width: 640px; }
+.chart text { font-family: var(--font-body); font-size: 13px; fill: var(--muted); }
+.chart .lab { fill: var(--ink); font-weight: 700; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; color: var(--ink-2); }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; }
+.two h3 { margin: 0 0 6px; font: 700 22px var(--font-display); }
+.roi { display: grid; gap: 8px; }
+.r { display: grid; grid-template-columns: minmax(0, 15em) minmax(0, 1fr) 5em; gap: 12px; align-items: center; font-size: 15px; }
+.r .nm { font-weight: 600; } .r .nm small { display: block; font-weight: 400; color: var(--muted); font-size: 13px; line-height: 1.3; }
+.r .tr { position: relative; height: 24px; background: linear-gradient(var(--muted), var(--muted)) var(--zero) 0 / 2px 100% no-repeat; }
+.r .f { position: absolute; top: 3px; bottom: 3px; border-radius: 4px; }
+.r .v { font: 700 19px var(--font-display); text-align: right; font-variant-numeric: tabular-nums; }
+.r.sep { border-top: 1px solid var(--line); padding-top: 8px; }
+.reading { display: grid; gap: 14px; }
+.reading > div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+.reading b.h { display: block; font: 700 24px/1.1 var(--font-display); margin-bottom: 6px; }
+.reading p { margin: 0; color: var(--ink-2); }
+.warn { border-left: 5px solid var(--pl); background: var(--grid); padding: 14px 18px; border-radius: 6px; font-size: 15px; color: var(--ink-2); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line); background: var(--panel); border-radius: 6px; padding: 6px 12px; font-size: 14px; font-weight: 600; }
+.method { padding-left: 20px; color: var(--ink-2); font-size: 15px; display: grid; gap: 8px; }
+.method a { color: var(--model); }
+footer { padding-block: 40px 56px; font-size: 14px; color: var(--muted); }
+@media (max-width: 760px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .kpi b { font-size: 32px; }
+  .steps, .two { grid-template-columns: 1fr; }
+  .r { grid-template-columns: minmax(0, 1fr) 4.5em; } .r .tr { grid-column: 1 / -1; grid-row: 2; }
+}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="inner">
+    <a class="back" href="../../">← Sports analytics</a>
+    <div class="eyebrow">Premier League · 7,600 matches · 2006/07–2025/26</div>
+    <h1>Can data beat the bookmaker?<span>I built two prediction models and tested them against Bet365 on 20 seasons of Premier League football.</span></h1>
+    <p class="lede">Every match was predicted using only what was known before kick-off. Then I compared the predictions with the bookmaker's odds, and checked what would have happened with £10 on every pick.</p>
+    <div class="byline">Stephen tAMBI · data to August 2026</div>
+  </div>
+</header>
+<main class="inner">
+  <div class="kpis" id="kpis"></div>
+
+  <section>
+    <h2>How the test works</h2>
+    <div class="steps">
+      <div class="step"><i>1</i><b>Two models</b><p>A <strong>goals model</strong> rates each team's attack and defence from recent scores. An <strong>Elo model</strong> rates teams from results, like chess ratings.</p></div>
+      <div class="step"><i>2</i><b>No looking ahead</b><p>Before every match day the models are rebuilt using only earlier games. Each prediction is what you could have known that morning.</p></div>
+      <div class="step"><i>3</i><b>Same question, same scoring</b><p>Everyone gives a chance for home win, draw and away win. The <strong>Brier score</strong> measures how far those chances were from what happened. Lower is better.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The scoreboard</h2>
+    <p class="intro" id="boardIntro"></p>
+    <div class="card"><div class="wrap"><table id="board"></table></div>
+      <p class="note">Bookmaker chances are Bet365's odds with the margin taken out. "Picked the right result" means the outcome given the highest chance actually happened. "Guessing" uses only how often home wins, draws and away wins happened before 2006.</p></div>
+  </section>
+
+  <section>
+    <h2>Season by season</h2>
+    <p class="intro" id="seasonIntro"></p>
+    <div class="card"><div class="wrap"><svg class="chart" id="season" viewBox="0 0 940 330" role="img" aria-label="Brier score per season for the bookmaker, the goals model and the Elo model"></svg></div>
+      <div class="legend"><span><i class="sw" style="background:var(--book)"></i>Bookmaker</span><span><i class="sw" style="background:var(--model)"></i>Goals model</span><span><i class="sw" style="background:var(--elo)"></i>Elo model</span></div>
+      <p class="note">Brier score per season, lower is better. ★ = a model beat the bookmaker that season. Some seasons are harder for everyone: 2015/16 was Leicester's title, one of the two seasons the Elo model won.</p></div>
+  </section>
+
+  <section>
+    <h2>Are the odds honest?</h2>
+    <p class="intro" id="calIntro"></p>
+    <div class="card"><div class="two">
+      <div><h3>Bookmaker</h3><svg class="chart" id="calB" viewBox="0 0 420 380" style="min-width:0" role="img" aria-label="Bookmaker calibration"></svg></div>
+      <div><h3>Goals model</h3><svg class="chart" id="calM" viewBox="0 0 420 380" style="min-width:0" role="img" aria-label="Goals model calibration"></svg></div>
+    </div><p class="note">Every home, draw and away chance, grouped in 10% steps. Dots on the diagonal mean "when it said 30%, it happened 30% of the time". Groups with fewer than 40 outcomes are left out.</p></div>
+  </section>
+
+  <section>
+    <h2>The margin: how the bookmaker gets paid</h2>
+    <p class="intro" id="marginIntro"></p>
+    <div class="card"><div class="wrap"><svg class="chart" id="margin" viewBox="0 0 940 260" role="img" aria-label="Bet365 average margin per season"></svg></div>
+      <p class="note">Average Bet365 margin per Premier League match: add up 1 ÷ odds for home, draw and away, then subtract 100%.</p></div>
+  </section>
+
+  <section>
+    <h2>£10 on every pick</h2>
+    <p class="intro" id="betIntro"></p>
+    <div class="card"><div class="roi" id="roi"></div>
+      <p class="note">Return on money staked, 2006/07–2025/26, flat £10 stakes. A "value bet" is placed when the model's chance × the odds is more than 1.05 (or 1.10 where stated). "Best price" means the best odds across about 17 European bookmakers for each match.</p></div>
+  </section>
+
+  <section>
+    <h2>Long shots are the worst bet</h2>
+    <p class="intro" id="flIntro"></p>
+    <div class="card"><div class="roi" id="fl"></div>
+      <p class="note">Return on money staked when backing every outcome in each group, at Bet365 prices. Groups are the chance implied by the odds.</p></div>
+  </section>
+
+  <section>
+    <h2>What the numbers say</h2>
+    <div class="reading" id="reading"></div>
+    <p class="warn">This is analysis, not betting advice. Over 20 seasons every simple strategy here lost money. If gambling stops being fun: BeGambleAware (UK) or check-dein-spiel.de (Germany).</p>
+  </section>
+
+  <section class="build" id="how-it-was-built">
+    <h2>Tech stack</h2>
+    <div class="chips"><span class="chip">Python</span><span class="chip">pandas</span><span class="chip">scikit-learn</span><span class="chip">SciPy</span><span class="chip">Poisson regression</span><span class="chip">Elo ratings</span><span class="chip">Walk-forward testing</span><span class="chip">JavaScript</span><span class="chip">SVG</span><span class="chip">Playwright</span><span class="chip">GitHub Pages</span></div>
+  </section>
+
+  <section>
+    <h2>Method and sources</h2>
+    <ul class="method">
+      <li><b>Data:</b> every Premier League match 2000/01–2026/27 with Bet365 odds and best market odds, from <a href="https://www.football-data.co.uk/">Football-Data.co.uk</a> via the <a href="https://github.com/xgabora/Club-Football-Match-Data-2000-2025">Club Football Match Data</a> collection (MIT licence). Test window: 2006/07–2025/26, 7,600 matches. Earlier seasons are used only to warm the models up.</li>
+      <li><b>Goals model:</b> Poisson regression with an attack and defence rating for every team plus home advantage, fitted on the previous three years. Older matches count less (weight halves every 240 days), and a small penalty keeps promoted teams close to average. Refit before every match date. Scorelines up to 10–10 give home, draw and away chances.</li>
+      <li><b>Elo model:</b> K = 20, home advantage 60 points, bigger wins move ratings more, 20% pull back to average each summer. An ordered logistic model, fitted only on earlier seasons, turns the rating gap into home, draw and away chances.</li>
+      <li><b>Bookmaker chances:</b> 1 ÷ odds, scaled so the three add up to 100%. Brier score = sum of squared differences between the three chances and what happened (0 = perfect).</li>
+      <li><b>Betting:</b> one bet per match at most, on the outcome with the biggest expected value, settled at Bet365 or best market odds. No staking tricks, no hindsight.</li>
+    </ul>
+  </section>
+</main>
+<footer class="inner">Stephen tAMBI · Sports analytics · Data, not opinion.</footer>
+
+<script>
+const D = /*__DATA__*/null;
+const $ = id => document.getElementById(id);
+const S = D.scores, P = D.per, SIM = D.sims, B = S['Bookmaker (Bet365)'], G = S['Goals model'], E = S['Elo model'];
+const pct = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1) + '%';
+const mb = SIM['model b365 edge5'], best = SIM['model best edge10'];
+const fav = D.simple.find(s => s.label === 'Back every favourite');
+
+$('kpis').innerHTML = [
+  [`${D.wins} of ${D.seasons}`, 'seasons where the goals model beat the bookmaker'],
+  [D.fav_rate + '%', 'of matches won by the bookmaker\'s favourite'],
+  [pct(mb.roi), `return betting the model's value picks at Bet365 (${mb.bets.toLocaleString()} bets)`],
+  [pct(best.roi), 'best case: shopping 17 bookmakers for the top price'],
+].map(([b, s]) => `<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
+
+$('boardIntro').textContent = `The bookmaker was the best forecaster on every measure. Both models clearly beat guessing, so they learned something real about football, but they were never as sharp as the odds.`;
+const rows = [['Bookmaker (Bet365)', 'var(--book)'], ['Goals model', 'var(--model)'], ['Elo model', 'var(--elo)'], ['Coin flip (home/draw/away rates)', 'var(--neutral)']];
+$('board').innerHTML = `<tr><th>Forecaster</th><th>Brier score</th><th>Log loss</th><th>Picked the right result</th></tr>` + rows.map(([k, c], i) => {
+  const s = S[k]; return `<tr class="${i === 0 ? 'win' : ''}"><td><i class="sw" style="background:${c}"></i>${k === 'Coin flip (home/draw/away rates)' ? 'Guessing (base rates)' : k}</td><td>${s.brier.toFixed(3)}</td><td>${s.logloss.toFixed(3)}</td><td>${(s.acc * 100).toFixed(1)}%</td></tr>`; }).join('');
+
+const won = P.filter(p => p.model < p.book).map(p => p.season), eWon = P.filter(p => p.elo < p.book).map(p => p.season);
+$('seasonIntro').textContent = `The goals model beat the bookmaker in ${D.wins} season out of ${D.seasons} (${won.join(', ')}), and the Elo model in ${eWon.length} (${eWon.join(', ')}), both by tiny margins. Every other year the odds were closer to the truth. The models follow the bookmaker's ups and downs closely: when football is unpredictable, everyone gets it wrong together.`;
+(() => {
+  const W = 940, H = 330, L = 52, R = 14, T = 18, Bm = 44, n = P.length, lo = .51, hi = .635;
+  const X = i => L + (i + .5) * (W - L - R) / n, Y = v => T + (hi - v) / (hi - lo) * (H - T - Bm);
+  let s = '';
+  for (let g = .52; g <= .63; g += .02) s += `<line x1="${L}" x2="${W - R}" y1="${Y(g)}" y2="${Y(g)}" stroke="var(--grid)"/><text x="${L - 6}" y="${Y(g) + 4}" text-anchor="end">${g.toFixed(2)}</text>`;
+  P.forEach((p, i) => {
+    const ys = [p.book, p.model, p.elo].map(Y);
+    s += `<line x1="${X(i)}" x2="${X(i)}" y1="${Math.min(...ys)}" y2="${Math.max(...ys)}" stroke="var(--line)" stroke-width="2"/>`;
+    [['elo', 'var(--elo)', 'Elo'], ['model', 'var(--model)', 'Goals model'], ['book', 'var(--book)', 'Bookmaker']].forEach(([k, c, nm]) =>
+      s += `<circle cx="${X(i)}" cy="${Y(p[k])}" r="6" fill="${c}" stroke="var(--panel)" stroke-width="2"><title>${p.season} ${nm}: ${p[k].toFixed(3)}</title></circle>`);
+    if (p.model < p.book || p.elo < p.book) s += `<text class="lab" x="${X(i)}" y="${Y(p.book) + 24}" text-anchor="middle" style="fill:var(--good)">★</text>`;
+    s += `<text x="${X(i)}" y="${H - Bm + 20}" text-anchor="middle">${p.season.slice(2, 4)}/${p.season.slice(5)}</text>`;
+  });
+  s += `<text x="${L}" y="${T - 4}" style="font-size:12px">↑ worse</text>`;
+  $('season').innerHTML = s;
+})();
+
+$('calIntro').textContent = `A good forecaster is "calibrated": when it says 30%, it happens about 30% of the time. Take the margin out and the bookmaker's odds are almost perfectly calibrated. My goals model is calibrated too, it's just less sharp: it can't separate matches as precisely, so it's further from the truth on each one.`;
+const cal = (id, pts, c) => {
+  const W = 420, H = 380, L = 44, R = 12, T = 12, Bm = 40, X = v => L + v / 100 * (W - L - R), Y = v => T + (100 - v) / 100 * (H - T - Bm);
+  let s = '';
+  for (let g = 0; g <= 100; g += 20) s += `<line x1="${X(g)}" x2="${X(g)}" y1="${Y(0)}" y2="${Y(100)}" stroke="var(--grid)"/><line x1="${X(0)}" x2="${X(100)}" y1="${Y(g)}" y2="${Y(g)}" stroke="var(--grid)"/><text x="${X(g)}" y="${H - Bm + 18}" text-anchor="middle">${g}%</text><text x="${L - 6}" y="${Y(g) + 4}" text-anchor="end">${g}%</text>`;
+  s += `<line x1="${X(0)}" y1="${Y(0)}" x2="${X(100)}" y2="${Y(100)}" stroke="var(--muted)" stroke-dasharray="4 4"/>`;
+  s += `<polyline fill="none" stroke="${c}" stroke-width="2" points="${pts.map(p => X(p.pred) + ',' + Y(p.act)).join(' ')}"/>`;
+  pts.forEach(p => s += `<circle cx="${X(p.pred)}" cy="${Y(p.act)}" r="${4 + Math.sqrt(p.n) / 14}" fill="${c}" stroke="var(--panel)" stroke-width="2"><title>Said ${p.pred}%, happened ${p.act}% (${p.n.toLocaleString()} outcomes)</title></circle>`);
+  s += `<text x="${(X(0) + X(100)) / 2}" y="${H - 4}" text-anchor="middle">Chance given</text><text x="${X(2)}" y="${Y(94)}">Happened</text>`;
+  $(id).innerHTML = s;
+};
+cal('calB', D.cal.book, 'var(--book)'); cal('calM', D.cal.model, 'var(--model)');
+
+const mlo = Math.min(...P.map(p => p.margin)), mlow = P.find(p => p.margin === mlo);
+$('marginIntro').textContent = `The odds are fair chances plus a margin. In ${P[0].season} Bet365's odds had a margin of ${P[0].margin.toFixed(1)}% built in on an average Premier League match. Competition pushed it down to ${mlo.toFixed(1)}% in ${mlow.season}, and it has crept back up to ${P[P.length - 1].margin.toFixed(1)}% in ${P[P.length - 1].season}. You pay this on every single bet, so a model has to be better than the bookmaker by more than the margin just to break even.`;
+(() => {
+  const W = 940, H = 260, L = 52, R = 14, T = 22, Bm = 36, n = P.length, hi = 9;
+  const X = i => L + (i + .5) * (W - L - R) / n, Y = v => T + (hi - v) / hi * (H - T - Bm), bw = (W - L - R) / n * .6;
+  let s = '';
+  for (let g = 0; g <= 8; g += 2) s += `<line x1="${L}" x2="${W - R}" y1="${Y(g)}" y2="${Y(g)}" stroke="var(--grid)"/><text x="${L - 6}" y="${Y(g) + 4}" text-anchor="end">${g}%</text>`;
+  P.forEach((p, i) => { s += `<rect x="${X(i) - bw / 2}" y="${Y(p.margin)}" width="${bw}" height="${Y(0) - Y(p.margin)}" rx="3" fill="var(--book)"><title>${p.season}: ${p.margin}%</title></rect>`;
+    if (i === 0 || i === n - 1 || p === mlow) s += `<text class="lab" x="${X(i)}" y="${Y(p.margin) - 6}" text-anchor="middle">${p.margin.toFixed(1)}%</text>`;
+    s += `<text x="${X(i)}" y="${H - 14}" text-anchor="middle">${p.season.slice(2, 4)}/${p.season.slice(5)}</text>`; });
+  $('margin').innerHTML = s;
+})();
+
+const bars = (id, rows, lo, hi) => {
+  const zero = (-lo) / (hi - lo) * 100;
+  $(id).innerHTML = rows.map(([nm, sub, v, sep]) => {
+    const w = Math.abs(v) / (hi - lo) * 100, left = v >= 0 ? zero : zero - w, c = v >= 0 ? 'var(--good)' : 'var(--bad)';
+    return `<div class="r ${sep ? 'sep' : ''}"><div class="nm">${nm}<small>${sub}</small></div><div class="tr" style="--zero:${zero}%"><div class="f" style="left:${left}%;width:${Math.max(w, .6)}%;background:${c}"></div></div><div class="v" style="color:${c}">${pct(v)}</div></div>`; }).join('');
+};
+const SM = Object.fromEntries(D.simple.map(s => [s.label, s]));
+const me = SIM['elo b365 edge5'];
+$('betIntro').textContent = `Every simple strategy lost money, and so did betting my models' "value" picks at Bet365: ${pct(mb.roi)} on £${(mb.staked).toLocaleString()} staked. The only way to break even was to take the best price from 17 bookmakers on every match, and even then the result (${pct(best.roi)}) is too small to tell apart from luck.`;
+bars('roi', [
+  ['Back every home team', `${SM['Back every home team'].hit}% won`, SM['Back every home team'].roi],
+  ['Back every favourite', `${fav.hit}% won`, fav.roi],
+  ['Back every underdog', `${SM['Back every underdog'].hit}% won`, SM['Back every underdog'].roi],
+  ['Back every draw', `${SM['Back every draw'].hit}% won`, SM['Back every draw'].roi],
+  ['Elo model value bets', `Bet365 · ${me.bets.toLocaleString()} bets`, me.roi, true],
+  ['Goals model value bets', `Bet365 · ${mb.bets.toLocaleString()} bets`, mb.roi],
+  ['Goals model, best price', `edge over 10% · ${best.bets.toLocaleString()} bets`, best.roi],
+], -8, 4);
+
+const ls = D.fl[0], bf = D.fl[D.fl.length - 1];
+$('flIntro').textContent = `Bookmakers price long shots worst. Backing every outcome the odds rated under 20% lost ${Math.abs(ls.roi)}p per £1. In the 60–80% group the loss was only ${Math.abs(D.fl[3].roi)}p. This is the "favourite–longshot bias", one of the oldest findings in betting research, and it shows up clearly in 20 years of Premier League odds.`;
+bars('fl', D.fl.map(f => [f.bucket, `${f.n.toLocaleString()} outcomes`, f.roi]), -10, 2);
+
+const ex = D.example;
+$('reading').innerHTML = [
+  ['The market is the best model in the room', `Over the 20 seasons the odds beat both models on every measure, and season by season they beat the goals model ${D.seasons - won.length} times and the Elo model ${D.seasons - eWon.length} times out of ${D.seasons}. Odds include information my models can't see: injuries, team news, and millions of people's money.`],
+  ['Beating guessing is easy. Beating the odds is not.', `Both models improved on guessing by about 10% (Brier ${S['Coin flip (home/draw/away rates)'].brier.toFixed(3)} → ${G.brier.toFixed(3)}). The last step to ${B.brier.toFixed(3)}, the bookmaker's level, is where the real work is.`],
+  ['The margin is the moat', `Even a model as good as the bookmaker loses about the margin on every bet: ${P[P.length - 1].margin.toFixed(1)}% last season. To profit you need to be better than the market by more than that, and find bookmakers who will take your bets.`],
+  ['Shocks still happen', `On ${ex.date.split('-').reverse().join('.')} the odds gave ${ex.home} ${ex.book[0]}% against ${ex.away}. ${ex.home} won ${ex.score}. A calibrated 11% happens about once in nine matches, which is why one result never proves a model right or wrong. Twenty seasons do.`],
+  ['What would help a model', 'Expected goals instead of goals, line-ups an hour before kick-off, and player-level ratings. That is what professional pricing teams use, and it is the next step for this project.'],
+].map(([h, p]) => `<div><b class="h">${h}</b><p>${p}</p></div>`).join('');
+</script>
+</body>
+</html>

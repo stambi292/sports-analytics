@@ -2,6 +2,8 @@
 // Add one entry per new project and run: node football/scripts/make_thumbnails.js
 const {chromium}=require('playwright');
 const T=[
+ {f:'og-can-data-beat-the-bookmaker.png',bg:'#37003c',ink:'#fff',acc:'#00ff85',sub:'#e3cfe6',kick:'PREMIER LEAGUE · 7,600 MATCHES · 2006/07–2025/26',t:'CAN DATA BEAT<br><span>THE BOOKMAKER?</span>',
+  body:`<div class="stats"><div><em class="a">1 of 20</em><small>seasons my model won</small></div><div><em>−5.0%</em><small>betting the model's picks</small></div><div><em>54.6%</em><small>favourites that won</small></div></div>`},
  {f:'og-does-the-pitch-matter.png',bg:'#da291c',ink:'#fff',acc:'#fbe122',sub:'#ffe1dc',kick:'MAN UNITED · CLUB ACCOUNTS 2013/14–2025/26',t:'DOES THE PITCH<br><span>MATTER?</span>',
   body:`<div class="stats"><div><em class="a">+£59m</em><small>TV money, 15th to 3rd</small></div><div><em>−£29m</em><small>sponsorship since 2022/23</small></div><div><em>£449m</em><small>lost in 7 straight years</small></div></div>`},
  {f:'og-psg-from-stars-to-a-team.png',bg:'#004170',ink:'#fff',acc:'#da291c',sub:'#c7d9ea',kick:'PSG · CHAMPIONS LEAGUE · 2017–2026',t:'FROM STARS<br><span>TO A TEAM</span>',
