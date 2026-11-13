@@ -1,0 +1,32 @@
+{
+ "_note": "Manchester United plc full-year results, year to 30 June, GBP million. FY2014-FY2025 from the club's earnings releases / SEC 6-K exhibits (FY2018 restated for IFRS 15). FY2026 from Stock Analysis segment data and SportsCal report of the 23 Sep 2026 release. FY2026 wages from SI (reported in USD, ~GBP 302m). Europe: competition played that season. League finish computed from every Premier League result.",
+ "years": [
+  {"fy":2014,"season":"2013/14","com":189.3,"spon":135.8,"bro":135.8,"mat":108.1,"tot":433.2,"wages":214.8,"pl":23.8,"eu":"UCL","eu_run":"UCL quarter-final"},
+  {"fy":2015,"season":"2014/15","com":196.9,"spon":154.9,"bro":107.7,"mat":90.6,"tot":395.2,"wages":203.0,"pl":-0.9,"eu":"none","eu_run":"No Europe"},
+  {"fy":2016,"season":"2015/16","com":268.3,"spon":160.1,"bro":140.4,"mat":106.6,"tot":515.3,"wages":232.2,"pl":36.4,"eu":"UCL","eu_run":"UCL group, then Europa League"},
+  {"fy":2017,"season":"2016/17","com":275.5,"spon":162.3,"bro":194.1,"mat":111.6,"tot":581.2,"wages":263.5,"pl":39.2,"eu":"UEL","eu_run":"Europa League winners"},
+  {"fy":2018,"season":"2017/18","com":275.8,"spon":173.0,"bro":204.2,"mat":109.8,"tot":589.8,"wages":296.0,"pl":-37.6,"eu":"UCL","eu_run":"UCL last 16"},
+  {"fy":2019,"season":"2018/19","com":275.1,"spon":173.0,"bro":241.2,"mat":110.8,"tot":627.1,"wages":332.3,"pl":18.9,"eu":"UCL","eu_run":"UCL quarter-final"},
+  {"fy":2020,"season":"2019/20","com":279.0,"spon":182.7,"bro":140.2,"mat":89.8,"tot":509.0,"wages":284.0,"pl":-23.2,"eu":"UEL","eu_run":"Europa League semi-final","covid":true},
+  {"fy":2021,"season":"2020/21","com":232.2,"spon":140.2,"bro":254.8,"mat":7.1,"tot":494.1,"wages":322.6,"pl":-92.2,"eu":"UCL","eu_run":"UCL group, then Europa League final","covid":true},
+  {"fy":2022,"season":"2021/22","com":257.8,"spon":147.9,"bro":214.9,"mat":110.5,"tot":583.2,"wages":384.2,"pl":-115.5,"eu":"UCL","eu_run":"UCL last 16"},
+  {"fy":2023,"season":"2022/23","com":302.9,"spon":189.5,"bro":209.1,"mat":136.4,"tot":648.4,"wages":331.4,"pl":-28.7,"eu":"UEL","eu_run":"Europa League quarter-final"},
+  {"fy":2024,"season":"2023/24","com":302.9,"spon":177.8,"bro":221.7,"mat":137.1,"tot":661.8,"wages":364.7,"pl":-113.2,"eu":"UCL","eu_run":"UCL group stage"},
+  {"fy":2025,"season":"2024/25","com":333.3,"spon":188.4,"bro":173.0,"mat":160.3,"tot":666.5,"wages":313.2,"pl":-33.0,"eu":"UEL","eu_run":"Europa League final"},
+  {"fy":2026,"season":"2025/26","com":317.3,"spon":160.5,"bro":206.8,"mat":153.5,"tot":677.6,"wages":302,"pl":-43.0,"eu":"none","eu_run":"No Europe"}
+ ],
+ "swing": {
+  "_note": "FY2025 -> FY2026, GBP m (Stock Analysis segment data from the FY2026 release).",
+  "domestic_bro":[136.1,195.0], "europe_bro":[31.1,6.1], "spon":[188.4,160.5], "retail":[144.9,156.8], "mat":[160.3,153.5], "tot":[666.5,677.6]
+ },
+ "cpi": {"_note":"ONS CPI index 2015=100 (via Royal London table).","jun2016":100.6,"jun2026":142.5},
+ "rivals": {
+  "_note":"Commercial revenue CAGR FY2015/16 to FY2023/24 and FY2024 commercial revenue, Glazernomics compiling club accounts / Swiss Ramble; FY2017-FY2020 growth same source.",
+  "cagr_16_24":{"Man United":1.5,"Big Six average":11.8,"Other five, lowest":8.6,"Other five, highest":19.6},
+  "com_2024":{"Man City":345,"Liverpool":308,"Man United":302.9},
+  "growth_17_20":{"Tottenham":86,"Liverpool":80,"Chelsea":37,"Man City":28,"Arsenal":25,"Man United":3}
+ },
+ "money_league":{"rank_2026":8,"tops":10,"editions":29,"last_top":2017},
+ "adidas":"£10m deduction for each season without Champions League from 2025/26 (FY2025 20-F, Note 4.3, via The Esk)",
+ "quote":{"text":"not dependent on success on the pitch for commercial power","who":"Avram Glazer, co-owner","where":"Deutsche Bank Sports Investment Conference, London, 5 Nov 2026 (reported by The Athletic, via SI)","pos_then":17}
+}

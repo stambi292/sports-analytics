@@ -2,6 +2,8 @@
 // Add one entry per new project and run: node football/scripts/make_thumbnails.js
 const {chromium}=require('playwright');
 const T=[
+ {f:'og-does-the-pitch-matter.png',bg:'#da291c',ink:'#fff',acc:'#fbe122',sub:'#ffe1dc',kick:'MAN UNITED · CLUB ACCOUNTS 2013/14–2025/26',t:'DOES THE PITCH<br><span>MATTER?</span>',
+  body:`<div class="stats"><div><em class="a">+£59m</em><small>TV money, 15th to 3rd</small></div><div><em>−£29m</em><small>sponsorship since 2022/23</small></div><div><em>£449m</em><small>lost in 7 straight years</small></div></div>`},
  {f:'og-psg-from-stars-to-a-team.png',bg:'#004170',ink:'#fff',acc:'#da291c',sub:'#c7d9ea',kick:'PSG · CHAMPIONS LEAGUE · 2017–2026',t:'FROM STARS<br><span>TO A TEAM</span>',
   body:`<div class="stats"><div><em>0 in 7</em><small>with Neymar + Mbappé</small></div><div><em class="a">2 in 2</em><small>since, back to back</small></div><div><em>10 of 10</em><small>knockout ties won</small></div></div>`},
  {f:'og-the-spanish-school.png',bg:'#ffc400',ink:'#2a1a00',acc:'#c60b1e',sub:'#5a3b00',kick:'SPANISH COACHES · 2000–2026',t:'THE SPANISH<br><span>SCHOOL</span>',

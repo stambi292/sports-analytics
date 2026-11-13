@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Does the Pitch Matter?</title>
+<meta name="description" content="Manchester United's co-owner says the club does not depend on results for commercial power. Thirteen years of club accounts say the pitch still decides the money.">
+<meta name="author" content="Stephen tAMBI">
+<meta property="og:title" content="Man United: does the pitch matter?">
+<meta property="og:description" content="The owner says no. 13 years of accounts: 15th to 3rd was worth £59m in TV money, sponsorship fell £29m, and 7 straight years of losses.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stambi292.github.io/sports-analytics/football/does-the-pitch-matter/">
+<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-does-the-pitch-matter.png?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: United red masthead with black + gold rule, claim scorecard, revenue stack by year, 15th->3rd swing, commercial in real terms vs rivals, losses, verdict, stack, method. */
+:root {
+  --bg: #f7f5f4; --panel: #ffffff; --ink: #1a1414; --ink-2: #4a3f3f; --muted: #6f6464; --line: #e4dcdb; --grid: #f0eaea;
+  --red: #da291c; --red-ink: #b81f14; --black: #2a2323; --gold: #c99a06; --gold-ink: #8a6a00; --other: #cfc6c5; --good: #2f7d4f;
+  --font-display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #120e0e; --panel: #1c1616; --ink: #f4eeee; --ink-2: #cdbfbf; --muted: #9a8b8b; --line: #342a2a; --grid: #261e1e;
+  --red: #ff5a4c; --red-ink: #ff8a7f; --black: #d9cfcf; --gold: #f2c230; --gold-ink: #f7d566; --other: #4a3e3e; --good: #5cc28a; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #120e0e; --panel: #1c1616; --ink: #f4eeee; --ink-2: #cdbfbf; --muted: #9a8b8b; --line: #342a2a; --grid: #261e1e;
+  --red: #ff5a4c; --red-ink: #ff8a7f; --black: #d9cfcf; --gold: #f2c230; --gold-ink: #f7d566; --other: #4a3e3e; --good: #5cc28a; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
+.inner { max-width: 1000px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+.mast { background: #da291c; color: #fff; border-bottom: 10px solid; border-image: linear-gradient(90deg, #000 0 70%, #fbe122 70%) 1; }
+.mast .inner { padding-block: 22px 64px; display: grid; gap: 14px; }
+.back { color: #ffd9d4; text-decoration: none; font-weight: 600; font-size: 15px; }
+.eyebrow { font: 700 13px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: #ffe1dc; margin-top: 18px; }
+h1 { font: 800 clamp(56px, 11vw, 116px)/.9 var(--font-display); text-transform: uppercase; margin: 0; }
+h1 span { display: block; font-size: .36em; line-height: 1.15; margin-top: 12px; font-weight: 700; color: #fbe122; text-wrap: balance; }
+.lede { margin: 4px 0 0; max-width: 64ch; color: #fff1ef; font-size: 19px; }
+.byline { font-size: 14px; color: #ffd9d4; }
+h2 { font: 700 36px/1.05 var(--font-display); margin: 0 0 8px; text-wrap: balance; }
+.intro { margin: 0 0 18px; color: var(--ink-2); max-width: 68ch; }
+section { padding-block: 44px 4px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: -34px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--red); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+.kpi:nth-child(even) { border-top-color: var(--black); }
+.kpi b { display: block; font: 800 40px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.kpi span { color: var(--ink-2); font-size: 15px; line-height: 1.4; display: block; margin-top: 6px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: grid; gap: 16px; min-width: 0; }
+.note { font-size: 14px; color: var(--muted); margin: 0; }
+.quote { border-left: 6px solid var(--red); padding: 4px 0 4px 18px; }
+.quote q { font: 700 clamp(26px, 4vw, 36px)/1.15 var(--font-display); display: block; text-wrap: balance; }
+.quote cite { display: block; margin-top: 8px; font-style: normal; color: var(--muted); font-size: 14px; }
+.claims { display: grid; gap: 10px; }
+.claim { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 16px; align-items: center; padding: 14px 16px; border-radius: 8px; background: var(--grid); }
+.claim b { font-weight: 700; } .claim p { margin: 0; grid-column: 1 / -1; color: var(--ink-2); font-size: 15px; }
+.verdict { font: 800 18px var(--font-display); letter-spacing: .04em; text-transform: uppercase; padding: 2px 10px; border-radius: 4px; color: #fff; white-space: nowrap; }
+.v-true { background: var(--good); } .v-false { background: var(--red); } .v-half { background: var(--gold); color: #1a1414; }
+.chart { width: 100%; height: auto; display: block; min-width: 680px; }
+.chart text { font-family: var(--font-body); font-size: 13px; fill: var(--muted); }
+.chart .lab { fill: var(--ink); font-weight: 700; }
+.wrap { overflow-x: auto; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; color: var(--ink-2); }
+.legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; margin-right: 6px; }
+.swing { display: grid; gap: 8px; }
+.sw { display: grid; grid-template-columns: minmax(0, 13em) minmax(0, 1fr) 5.5em; gap: 12px; align-items: center; font-size: 15px; }
+.sw .nm { font-weight: 600; } .sw .nm small { display: block; font-weight: 400; color: var(--muted); font-size: 13px; line-height: 1.3; }
+.sw .tr { position: relative; height: 26px; background: linear-gradient(var(--line), var(--line)) 50% 0 / 2px 100% no-repeat; }
+.sw .f { position: absolute; top: 3px; bottom: 3px; border-radius: 4px; }
+.sw .f.up { left: 50%; background: var(--good); } .sw .f.dn { right: 50%; background: var(--red); }
+.sw .v { font: 700 18px var(--font-display); text-align: right; font-variant-numeric: tabular-nums; }
+.sw .v.up { color: var(--good); } .sw .v.dn { color: var(--red-ink); }
+.sw.tot { border-top: 1px solid var(--line); padding-top: 8px; }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; }
+.two h3 { margin: 0 0 10px; font: 700 22px var(--font-display); }
+.hb { display: grid; gap: 7px; }
+.hr { display: grid; grid-template-columns: minmax(0, 9.5em) minmax(0, 1fr); gap: 10px; align-items: center; font-size: 14px; }
+.hr .t { height: 26px; }
+.hr .f { height: 100%; border-radius: 0 4px 4px 0; background: var(--other); display: flex; align-items: center; padding-left: 8px; font: 700 15px var(--font-display); color: var(--ink); white-space: nowrap; }
+.hr.mu .f { background: var(--red); color: #fff; } .hr.real .f { background: repeating-linear-gradient(45deg, var(--red) 0 6px, var(--grid) 6px 11px); color: var(--ink); }
+.hr .f em { font-style: normal; } .hr.real .f em { background: var(--panel); padding: 0 5px; border-radius: 3px; }
+.hr .o { font: 700 15px var(--font-display); color: var(--red-ink); white-space: nowrap; }
+.hr .n { font-weight: 600; } .hr.mu .n { color: var(--red-ink); }
+.reading { display: grid; gap: 14px; }
+.reading > div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+.reading b.h { display: block; font: 700 24px/1.1 var(--font-display); margin-bottom: 6px; }
+.reading p { margin: 0; color: var(--ink-2); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line); background: var(--panel); border-radius: 6px; padding: 6px 12px; font-size: 14px; font-weight: 600; }
+.method { padding-left: 20px; color: var(--ink-2); font-size: 15px; display: grid; gap: 8px; }
+.method a { color: var(--red-ink); }
+footer { padding-block: 40px 56px; font-size: 14px; color: var(--muted); }
+@media (max-width: 760px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .kpi b { font-size: 32px; }
+  .two { grid-template-columns: 1fr; }
+  .sw { grid-template-columns: minmax(0, 1fr) 4.5em; } .sw .tr { grid-column: 1 / -1; grid-row: 2; }
+}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="inner">
+    <a class="back" href="../../">← Sports analytics</a>
+    <div class="eyebrow">Manchester United · club accounts 2013/14–2025/26</div>
+    <h1>Does the pitch matter?<span>The owner says the money doesn't depend on results. Thirteen years of United's accounts disagree.</span></h1>
+    <p class="lede">Co-owner Avram Glazer told investors this month that United's commercial power doesn't depend on success on the pitch. We checked every revenue line since Ferguson left against where the team finished.</p>
+    <div class="byline">Stephen tAMBI · data to November 2026</div>
+  </div>
+</header>
+<main class="inner">
+  <div class="kpis" id="kpis"></div>
+
+  <section>
+    <h2>The claim, checked</h2>
+    <div class="card">
+      <div class="quote" id="quote"></div>
+      <div class="claims" id="claims"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Where United's money comes from</h2>
+    <p class="intro" id="stackIntro"></p>
+    <div class="card"><div class="wrap"><svg class="chart" id="stack" viewBox="0 0 940 420" role="img" aria-label="Manchester United revenue by stream each year 2013/14 to 2025/26, with league finish and European competition"></svg></div>
+      <div class="legend"><span><i style="background:var(--red)"></i>Commercial</span><span><i style="background:var(--black)"></i>Broadcasting</span><span><i style="background:var(--gold)"></i>Matchday</span></div>
+      <p class="note">£ million, financial years to 30 June. Under each bar: Premier League finish and European competition (UCL = Champions League, UEL = Europa League). 2019/20 and 2020/21 were hit by COVID: games behind closed doors and TV money moved between years.</p></div>
+  </section>
+
+  <section>
+    <h2>15th to 3rd: what one good season paid</h2>
+    <p class="intro" id="swingIntro"></p>
+    <div class="card"><div class="swing" id="swing"></div>
+      <p class="note">Change from 2024/25 (15th, Europa League final) to 2025/26 (3rd, no Europe), £ million. Commercial split from the club's segment data.</p></div>
+  </section>
+
+  <section>
+    <h2>Commercial: it survived, but it stood still</h2>
+    <p class="intro" id="comIntro"></p>
+    <div class="card"><div class="two">
+      <div><h3>United's commercial income</h3><div class="hb" id="real"></div></div>
+      <div><h3>Commercial growth per year, 2015/16–2023/24</h3><div class="hb" id="rivals"></div></div>
+    </div>
+      <p class="note">Left: £ million; hatched bar is 2015/16 in today's money (UK CPI, June 2016 to June 2026). Right: compound annual growth of commercial revenue; "other five" are Arsenal, Chelsea, Liverpool, Man City and Tottenham.</p></div>
+  </section>
+
+  <section>
+    <h2>Record revenue, still losing money</h2>
+    <p class="intro" id="plIntro"></p>
+    <div class="card"><div class="wrap"><svg class="chart" id="pl" viewBox="0 0 940 300" role="img" aria-label="Manchester United profit or loss for each year 2013/14 to 2025/26"></svg></div>
+      <p class="note">Profit or loss for the year, £ million. 2017/18 includes a one-off tax charge from the US tax reform.</p></div>
+  </section>
+
+  <section>
+    <h2>What the numbers say</h2>
+    <div class="reading" id="reading"></div>
+  </section>
+
+  <section class="build" id="how-it-was-built">
+    <h2>Tech stack</h2>
+    <div class="chips"><span class="chip">Python</span><span class="chip">JSON</span><span class="chip">CSV</span><span class="chip">Club accounts</span><span class="chip">JavaScript</span><span class="chip">SVG</span><span class="chip">HTML/CSS</span><span class="chip">Playwright</span><span class="chip">GitHub Pages</span></div>
+  </section>
+
+  <section>
+    <h2>Method and sources</h2>
+    <ul class="method">
+      <li><b>Revenue, wages, profit:</b> Manchester United plc full-year results releases and SEC filings, 2013/14–2024/25 (2017/18 restated for IFRS 15). 2025/26: <a href="https://stockanalysis.com/stocks/manu/financials/metrics/">Stock Analysis segment data</a>, <a href="https://sportcal.com/news/man-united-post-record-revenue-for-2025-26-but-losses-debt-widen/">SportsCal</a> and <a href="https://www.si.com/soccer/record-revenue-takeaways-from-man-utd-2025-26-finances">SI</a> (wages reported in dollars, about £302m).</li>
+      <li><b>League finish:</b> computed from every Premier League result 2013/14–2025/26 (football-data.co.uk).</li>
+      <li><b>The quote:</b> <a href="https://www.si.com/soccer/man-utd-coowner-comparison-dallas-cowboys-new-york-yankees-fans-hate">The Athletic via SI</a>, 5–6 Nov 2026; United's position at the time: <a href="https://thepeoplesperson.com/2026/11/05/avram-glazer-makes-man-united-success-on-the-pitch-claim-321314/">The People's Person</a>.</li>
+      <li><b>adidas clause:</b> £10m deduction per season without Champions League from 2025/26, from the 2024/25 annual report (<a href="https://theesk.org/2026/09/24/the-analysis-series-manchester-united-plc-annual-report-financial-year-ended-30-june-2025/">The Esk</a>).</li>
+      <li><b>Rivals:</b> commercial growth from club accounts as compiled by <a href="https://glazernomics.com/entries/commercial-revenue">Glazernomics</a>. Money League: <a href="https://www.skysports.com/football/news/11095/13497208/deloitte-football-money-league-man-utd-fall-to-lowest-position-with-liverpool-the-highest-earning-pl-club-and-real-madrid-top">Deloitte via Sky Sports</a>. Inflation: ONS CPI.</li>
+    </ul>
+  </section>
+</main>
+<footer class="inner">Stephen tAMBI · Sports analytics · Data, not opinion.</footer>
+
+<script>
+const D = /*__DATA__*/null;
+const $ = id => document.getElementById(id);
+const Yr = D.years, S = D.s, Q = D.quote, SW = D.swing;
+const by = Object.fromEntries(Yr.map(y => [y.fy, y]));
+const ord = n => n + (n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] || 'th');
+const m = v => '£' + Math.round(v) + 'm';
+
+$('kpis').innerHTML = [
+  ['+' + m(S.dom), 'more Premier League TV money from finishing 3rd instead of 15th'],
+  ['−' + m(S.spon_drop), 'sponsorship income lost since 2022/23'],
+  [m(S.loss_total), `lost in ${S.loss_years} straight years, on record revenue`],
+  [ord(D.money_league.rank_2026), 'in Deloitte\'s Money League, United\'s lowest ever'],
+].map(([b, s]) => `<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
+
+$('quote').innerHTML = `<q>United are ${Q.text}.</q><cite>${Q.who} · ${Q.where}. United were ${ord(Q.pos_then)} in the league when he said it. He compared the club to the New York Yankees and Dallas Cowboys.</cite>`;
+$('claims').innerHTML = [
+  ['Commercial income survives bad seasons', 'half', 'Partly true', `In 2024/25 United finished 15th and commercial income still hit a record ${m(by[2025].com)}. The brand does sell shirts in bad years. But it fell to ${m(by[2026].com)} the next year, and after inflation it is ${-S.real}% below 2015/16.`],
+  ['So results are not important for the money', 'false', 'False', `Broadcasting and matchday are ${Math.round((by[2026].bro + by[2026].mat) / by[2026].tot * 100)}% of revenue and move with the table. One jump from 15th to 3rd added ${m(S.dom)} in Premier League TV money. The adidas deal costs £10m for every season without the Champions League.`],
+  ['United are like the Yankees or the Cowboys', 'false', 'Doesn\'t fit', 'Baseball and the NFL are closed leagues: no relegation, and most national TV money is shared out equally. In the Premier League prize money follows the table, Europe has to be earned, and the bottom three go down.'],
+].map(([c, k, v, p]) => `<div class="claim"><b>${c}</b><span class="verdict v-${k}">${v}</span><p>${p}</p></div>`).join('');
+
+$('stackIntro').textContent = `Revenue grew from ${m(by[2014].tot)} to a record ${m(by[2026].tot)}. Commercial is the biggest stream, but it has barely moved since 2015/16. The lines that jump around are broadcasting and matchday, and they jump with results.`;
+(() => {
+  const W = 940, H = 420, L = 48, R = 12, T = 16, B = 70, n = Yr.length, mx = 700, bw = (W - L - R) / n * .62;
+  const X = i => L + (i + .5) * (W - L - R) / n, Yv = v => T + (mx - v) / mx * (H - T - B), h = v => v / mx * (H - T - B);
+  let s = '';
+  for (let g = 0; g <= mx; g += 100) s += `<line x1="${L}" x2="${W - R}" y1="${Yv(g)}" y2="${Yv(g)}" stroke="var(--grid)"/><text x="${L - 6}" y="${Yv(g) + 4}" text-anchor="end">${g}</text>`;
+  Yr.forEach((y, i) => {
+    let base = 0; const x = X(i) - bw / 2;
+    [['com', 'var(--red)', 'Commercial'], ['bro', 'var(--black)', 'Broadcasting'], ['mat', 'var(--gold)', 'Matchday']].forEach(([k, c, nm], j) => {
+      const top = Yv(base + y[k]), hh = Math.max(h(y[k]) - 2, 0);
+      s += `<rect x="${x}" y="${top}" width="${bw}" height="${hh}" fill="${c}" rx="${j === 2 ? 3 : 0}"><title>${y.season} ${nm}: £${y[k]}m</title></rect>`;
+      base += y[k];
+    });
+    s += `<text class="lab" x="${X(i)}" y="${Yv(y.tot) - 6}" text-anchor="middle">${Math.round(y.tot)}</text>`;
+    s += `<text x="${X(i)}" y="${H - B + 18}" text-anchor="middle">${y.season.slice(2, 4)}/${y.season.slice(5)}</text>`;
+    s += `<text x="${X(i)}" y="${H - B + 38}" text-anchor="middle" style="fill:${y.pos >= 7 ? 'var(--red-ink)' : 'var(--ink)'};font-weight:700">${ord(y.pos)}</text>`;
+    s += `<text x="${X(i)}" y="${H - B + 56}" text-anchor="middle" style="font-weight:600;fill:${y.eu === 'UCL' ? 'var(--ink)' : 'var(--muted)'}">${y.eu === 'none' ? '—' : y.eu}<title>${y.eu_run}</title></text>`;
+  });
+  $('stack').innerHTML = s;
+})();
+
+const sw = [
+  ['Premier League TV money', '15th → 3rd', SW.domestic_bro],
+  ['European TV and prize money', 'Europa League final → no Europe', SW.europe_bro],
+  ['Sponsorship', 'training-kit sponsor deal ended', SW.spon],
+  ['Retail and merchandise', 'shirts, licensing, stores (incl. adidas)', SW.retail],
+  ['Matchday', 'no European nights at Old Trafford', SW.mat],
+];
+const mxd = Math.max(...sw.map(r => Math.abs(r[2][1] - r[2][0])));
+$('swingIntro').textContent = `In 2024/25 United finished 15th, their worst league finish since 1974. In 2025/26 they finished 3rd. Total revenue only rose ${m(SW.tot[1] - SW.tot[0])}, but look underneath: the league finish alone added ${m(S.dom)}, while missing Europe and losing sponsors took most of it away again.`;
+$('swing').innerHTML = sw.map(([nm, sub, [a, b]]) => { const d = b - a, up = d >= 0;
+  return `<div class="sw"><div class="nm">${nm}<small>${sub}</small></div><div class="tr"><div class="f ${up ? 'up' : 'dn'}" style="width:${Math.abs(d) / mxd * 50}%"></div></div><div class="v ${up ? 'up' : 'dn'}">${up ? '+' : '−'}£${Math.abs(d).toFixed(1)}m</div></div>`; }).join('')
+  + `<div class="sw tot"><div class="nm">Total revenue</div><div class="tr"><div class="f up" style="width:${(SW.tot[1] - SW.tot[0]) / mxd * 50}%"></div></div><div class="v up">+£${(SW.tot[1] - SW.tot[0]).toFixed(1)}m</div></div>`;
+
+$('comIntro').textContent = `This is the part of the claim that holds: commercial income did not collapse when the team did. But "didn't collapse" isn't growth. Commercial income is up ${S.com_nom}% since 2015/16 while UK prices rose ${S.prices}%, and rivals who won things grew much faster.`;
+const rb = (rows, mx, fmt) => rows.map(([n, v, cls]) => { const w = v / mx * 100, out = w < 30;
+  return `<div class="hr ${cls || ''}"><div class="n">${n}</div><div class="t" style="display:flex;align-items:center;gap:8px"><div class="f" style="width:${w}%">${out ? '' : `<em>${fmt(v)}</em>`}</div>${out ? `<span class="o">${fmt(v)}</span>` : ''}</div></div>`; }).join('');
+$('real').innerHTML = rb([['2015/16', S.com16, 'mu'], ['2015/16 in 2026 £', S.com16_real, 'real'], ['2025/26', S.com26, 'mu']], 400, v => m(v));
+const C = D.rivals.cagr_16_24;
+$('rivals').innerHTML = rb([['Other five, best', C['Other five, highest']], ['Big Six average', C['Big Six average']], ['Other five, lowest', C['Other five, lowest']], ['Man United', C['Man United'], 'mu']], 20, v => v + '% a year');
+
+$('plIntro').textContent = `If results didn't matter, record revenue would mean profits. Instead United have lost money ${S.loss_years} years in a row, ${m(S.loss_total)} in total. Wages took ${S.wage_ratio}% of revenue in 2025/26, money spent trying to get results back.`;
+(() => {
+  const W = 940, H = 300, L = 48, R = 12, T = 20, B = 30, n = Yr.length, hi = 60, lo = -130, bw = (W - L - R) / n * .56;
+  const X = i => L + (i + .5) * (W - L - R) / n, Yv = v => T + (hi - v) / (hi - lo) * (H - T - B);
+  let s = '';
+  for (let g = -120; g <= 40; g += 40) s += `<line x1="${L}" x2="${W - R}" y1="${Yv(g)}" y2="${Yv(g)}" stroke="${g === 0 ? 'var(--muted)' : 'var(--grid)'}"/><text x="${L - 6}" y="${Yv(g) + 4}" text-anchor="end">${g}</text>`;
+  Yr.forEach((y, i) => { const up = y.pl >= 0, y0 = Yv(0), y1 = Yv(y.pl);
+    s += `<rect x="${X(i) - bw / 2}" y="${Math.min(y0, y1)}" width="${bw}" height="${Math.max(Math.abs(y1 - y0), 2)}" rx="3" fill="${up ? 'var(--good)' : 'var(--red)'}"><title>${y.season}: ${up ? 'profit' : 'loss'} £${Math.abs(y.pl)}m</title></rect>`;
+    s += `<text class="lab" x="${X(i)}" y="${up ? y1 - 6 : y1 + 15}" text-anchor="middle">${y.pl > 0 ? '+' : ''}${Math.round(y.pl)}</text>`;
+    s += `<text x="${X(i)}" y="${H - 8}" text-anchor="middle">${y.season.slice(2, 4)}/${y.season.slice(5)}</text>`; });
+  $('pl').innerHTML = s;
+})();
+
+$('reading').innerHTML = [
+  ['The brand is the floor, not the engine', `Glazer is right that United's name still sells. In the 15th-place season commercial income reached a record. But a floor stops you falling. It doesn't take you anywhere.`],
+  ['The table decides the TV money', `The two biggest drops in broadcasting outside COVID came in seasons without the Champions League: −${-S.bro15}% in 2014/15 and −${-S.bro25}% in 2024/25. Going from 15th to 3rd was worth ${m(S.dom)}.`],
+  ['Commercial is losing value', `Sponsorship is down ${m(S.spon_drop)} from 2022/23, and the adidas deal now has a penalty for missing the Champions League. Adjusted for inflation, commercial income is ${-S.real}% below 2015/16, and rivals have grown about eight times faster.`],
+  ['The losses tell the story', `${S.loss_years} straight years of losses and ${m(S.loss_total)} gone, while revenue set records. United are paying ${S.wage_ratio}% of their income in wages to get back the results the owner says don't matter.`],
+  ['Verdict: partly true, mostly wrong', 'The brand keeps United rich in bad years. Results decide whether they stay at the top. Champions League football this season is the clearest test: it will show up in next year\'s accounts.'],
+].map(([h, p]) => `<div><b class="h">${h}</b><p>${p}</p></div>`).join('');
+</script>
+</body>
+</html>
