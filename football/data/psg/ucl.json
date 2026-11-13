@@ -1,0 +1,15 @@
+{
+ "_note": "Champions League runs. Star era = Neymar and Mbappé (2017/18-2023/24; Messi 2021-23). 2024/25-2025/26 routes: Flashscore, Sports Mole; final 2026: The Star/Reuters. 2026/27: NBC Sports table after matchday 4.",
+ "seasons": [
+  {"season":"2017/18","era":"stars","exit":"Round of 16","stage":1,"ties":[["Real Madrid","L"]]},
+  {"season":"2018/19","era":"stars","exit":"Round of 16","stage":1,"ties":[["Man United","L"]]},
+  {"season":"2019/20","era":"stars","exit":"Final","stage":4,"ties":[["Dortmund","W"],["Atalanta","W"],["RB Leipzig","W"],["Bayern (final)","L"]]},
+  {"season":"2020/21","era":"stars","exit":"Semi-final","stage":3,"ties":[["Barcelona","W"],["Bayern","W"],["Man City","L"]]},
+  {"season":"2021/22","era":"stars","exit":"Round of 16","stage":1,"ties":[["Real Madrid","L"]]},
+  {"season":"2022/23","era":"stars","exit":"Round of 16","stage":1,"ties":[["Bayern","L"]]},
+  {"season":"2023/24","era":"stars","exit":"Semi-final","stage":3,"ties":[["Real Sociedad","W"],["Barcelona","W"],["Dortmund","L"]]},
+  {"season":"2024/25","era":"team","exit":"Champions","stage":5,"league_phase":"15th","ties":[["Brest","W","10–0"],["Liverpool","W","1–1, pens"],["Aston Villa","W","5–4"],["Arsenal","W","3–1"],["Inter (final)","W","5–0"]]},
+  {"season":"2025/26","era":"team","exit":"Champions","stage":5,"league_phase":"11th","ties":[["Monaco","W","5–3"],["Chelsea","W","8–2"],["Liverpool","W","4–0"],["Bayern","W","6–5"],["Arsenal (final)","W","1–1, pens"]]}
+ ],
+ "now": {"played": 4, "won": 4, "pts": 12, "gd": 15, "pos": 1}
+}

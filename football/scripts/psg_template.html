@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>From Stars to a Team</title>
+<meta name="description" content="With Neymar, Mbappé and Messi, PSG won 0 Champions Leagues in 7 seasons and half their knockout ties. Without them: 2 in 2, and 10 knockout ties out of 10. Now they are going for a third in a row.">
+<meta name="author" content="Stephen tAMBI">
+<meta property="og:title" content="PSG: from stars to a team">
+<meta property="og:description" content="Star era: 0 Champions Leagues in 7 seasons, 7 of 14 knockout ties. Team era: 2 in 2, 10 of 10. Going for three.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stambi292.github.io/sports-analytics/football/psg-from-stars-to-a-team/">
+<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-psg-from-stars-to-a-team.png?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: PSG navy masthead with red-white-red rule, KPIs, Champions League ladder by season, knockout ties, Ligue 1 dominance, hat-trick watch, reading, stack, method. */
+:root {
+  --bg: #f4f6f9; --panel: #ffffff; --ink: #0d1626; --ink-2: #3b4760; --muted: #67738a; --line: #dde2ea; --grid: #ebeff4;
+  --navy: #004170; --navy-ink: #004170; --red: #da291c; --red-ink: #b51f14; --other: #c3cad6; --gold: #c9a227;
+  --font-display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0a111c; --panel: #111b2a; --ink: #edf2f8; --ink-2: #bcc8d9; --muted: #8794a8; --line: #233046; --grid: #1a2536;
+  --navy: #5b9bd5; --navy-ink: #8cbcea; --red: #ff5a4c; --red-ink: #ff8378; --other: #3b475c; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0a111c; --panel: #111b2a; --ink: #edf2f8; --ink-2: #bcc8d9; --muted: #8794a8; --line: #233046; --grid: #1a2536;
+  --navy: #5b9bd5; --navy-ink: #8cbcea; --red: #ff5a4c; --red-ink: #ff8378; --other: #3b475c; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
+.inner { max-width: 1000px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+.mast { background: #004170; color: #fff; border-bottom: 10px solid; border-image: linear-gradient(90deg, #da291c 0 40%, #ffffff 40% 60%, #da291c 60%) 1; }
+.mast .inner { padding-block: 22px 64px; display: grid; gap: 14px; }
+.back { color: #c7d9ea; text-decoration: none; font-weight: 600; font-size: 15px; }
+.eyebrow { font: 700 13px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: #c7d9ea; margin-top: 18px; }
+h1 { font: 800 clamp(56px, 11vw, 116px)/.9 var(--font-display); text-transform: uppercase; margin: 0; }
+h1 span { display: block; font-size: .36em; line-height: 1.15; margin-top: 12px; font-weight: 700; color: #ff6a5e; text-wrap: balance; }
+.lede { margin: 4px 0 0; max-width: 64ch; color: #dbe7f2; font-size: 19px; }
+.byline { font-size: 14px; color: #c7d9ea; }
+h2 { font: 700 36px/1.05 var(--font-display); margin: 0 0 8px; text-wrap: balance; }
+.intro { margin: 0 0 18px; color: var(--ink-2); max-width: 68ch; }
+section { padding-block: 44px 4px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: -34px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--navy); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+.kpi:nth-child(even) { border-top-color: var(--red); }
+.kpi b { display: block; font: 800 40px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.kpi span { color: var(--ink-2); font-size: 15px; line-height: 1.4; display: block; margin-top: 6px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: grid; gap: 16px; min-width: 0; }
+.note { font-size: 14px; color: var(--muted); margin: 0; }
+.ladder { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 8px; align-items: end; height: 280px; }
+.rung { display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; height: 100%; gap: 6px; min-width: 0; }
+.rung .b { border-radius: 6px 6px 0 0; background: var(--other); display: flex; align-items: flex-start; justify-content: center; padding-top: 6px; color: #fff; font: 800 16px var(--font-display); }
+.rung.team .b { background: var(--navy); } .rung.win .b { background: var(--red); }
+.rung.now .b { background: repeating-linear-gradient(45deg, var(--navy) 0 7px, var(--grid) 7px 12px); }
+.rung .s { font-size: 13px; text-align: center; color: var(--muted); font-variant-numeric: tabular-nums; }
+.rung .x { font-size: 13px; text-align: center; font-weight: 600; line-height: 1.2; min-height: 2.4em; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; color: var(--ink-2); }
+.legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; margin-right: 6px; }
+.ties { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; }
+.ties h3 { margin: 0 0 8px; font: 800 26px var(--font-display); }
+.ties h3 small { font-size: .7em; color: var(--muted); font-weight: 700; }
+.tl { display: grid; gap: 4px; }
+.t { display: grid; grid-template-columns: 4.6em minmax(0, 1fr) auto; gap: 10px; align-items: center; font-size: 14px; padding: 6px 10px; border-radius: 6px; background: var(--grid); }
+.t.W { border-left: 5px solid var(--navy); } .t.L { border-left: 5px solid var(--other); color: var(--muted); }
+.t b { font-weight: 700; } .t .r { font: 700 15px var(--font-display); }
+.t.W .r { color: var(--navy-ink); }
+.chart { width: 100%; height: auto; display: block; min-width: 640px; }
+.chart text { font-family: var(--font-body); font-size: 13px; fill: var(--muted); }
+.wrap { overflow-x: auto; }
+.cmp { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.cm { border: 1px solid var(--line); border-radius: 10px; padding: 16px; min-width: 0; }
+.cm h3 { margin: 0 0 8px; font-size: 15px; font-weight: 600; color: var(--ink-2); }
+.cm .big { font: 800 38px/1 var(--font-display); } .cm .big small { font-size: .5em; color: var(--muted); }
+.cm p { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
+.reading { display: grid; gap: 14px; }
+.reading > div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+.reading b.h { display: block; font: 700 24px/1.1 var(--font-display); margin-bottom: 6px; }
+.reading p { margin: 0; color: var(--ink-2); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line); background: var(--panel); border-radius: 6px; padding: 6px 12px; font-size: 14px; font-weight: 600; }
+.method { padding-left: 20px; color: var(--ink-2); font-size: 15px; display: grid; gap: 8px; }
+.method a { color: var(--red-ink); }
+footer { padding-block: 40px 56px; font-size: 14px; color: var(--muted); }
+@media (max-width: 760px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .kpi b { font-size: 32px; }
+  .ties, .cmp { grid-template-columns: 1fr; }
+  .ladder { gap: 3px; height: 230px; } .rung .x { font-size: 11px; } .rung .s { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="inner">
+    <a class="back" href="../../">← Sports analytics</a>
+    <div class="eyebrow">Paris Saint-Germain · Champions League and Ligue 1 · 2017–2026</div>
+    <h1>From stars to a team<span>Why PSG only won the Champions League after the superstars left</span></h1>
+    <p class="lede">Neymar, Mbappé and Messi made PSG the most famous team in the world. Luis Enrique's team without them won the Champions League twice in a row and is going for a third. The numbers show what changed.</p>
+    <div class="byline">Stephen tAMBI · data to November 2026</div>
+  </div>
+</header>
+<main class="inner">
+  <div class="kpis" id="kpis"></div>
+
+  <section>
+    <h2>How far PSG got, every season</h2>
+    <p class="intro">Seven seasons with Neymar and Mbappé: one final, no trophy. Two seasons after Mbappé left: two trophies.</p>
+    <div class="card"><div class="ladder" id="ladder"></div>
+      <div class="legend"><span><i style="background:var(--other)"></i>Star era</span><span><i style="background:var(--navy)"></i>Team era</span><span><i style="background:var(--red)"></i>Champions</span><span><i style="background:repeating-linear-gradient(45deg,var(--navy) 0 4px,var(--grid) 4px 7px)"></i>2026/27, in progress</span></div>
+      <p class="note">Bar height = how far PSG went: round of 16, quarter-final, semi-final, final, champions. Star era: Neymar and Mbappé (2017/18–2023/24), Messi too in 2021–23.</p></div>
+  </section>
+
+  <section>
+    <h2>Knockout football: coin flip vs certainty</h2>
+    <p class="intro" id="tiesIntro"></p>
+    <div class="card"><div class="ties" id="ties"></div>
+      <p class="note">Each two-legged tie or one-off knockout game, including finals. 2019/20 was played as single games in Lisbon.</p></div>
+  </section>
+
+  <section>
+    <h2>Fewer stars, more control</h2>
+    <p class="intro" id="l1Intro"></p>
+    <div class="card"><div class="wrap"><svg class="chart" id="shots" viewBox="0 0 900 320" role="img" aria-label="PSG's share of all shots in their Ligue 1 games by season, 2010/11 to 2025/26"></svg></div>
+      <div class="cmp" id="cmp"></div>
+      <p class="note">Shot share = PSG's shots ÷ all shots in their league games. Built from every Ligue 1 result and shot count. Ligue 1 shrank from 20 to 18 teams in 2023/24; 2019/20 stopped after 27 games.</p></div>
+  </section>
+
+  <section>
+    <h2>Going for three</h2>
+    <p class="intro" id="nowIntro"></p>
+    <div class="card"><div class="cmp" id="three"></div></div>
+  </section>
+
+  <section>
+    <h2>What the numbers say</h2>
+    <div class="reading" id="reading"></div>
+  </section>
+
+  <section class="build" id="how-it-was-built">
+    <h2>Tech stack</h2>
+    <div class="chips"><span class="chip">Python</span><span class="chip">CSV</span><span class="chip">football-data.co.uk</span><span class="chip">JavaScript</span><span class="chip">SVG</span><span class="chip">HTML/CSS</span><span class="chip">Playwright</span><span class="chip">GitHub Pages</span></div>
+  </section>
+
+  <section>
+    <h2>Method and sources</h2>
+    <ul class="method">
+      <li><b>Ligue 1:</b> every result and shot count 2010/11–2025/26 (football-data.co.uk, via the datasets/football-datasets repository).</li>
+      <li><b>Champions League runs:</b> official results. 2024/25 route: <a href="https://www.flashscore.com/news/uefa-champions-league-2024-2025-results/80SogJo9">Flashscore</a>; 2025/26 route: <a href="https://www.sportsmole.co.uk/football/psg/champions-league/feature/psgs-route-to-the-champions-league-final_598330.html">Sports Mole</a>; 2026 final: <a href="https://www.thestar.com.my/sport/football/2026/05/31/soccer-faith-in-luis-enrique-leads-psg-to-back-to-back-champions-league-titles">Reuters via The Star</a>; 2026/27 table: <a href="https://www.nbcsports.com/soccer/news/uefa-champions-league-2026-27-league-phase-table-latest-standings">NBC Sports</a>.</li>
+      <li><b>Star era:</b> Neymar 2017–2023, Mbappé 2017–2024, Messi 2021–2023. A season counts as star era if Neymar or Mbappé played it.</li>
+    </ul>
+  </section>
+</main>
+<footer class="inner">Stephen tAMBI · Sports analytics · Data, not opinion.</footer>
+
+<script>
+const D = /*__DATA__*/null;
+const $ = id => document.getElementById(id);
+const U = D.ucl, L = D.ligue1, S = D.s;
+$('kpis').innerHTML = [
+  ['0 in 7', 'Champions Leagues in the Neymar and Mbappé seasons'],
+  ['2 in 2', 'since Mbappé left, back to back'],
+  [`${S.ties_team[0]} of ${S.ties_team[1]}`, `knockout ties won since; ${S.ties_stars[0]} of ${S.ties_stars[1]} in the star era`],
+  [`${U.now.won} of ${U.now.played}`, 'wins in this season\'s league phase, top of the table'],
+].map(([b, s]) => `<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
+
+const stg = ['', 'Last 16', 'Quarters', 'Semis', 'Final', 'Won'];
+const rows = [...U.seasons, { season: '2026/27', era: 'now', exit: `${U.now.won}/${U.now.played}`, stage: 1 }];
+$('ladder').innerHTML = rows.map(s => `<div class="rung ${s.era === 'team' ? 'team' : ''} ${s.stage === 5 ? 'win' : ''} ${s.era === 'now' ? 'now' : ''}">
+  <div class="x">${s.era === 'now' ? s.exit : stg[s.stage]}</div><div class="b" style="height:${s.stage / 5 * 78}%">${s.stage === 5 ? '🏆' : ''}</div><div class="s">${s.season.replace('20', '')}</div></div>`).join('');
+
+$('tiesIntro').textContent = `With the stars, PSG won ${S.ties_stars[0]} of ${S.ties_stars[1]} knockout ties: exactly half. Since, they have won all ${S.ties_team[1]}, including two finals, two penalty shoot-outs and wins over Liverpool twice, Arsenal twice and Bayern.`;
+const tl = e => U.seasons.filter(s => s.era === e).flatMap(s => s.ties.map(t => `<div class="t ${t[1]}"><span>${s.season}</span><b>${t[0]}</b><span class="r">${t[2] || (t[1] === 'W' ? 'won' : 'lost')}</span></div>`)).join('');
+$('ties').innerHTML = `<div><h3>Star era <small>${S.ties_stars[0]} of ${S.ties_stars[1]}</small></h3><div class="tl">${tl('stars')}</div></div><div><h3>Team era <small>${S.ties_team[0]} of ${S.ties_team[1]}</small></h3><div class="tl">${tl('team')}</div></div>`;
+
+$('l1Intro').textContent = `In the league the team era scores slightly less (${S.team.gf} goals a game vs ${S.stars.gf}) but controls games more: PSG took ${S.team.shots}% of all shots in their matches, against ${S.stars.shots}% with the stars. The pressing team gives opponents almost nothing.`;
+(() => {
+  const W = 900, H = 320, Lp = 44, R = 16, T = 16, B = 30, lo = 45, hi = 70, n = L.length;
+  const X = i => Lp + i / (n - 1) * (W - Lp - R), Y = v => T + (hi - v) / (hi - lo) * (H - T - B);
+  let s = '';
+  for (let g = lo; g <= hi; g += 5) s += `<line x1="${Lp}" x2="${W - R}" y1="${Y(g)}" y2="${Y(g)}" stroke="var(--grid)"/><text x="${Lp - 6}" y="${Y(g) + 4}" text-anchor="end">${g}%</text>`;
+  const band = (a, b, c, lab) => { const i0 = L.findIndex(x => x.y === a), i1 = L.findIndex(x => x.y === b);
+    s += `<rect x="${X(i0) - 12}" y="${T}" width="${X(i1) - X(i0) + 24}" height="${H - T - B}" fill="${c}" opacity=".12"/><text x="${(X(i0) + X(i1)) / 2}" y="${T + 14}" text-anchor="middle" style="fill:var(--ink);font-weight:700">${lab}</text>`; };
+  band(2017, 2023, 'var(--other)', 'Neymar + Mbappé'); band(2024, 2025, 'var(--navy)', 'Team era');
+  L.forEach((d, i) => { if (i % 2 === 0 || i === n - 1) s += `<text x="${X(i)}" y="${H - 8}" text-anchor="middle">${d.season.replace('20', '')}</text>`; });
+  s += `<polyline points="${L.map((d, i) => `${X(i)},${Y(d.shot_share)}`).join(' ')}" fill="none" stroke="var(--navy)" stroke-width="3.5"/>`;
+  L.forEach((d, i) => s += `<circle cx="${X(i)}" cy="${Y(d.shot_share)}" r="${d.y >= 2024 ? 7 : 4}" fill="${d.y >= 2024 ? 'var(--red)' : 'var(--panel)'}" stroke="${d.y >= 2024 ? 'var(--red)' : 'var(--navy)'}" stroke-width="2.5"><title>${d.season}: ${d.shot_share}% of shots, ${d.pts} pts, ${d.pos === 1 ? 'champions' : d.pos}</title></circle>`);
+  $('shots').innerHTML = s;
+})();
+$('cmp').innerHTML = [['Points per game', 'ppg', 2], ['Goals conceded per game', 'ga', 2], ['Share of shots', 'shots', 1, '%']].map(([h, k, d, u = '']) =>
+  `<div class="cm"><h3>${h}</h3><div class="big">${S.stars[k].toFixed(d)}${u} <small>→</small> ${S.team[k].toFixed(d)}${u}</div><p>Star era → team era, Ligue 1</p></div>`).join('');
+
+const t = U.seasons.filter(s => s.era === 'team');
+$('nowIntro').textContent = `No club has won three Champions Leagues in a row since Real Madrid in 2016–2018. In both title seasons PSG finished outside the top eight of the league phase (${t[0].league_phase} and ${t[1].league_phase}) and had to win a play-off first. This season they started with ${U.now.won} wins out of ${U.now.played}.`;
+$('three').innerHTML = [['2024/25 league phase', t[0].league_phase, 'then 5 ties won, 24 goals for, 6 against'], ['2025/26 league phase', t[1].league_phase, 'then 5 ties won, 24 goals for, 11 against'], ['2026/27 so far', '1st', `${U.now.pts} points from ${U.now.played} games, goal difference +${U.now.gd}`]].map(([h, b, p]) => `<div class="cm"><h3>${h}</h3><div class="big">${b}</div><p>${p}</p></div>`).join('');
+
+$('reading').innerHTML = [
+  ['The stars won games, the team wins ties', `With Neymar and Mbappé, PSG won half their knockout ties. Since, all ${S.ties_team[1]}. Knockouts reward a team that controls games for 180 minutes, not moments of individual brilliance.`],
+  ['Control is the new weapon', `PSG's share of shots rose from ${S.stars.shots}% to ${S.team.shots}%, the highest in 16 seasons of data. A pressing team that keeps the ball gives better opponents less to work with.`],
+  ['Built to finish, not to start', 'Two titles from 15th and 11th in the league phase. PSG peak in spring, when the trophy is decided.'],
+  ['This year looks different', `${U.now.won} wins from ${U.now.played} and top of the table. If they keep that start, they will not need a play-off for the first time under the new format, and the hat-trick becomes realistic.`],
+].map(([h, p]) => `<div><b class="h">${h}</b><p>${p}</p></div>`).join('');
+</script>
+</body>
+</html>

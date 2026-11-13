@@ -2,6 +2,8 @@
 // Add one entry per new project and run: node football/scripts/make_thumbnails.js
 const {chromium}=require('playwright');
 const T=[
+ {f:'og-psg-from-stars-to-a-team.png',bg:'#004170',ink:'#fff',acc:'#da291c',sub:'#c7d9ea',kick:'PSG · CHAMPIONS LEAGUE · 2017–2026',t:'FROM STARS<br><span>TO A TEAM</span>',
+  body:`<div class="stats"><div><em>0 in 7</em><small>with Neymar + Mbappé</small></div><div><em class="a">2 in 2</em><small>since, back to back</small></div><div><em>10 of 10</em><small>knockout ties won</small></div></div>`},
  {f:'og-the-spanish-school.png',bg:'#ffc400',ink:'#2a1a00',acc:'#c60b1e',sub:'#5a3b00',kick:'SPANISH COACHES · 2000–2026',t:'THE SPANISH<br><span>SCHOOL</span>',
   body:`<div class="stats"><div><em>9 of 27</em><small>Champions Leagues</small></div><div><em class="a">5 of 10</em><small>Euros and World Cups</small></div><div><em>10×</em><small>England's top coaches (2013)</small></div></div>`},
  {f:'og-peps-student.png',bg:'#db0007',ink:'#fff',acc:'#ffffff',sub:'#ffe1e1',kick:'ARSENAL · ARTETA VS GUARDIOLA · 2016–2026',t:"PEP'S STUDENT<br><span>NFL PLAYBOOK</span>",
