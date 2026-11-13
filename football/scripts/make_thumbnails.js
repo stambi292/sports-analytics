@@ -2,6 +2,8 @@
 // Add one entry per new project and run: node football/scripts/make_thumbnails.js
 const {chromium}=require('playwright');
 const T=[
+ {f:'og-the-spanish-school.png',bg:'#ffc400',ink:'#2a1a00',acc:'#c60b1e',sub:'#5a3b00',kick:'SPANISH COACHES · 2000–2026',t:'THE SPANISH<br><span>SCHOOL</span>',
+  body:`<div class="stats"><div><em>9 of 27</em><small>Champions Leagues</small></div><div><em class="a">5 of 10</em><small>Euros and World Cups</small></div><div><em>10×</em><small>England's top coaches (2013)</small></div></div>`},
  {f:'og-peps-student.png',bg:'#db0007',ink:'#fff',acc:'#ffffff',sub:'#ffe1e1',kick:'ARSENAL · ARTETA VS GUARDIOLA · 2016–2026',t:"PEP'S STUDENT<br><span>NFL PLAYBOOK</span>",
   body:`<div class="stats"><div><em>19</em><small>corner goals, a record</small></div><div><em>46%</em><small>of wins by one goal (City 30%)</small></div><div><em>0</em><small>corner goals after the crackdown</small></div></div>`},
  {f:'og-why-spain.png',bg:'#c60b1e',ink:'#fff',acc:'#ffc400',sub:'#ffe9b0',kick:'SPAIN NATIONAL TEAM · EVERY RESULT SINCE 1990',t:'WHY SPAIN<br><span>THE BEST IN THE WORLD</span>',

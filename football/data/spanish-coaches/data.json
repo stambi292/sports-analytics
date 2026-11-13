@@ -1,0 +1,28 @@
+{
+ "ucl_all": [["Spain",13],["Italy",13],["Germany",10],["England",7],["Netherlands",5],["Argentina",4],["Scotland",4],["France",3],["Portugal",3],["Romania",3],["Austria",2],["Hungary",2],["Belgium",1],["Yugoslavia",1]],
+ "ucl_since2000": [
+  [2000,"Vicente del Bosque","Spain","Real Madrid"],[2001,"Ottmar Hitzfeld","Germany","Bayern Munich"],[2002,"Vicente del Bosque","Spain","Real Madrid"],
+  [2003,"Carlo Ancelotti","Italy","Milan"],[2004,"José Mourinho","Portugal","Porto"],[2005,"Rafael Benítez","Spain","Liverpool"],
+  [2006,"Frank Rijkaard","Netherlands","Barcelona"],[2007,"Carlo Ancelotti","Italy","Milan"],[2008,"Alex Ferguson","Scotland","Man United"],
+  [2009,"Pep Guardiola","Spain","Barcelona"],[2010,"José Mourinho","Portugal","Inter"],[2011,"Pep Guardiola","Spain","Barcelona"],
+  [2012,"Roberto Di Matteo","Italy","Chelsea"],[2013,"Jupp Heynckes","Germany","Bayern Munich"],[2014,"Carlo Ancelotti","Italy","Real Madrid"],
+  [2015,"Luis Enrique","Spain","Barcelona"],[2016,"Zinedine Zidane","France","Real Madrid"],[2017,"Zinedine Zidane","France","Real Madrid"],
+  [2018,"Zinedine Zidane","France","Real Madrid"],[2019,"Jürgen Klopp","Germany","Liverpool"],[2020,"Hansi Flick","Germany","Bayern Munich"],
+  [2021,"Thomas Tuchel","Germany","Chelsea"],[2022,"Carlo Ancelotti","Italy","Real Madrid"],[2023,"Pep Guardiola","Spain","Man City"],
+  [2024,"Carlo Ancelotti","Italy","Real Madrid"],[2025,"Luis Enrique","Spain","PSG"],[2026,"Luis Enrique","Spain","PSG"]],
+ "uel_spanish_since2000": [[2004,"Rafael Benítez","Valencia"],[2006,"Juande Ramos","Sevilla"],[2007,"Juande Ramos","Sevilla"],[2010,"Quique Sánchez Flores","Atlético Madrid"],[2013,"Rafael Benítez","Chelsea"],[2014,"Unai Emery","Sevilla"],[2015,"Unai Emery","Sevilla"],[2016,"Unai Emery","Sevilla"],[2020,"Julen Lopetegui","Sevilla"],[2021,"Unai Emery","Villarreal"],[2026,"Unai Emery","Aston Villa"]],
+ "uel_finals_since2000": 27,
+ "intl": [[2008,"Euro","Luis Aragonés","Spain"],[2010,"World Cup","Vicente del Bosque","Spain"],[2012,"Euro","Vicente del Bosque","Spain"],[2014,"World Cup","Joachim Löw","Germany"],[2016,"Euro","Fernando Santos","Portugal"],[2018,"World Cup","Didier Deschamps","France"],[2021,"Euro","Roberto Mancini","Italy"],[2022,"World Cup","Lionel Scaloni","Argentina"],[2024,"Euro","Luis de la Fuente","Spain"],[2026,"World Cup","Luis de la Fuente","Spain"]],
+ "coaches": [
+  {"name":"Pep Guardiola","ucl":3,"uel":0,"intl":0,"note":"Barcelona 2009, 2011; Man City 2023 · played for Barcelona"},
+  {"name":"Luis Enrique","ucl":3,"uel":0,"intl":0,"note":"Barcelona 2015; PSG 2025, 2026 · played for Barcelona"},
+  {"name":"Unai Emery","ucl":0,"uel":5,"intl":0,"note":"Sevilla ×3, Villarreal, Aston Villa · record five Europa Leagues"},
+  {"name":"Vicente del Bosque","ucl":2,"uel":0,"intl":2,"note":"Real Madrid 2000, 2002; World Cup 2010, Euro 2012"},
+  {"name":"Rafael Benítez","ucl":1,"uel":2,"intl":0,"note":"Liverpool 2005; Valencia 2004, Chelsea 2013"},
+  {"name":"Luis de la Fuente","ucl":0,"uel":0,"intl":2,"note":"Euro 2024, World Cup 2026 (plus Nations League 2023)"},
+  {"name":"Juande Ramos","ucl":0,"uel":2,"intl":0,"note":"Sevilla 2006, 2007"},
+  {"name":"Luis Aragonés","ucl":0,"uel":0,"intl":1,"note":"Euro 2008"},
+  {"name":"Julen Lopetegui","ucl":0,"uel":1,"intl":0,"note":"Sevilla 2020"},
+  {"name":"Quique Sánchez Flores","ucl":0,"uel":1,"intl":0,"note":"Atlético Madrid 2010"}],
+ "school": {"year": 2013, "pro": [["Spain",2140],["Germany",1000],["England",203]], "a_pro": [["Spain",15423],["England",1395]], "hours_a": [["Spain",750],["England",250]], "cost_a": [["Spain","€1,200"],["England","about £2,965"]]}
+}

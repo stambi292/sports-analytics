@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Spanish School</title>
+<meta name="description" content="Spanish coaches have won 9 of the last 27 Champions Leagues, 11 of 27 Europa Leagues and 5 of the last 10 Euros and World Cups. Who they are, their numbers, and what the world could learn from how Spain trains its coaches.">
+<meta name="author" content="Stephen tAMBI">
+<meta property="og:title" content="The Spanish School: why Spanish coaches win everything">
+<meta property="og:description" content="9 of the last 27 Champions Leagues. 11 of 27 Europa Leagues. 5 of the last 10 Euros and World Cups. And ten times England's number of top-level coaches.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stambi292.github.io/sports-analytics/football/the-spanish-school/">
+<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-the-spanish-school.png?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Spain-yellow masthead with red rule, KPIs, Champions League by nationality, Europa League, international, the coaches, the school, reading, stack, method. */
+:root {
+  --bg: #faf7f0; --panel: #ffffff; --ink: #1f1608; --ink-2: #4c3f2b; --muted: #7a6c56; --line: #ebe2d0; --grid: #f3ecdf;
+  --red: #c60b1e; --red-ink: #a8091a; --yellow: #ffc400; --other: #cbbfab;
+  --font-display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #15110a; --panel: #1f1a11; --ink: #f6f0e4; --ink-2: #d6cab4; --muted: #a5977f; --line: #3a3122; --grid: #2a2318;
+  --red: #e5303f; --red-ink: #ff7380; --other: #5b5140; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #15110a; --panel: #1f1a11; --ink: #f6f0e4; --ink-2: #d6cab4; --muted: #a5977f; --line: #3a3122; --grid: #2a2318;
+  --red: #e5303f; --red-ink: #ff7380; --other: #5b5140; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
+.inner { max-width: 1000px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+.mast { background: #ffc400; color: #2a1a00; border-bottom: 10px solid #c60b1e; }
+.mast .inner { padding-block: 22px 64px; display: grid; gap: 14px; }
+.back { color: #5a3b00; text-decoration: none; font-weight: 600; font-size: 15px; }
+.eyebrow { font: 700 13px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: #5a3b00; margin-top: 18px; }
+h1 { font: 800 clamp(58px, 12vw, 124px)/.9 var(--font-display); text-transform: uppercase; margin: 0; }
+h1 span { display: block; font-size: .34em; line-height: 1.15; margin-top: 12px; font-weight: 700; color: #a8091a; text-wrap: balance; }
+.lede { margin: 4px 0 0; max-width: 64ch; color: #3d2a00; font-size: 19px; }
+.byline { font-size: 14px; color: #5a3b00; }
+h2 { font: 700 36px/1.05 var(--font-display); margin: 0 0 8px; text-wrap: balance; }
+.intro { margin: 0 0 18px; color: var(--ink-2); max-width: 68ch; }
+section { padding-block: 44px 4px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: -34px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--red); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+.kpi:nth-child(even) { border-top-color: var(--yellow); }
+.kpi b { display: block; font: 800 40px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.kpi span { color: var(--ink-2); font-size: 15px; line-height: 1.4; display: block; margin-top: 6px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: grid; gap: 16px; min-width: 0; }
+.note { font-size: 14px; color: var(--muted); margin: 0; }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; }
+.two h3 { margin: 0 0 10px; font: 700 22px var(--font-display); }
+.bars { display: grid; gap: 7px; }
+.bar { display: grid; grid-template-columns: minmax(0, 7em) minmax(0, 1fr) 2em; gap: 10px; align-items: center; font-size: 15px; }
+.bar .track { height: 20px; background: var(--grid); border-radius: 0 4px 4px 0; }
+.bar .fill { height: 100%; background: var(--other); border-radius: 0 4px 4px 0; }
+.bar.es .fill { background: var(--red); } .bar.es .t { font-weight: 700; }
+.bar .v { font: 700 20px var(--font-display); text-align: right; }
+.strip { display: grid; grid-template-columns: repeat(27, minmax(0, 1fr)); gap: 3px; }
+.cell { aspect-ratio: 1 / 2.2; border-radius: 3px; background: var(--other); position: relative; }
+.cell.es { background: var(--red); }
+.strip-l { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; color: var(--ink-2); }
+.legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; margin-right: 6px; }
+.intl { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.it { border-radius: 8px; padding: 10px 8px; text-align: center; border: 1px solid var(--line); min-width: 0; }
+.it.es { background: var(--red); color: #fff; border-color: var(--red); }
+.it b { display: block; font: 800 26px/1 var(--font-display); }
+.it span { display: block; font-size: 13px; line-height: 1.3; margin-top: 4px; }
+table.t { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 15px; font-variant-numeric: tabular-nums; }
+table.t th, table.t td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: right; vertical-align: top; }
+table.t th { font-size: 13px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+table.t th:first-child, table.t td:first-child, table.t td:last-child, table.t th:last-child { text-align: left; }
+table.t td:first-child { font-weight: 700; white-space: nowrap; }
+table.t td.n { font: 700 20px var(--font-display); }
+table.t td.z { color: var(--muted); }
+table.t td:last-child { color: var(--ink-2); font-size: 14px; }
+.wrap { overflow-x: auto; }
+.school { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.sc { border: 1px solid var(--line); border-radius: 10px; padding: 16px; min-width: 0; display: grid; gap: 8px; }
+.sc h3 { margin: 0; font-size: 15px; color: var(--ink-2); font-weight: 600; }
+.sc .row { display: grid; grid-template-columns: 5.5em minmax(0, 1fr) auto; gap: 8px; align-items: center; font-size: 14px; }
+.sc .track { height: 14px; background: var(--grid); border-radius: 3px; }
+.sc .fill { height: 100%; border-radius: 3px; background: var(--other); }
+.sc .row.es .fill { background: var(--red); }
+.sc .row b { font: 700 18px var(--font-display); }
+.reading { display: grid; gap: 14px; }
+.reading > div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+.reading b.h { display: block; font: 700 24px/1.1 var(--font-display); margin-bottom: 6px; }
+.reading p { margin: 0; color: var(--ink-2); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line); background: var(--panel); border-radius: 6px; padding: 6px 12px; font-size: 14px; font-weight: 600; }
+.method { padding-left: 20px; color: var(--ink-2); font-size: 15px; display: grid; gap: 8px; }
+.method a { color: var(--red-ink); }
+footer { padding-block: 40px 56px; font-size: 14px; color: var(--muted); }
+@media (max-width: 760px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .kpi b { font-size: 32px; }
+  .two, .school { grid-template-columns: 1fr; } .intl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .strip { gap: 2px; }
+}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="inner">
+    <a class="back" href="../../">← Sports analytics</a>
+    <div class="eyebrow">Spanish coaches · Champions League, Europa League, Euros and World Cups · 2000–2026</div>
+    <h1>The Spanish school<span>Why Spanish coaches win everything, and what the world should study</span></h1>
+    <p class="lede">Guardiola, Luis Enrique, Emery, De la Fuente. In 2025/26 Spanish coaches won the Champions League, the Europa League and the World Cup. That is not one genius; it is a system.</p>
+    <div class="byline">Stephen tAMBI · data to November 2026</div>
+  </div>
+</header>
+<main class="inner">
+  <div class="kpis" id="kpis"></div>
+
+  <section>
+    <h2>Champions League: Spain have caught Italy</h2>
+    <p class="intro">Spanish coaches have now won the European Cup and Champions League as often as Italian coaches, and far more often this century.</p>
+    <div class="card"><div class="two"><div><h3>All finals, 1956–2026</h3><div class="bars" id="uclAll"></div></div><div><h3>Since 2000</h3><div class="bars" id="uclSince"></div></div></div>
+      <p class="note">Winning coach's nationality (Germany includes West Germany).</p></div>
+  </section>
+
+  <section>
+    <h2>Every Champions League since 2000</h2>
+    <div class="card"><div class="strip" id="strip"></div><div class="strip-l"><span>2000</span><span>2013</span><span>2026</span></div>
+      <div class="legend"><span><i style="background:var(--red)"></i>Spanish coach</span><span><i style="background:var(--other)"></i>Other</span></div>
+      <p class="note" id="stripNote"></p></div>
+  </section>
+
+  <section>
+    <h2>And the Europa League, and the national teams</h2>
+    <p class="intro" id="uelIntro"></p>
+    <div class="card"><div class="intl" id="intl"></div>
+      <p class="note">Euro and World Cup winners since 2008, with the winning coach. Euro 2020 was played in 2021.</p></div>
+  </section>
+
+  <section>
+    <h2>The coaches</h2>
+    <div class="card"><div class="wrap"><table class="t" id="coaches"></table></div>
+      <p class="note">Spanish coaches with a Champions League, UEFA Cup/Europa League, Euro or World Cup title since 2000. League titles not counted (Arteta's 2025/26 Premier League and Xabi Alonso's unbeaten 2024 Bundesliga are on top).</p></div>
+  </section>
+
+  <section>
+    <h2>What the world should study</h2>
+    <p class="intro" id="schoolIntro"></p>
+    <div class="card"><div class="school" id="school"></div>
+      <p class="note">UEFA coaching convention figures as of 2013, the latest comparison widely published. Germany's figure was given as "over 1,000". Course hours and costs for the UEFA A licence.</p></div>
+  </section>
+
+  <section>
+    <h2>What the numbers say</h2>
+    <div class="reading" id="reading"></div>
+  </section>
+
+  <section class="build" id="how-it-was-built">
+    <h2>Tech stack</h2>
+    <div class="chips"><span class="chip">Python</span><span class="chip">JSON</span><span class="chip">Data compilation</span><span class="chip">JavaScript</span><span class="chip">HTML/CSS</span><span class="chip">Playwright</span><span class="chip">GitHub Pages</span></div>
+  </section>
+
+  <section>
+    <h2>Method and sources</h2>
+    <ul class="method">
+      <li><b>Champions League coaches:</b> Wikipedia's list of European Cup and Champions League winning managers (to 2024), plus 2025 and 2026 (Luis Enrique, PSG; <a href="https://online91.thedailystar.net/sports/football/news/third-crown-lasting-legacy-luis-enrique-joins-coaching-greats-4187231">The Daily Star</a>).</li>
+      <li><b>Europa League:</b> UEFA Cup and Europa League winning managers; Emery's fifth title with Aston Villa in 2026 (<a href="https://theanalyst.com/articles/which-manager-has-won-the-most-european-titles/">Opta Analyst</a>).</li>
+      <li><b>Euros and World Cups:</b> winners and coaches; World Cup 2026, Luis de la Fuente (<a href="https://www.si.com/soccer/luis-de-la-fuente-new-heights-2026-mens-coach-of-the-year">Sports Illustrated</a>).</li>
+      <li><b>Coaching education:</b> UEFA coaching convention statistics as of 2013, via <a href="https://thesefootballtimes.co/2018/05/11/the-revolution-that-changed-spain-and-the-one-yet-to-arrive-in-england/">These Football Times</a> and <a href="https://www.sportseconomics.org/sports-economics/are-uefa-coaching-licences-too-expensive">Sports Economics</a>. Older numbers; the gap has narrowed since England expanded its courses.</li>
+    </ul>
+  </section>
+</main>
+<footer class="inner">Stephen tAMBI · Sports analytics · Data, not opinion.</footer>
+
+<script>
+const D = /*__DATA__*/null;
+const $ = id => document.getElementById(id);
+const es = D.ucl_since_counts.find(r => r[0] === 'Spain')[1];
+const esIntl = D.intl_counts.find(r => r[0] === 'Spain')[1];
+const uel = D.uel_spanish_since2000.length;
+$('kpis').innerHTML = [
+  [`${es} of 27`, 'Champions Leagues since 2000 won by Spanish coaches'],
+  [`${uel} of ${D.uel_finals_since2000}`, 'UEFA Cups and Europa Leagues since 2000'],
+  [`${esIntl} of 10`, 'Euros and World Cups since 2008'],
+  ['10×', "England's number of UEFA Pro licence coaches (2013)"],
+].map(([b, s]) => `<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
+
+const bars = (rows, max) => rows.map(([t, v]) => `<div class="bar ${t === 'Spain' ? 'es' : ''}"><div class="t">${t}</div><div class="track"><div class="fill" style="width:${v / max * 100}%"></div></div><div class="v">${v}</div></div>`).join('');
+$('uclAll').innerHTML = bars(D.ucl_all.slice(0, 8), 13);
+$('uclSince').innerHTML = bars(D.ucl_since_counts, 13);
+$('strip').innerHTML = D.ucl_since2000.map(([y, c, n, cl]) => `<div class="cell ${n === 'Spain' ? 'es' : ''}" title="${y}: ${c} (${n}), ${cl}"></div>`).join('');
+const l20 = D.ucl_last20.find(r => r[0] === 'Spain')[1];
+$('stripNote').textContent = `Each bar is one final. Spanish coaches won ${es} of 27, including ${l20} of the last 20 and the last two in a row (Luis Enrique, PSG). Hover a bar for the coach.`;
+$('uelIntro').textContent = `${uel} of the ${D.uel_finals_since2000} UEFA Cup and Europa League finals since 2000 were won by Spanish coaches, ${D.uel_spanish_since2000.filter(r => r[1] === 'Unai Emery').length} of them by Unai Emery, the record holder. With national teams, Spanish coaches won ${esIntl} of the last 10 Euros and World Cups; no other country's coaches won more than one.`;
+$('intl').innerHTML = D.intl.map(([y, c, coach, n]) => `<div class="it ${n === 'Spain' ? 'es' : ''}"><b>${y}</b><span>${c}<br>${coach}</span></div>`).join('');
+$('coaches').innerHTML = `<tr><th>Coach</th><th>Champions League</th><th>Europa League</th><th>Euro / World Cup</th><th>Titles</th></tr>` +
+  D.coaches.map(c => `<tr><td>${c.name}</td><td class="n ${c.ucl ? '' : 'z'}">${c.ucl || '–'}</td><td class="n ${c.uel ? '' : 'z'}">${c.uel || '–'}</td><td class="n ${c.intl ? '' : 'z'}">${c.intl || '–'}</td><td>${c.note}</td></tr>`).join('');
+
+const S = D.school;
+$('schoolIntro').textContent = `The secret is not one coach. It is how many coaches Spain produces, and how long it trains them. In ${S.year}, Spain had ${S.pro[0][1].toLocaleString('en')} coaches with UEFA's top licence; England had ${S.pro[2][1]}.`;
+const panel = (h, rows, fmt = v => v.toLocaleString('en')) => { const mx = Math.max(...rows.map(r => typeof r[1] === 'number' ? r[1] : 0));
+  return `<div class="sc"><h3>${h}</h3>${rows.map(([c, v]) => `<div class="row ${c === 'Spain' ? 'es' : ''}"><span>${c}</span><div class="track">${typeof v === 'number' ? `<div class="fill" style="width:${v / mx * 100}%"></div>` : ''}</div><b>${typeof v === 'number' ? fmt(v) : v}</b></div>`).join('')}</div>`; };
+$('school').innerHTML = panel('UEFA Pro licence coaches', S.pro, v => v === 1000 ? '1,000+' : v.toLocaleString('en')) + panel('UEFA A + Pro licence coaches', S.a_pro) + panel('Hours on the UEFA A course', S.hours_a);
+
+$('reading').innerHTML = [
+  ['Volume: more coaches, more chances', `Spain trained roughly ten times as many top-licence coaches as England. More coaches at every level means more who reach the top, and better coaching for every young player on the way.`],
+  ['Depth: a longer, cheaper education', `A Spanish UEFA A course took about ${S.hours_a[0][1]} hours and cost around ${S.cost_a[0][1]}; England's took about ${S.hours_a[1][1]} hours at ${S.cost_a[1][1]}. Spain made coaching education long, cheap and open.`],
+  ['A shared idea of football', `Guardiola played for Cruyff's Barcelona and Luis Enrique was his teammate there; Arteta was Guardiola's assistant at City; Xabi Alonso played for him at Bayern. Possession, pressing and positional play run through almost every name on this page.`],
+  ['But not one style', `Emery wins Europa Leagues with compact, reactive teams; Benítez won with defensive organisation; De la Fuente coached Spain's youth teams before the seniors. The common factor is the training, not one tactic.`],
+].map(([h, t]) => `<div><b class="h">${h}</b><p>${t}</p></div>`).join('');
+</script>
+</body>
+</html>
