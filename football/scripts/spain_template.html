@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Why Spain</title>
+<meta name="description" content="Why are Spain the best national team in the world? World and European champions, 44 competitive games unbeaten, a higher Elo rating than any top nation since 1990, and one defeat in 18 against the world's top 10. Built from every international result.">
+<meta name="author" content="Stephen tAMBI">
+<meta property="og:title" content="Why Spain: the best team in the world, in numbers">
+<meta property="og:description" content="44 competitive games unbeaten. A higher Elo rating than any top nation since 1990. 1 defeat in 18 against the world's top 10 since 2022.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stambi292.github.io/sports-analytics/football/why-spain/">
+<meta property="og:image" content="https://stambi292.github.io/sports-analytics/images/og-why-spain.png?v=2">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Spain-red masthead with yellow rule, KPIs, Elo top 10, Elo over time, peers, eras, trophies, reading, stack, method. */
+:root {
+  --bg: #faf6f1; --panel: #ffffff; --ink: #1d1410; --ink-2: #4d3f37; --muted: #7a6a60; --line: #eadfd5; --grid: #f1e9e1;
+  --red: #c60b1e; --red-ink: #a8091a; --yellow: #ffc400; --yellow-ink: #8a6a00; --other: #b9aca2; --other-2: #8e8178;
+  --font-display: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #15100d; --panel: #1f1814; --ink: #f6eee8; --ink-2: #d2c3b8; --muted: #a39388; --line: #3a2e27; --grid: #2a211c;
+  --red: #e0283a; --red-ink: #ff6b78; --yellow-ink: #ffd451; --other: #5e524b; --other-2: #8a7d74; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #15100d; --panel: #1f1814; --ink: #f6eee8; --ink-2: #d2c3b8; --muted: #a39388; --line: #3a2e27; --grid: #2a211c;
+  --red: #e0283a; --red-ink: #ff6b78; --yellow-ink: #ffd451; --other: #5e524b; --other-2: #8a7d74; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--font-body); }
+.inner { max-width: 1000px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+.mast { background: #c60b1e; color: #fff; border-bottom: 10px solid var(--yellow); }
+.mast .inner { padding-block: 22px 64px; display: grid; gap: 14px; }
+.back { color: #ffe9b0; text-decoration: none; font-weight: 600; font-size: 15px; }
+.eyebrow { font: 700 13px var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: #ffe9b0; margin-top: 18px; }
+h1 { font: 800 clamp(64px, 13vw, 132px)/.9 var(--font-display); text-transform: uppercase; margin: 0; }
+h1 span { display: block; font-size: .32em; line-height: 1.15; margin-top: 12px; font-weight: 700; color: var(--yellow); text-wrap: balance; }
+.lede { margin: 4px 0 0; max-width: 64ch; color: #fff1e8; font-size: 19px; }
+.byline { font-size: 14px; color: #ffe9b0; }
+h2 { font: 700 36px/1.05 var(--font-display); margin: 0 0 8px; text-wrap: balance; }
+.intro { margin: 0 0 18px; color: var(--ink-2); max-width: 68ch; }
+section { padding-block: 44px 4px; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: -34px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--red); border-radius: 8px; padding: 14px 16px; min-width: 0; }
+.kpi:nth-child(even) { border-top-color: var(--yellow); }
+.kpi b { display: block; font: 800 38px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.kpi span { color: var(--ink-2); font-size: 15px; line-height: 1.4; display: block; margin-top: 6px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 22px; display: grid; gap: 16px; min-width: 0; }
+.note { font-size: 14px; color: var(--muted); margin: 0; }
+.bars { display: grid; gap: 8px; }
+.bar { display: grid; grid-template-columns: 1.6em minmax(0, 8.5em) minmax(0, 1fr) 4em; gap: 10px; align-items: center; font-size: 15px; }
+.bar .rk { color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+.bar .track { height: 22px; background: var(--grid); border-radius: 0 4px 4px 0; }
+.bar .fill { height: 100%; background: var(--other); border-radius: 0 4px 4px 0; }
+.bar.es .fill { background: var(--red); } .bar.es .t { font-weight: 700; }
+.bar .v { font: 700 20px var(--font-display); text-align: right; font-variant-numeric: tabular-nums; }
+.chart { width: 100%; height: auto; display: block; min-width: 640px; }
+.chart text { font-family: var(--font-body); font-size: 13px; fill: var(--muted); }
+.wrap { overflow-x: auto; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 14px; color: var(--ink-2); }
+.legend i { display: inline-block; width: 18px; height: 4px; border-radius: 2px; vertical-align: 4px; margin-right: 6px; }
+table.t { border-collapse: collapse; width: 100%; min-width: 600px; font-size: 15px; font-variant-numeric: tabular-nums; }
+table.t th, table.t td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: right; }
+table.t th { font-size: 13px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+table.t th:first-child, table.t td:first-child { text-align: left; }
+table.t tr.es td { font-weight: 700; background: color-mix(in srgb, var(--red) 8%, transparent); }
+table.t td.hi { color: var(--red-ink); font-weight: 700; }
+.eras { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.era { border: 1px solid var(--line); border-radius: 10px; padding: 16px; min-width: 0; display: grid; gap: 8px; }
+.era h3 { margin: 0; font: 800 30px/1 var(--font-display); }
+.era.dip { background: var(--grid); }
+.era dl { margin: 0; display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; font-size: 15px; }
+.era dt { color: var(--ink-2); } .era dd { margin: 0; font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+.era p { margin: 0; font-size: 14px; color: var(--muted); }
+.trophies { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+.tr { border-radius: 10px; padding: 14px 10px; text-align: center; background: var(--red); color: #fff; min-width: 0; }
+.tr.y { background: var(--yellow); color: #3b2a00; }
+.tr b { display: block; font: 800 34px/1 var(--font-display); }
+.tr span { font-size: 14px; font-weight: 600; }
+.reading { display: grid; gap: 14px; }
+.reading > div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; }
+.reading b.h { display: block; font: 700 24px/1.1 var(--font-display); margin-bottom: 6px; }
+.reading p { margin: 0; color: var(--ink-2); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line); background: var(--panel); border-radius: 6px; padding: 6px 12px; font-size: 14px; font-weight: 600; }
+.method { padding-left: 20px; color: var(--ink-2); font-size: 15px; display: grid; gap: 8px; }
+.method a { color: var(--red-ink); }
+footer { padding-block: 40px 56px; font-size: 14px; color: var(--muted); }
+@media (max-width: 760px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .kpi b { font-size: 32px; }
+  .eras { grid-template-columns: 1fr; } .trophies { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+</style>
+</head>
+<body>
+<header class="mast">
+  <div class="inner">
+    <a class="back" href="../../">← Sports analytics</a>
+    <div class="eyebrow">Spain national team · every international result since 1990</div>
+    <h1>Why Spain<span>The best team in the world, in numbers</span></h1>
+    <p class="lede">World champions, European champions, and still not losing. Every international result since 1990, run through a rating model, shows how good Spain are now, and how they came back from their dip.</p>
+    <div class="byline" id="byline"></div>
+  </div>
+</header>
+<main class="inner">
+  <div class="kpis" id="kpis"></div>
+
+  <section>
+    <h2>Six trophies in 18 years</h2>
+    <div class="trophies" id="trophies"></div>
+  </section>
+
+  <section>
+    <h2>Number one, by a distance</h2>
+    <p class="intro" id="topIntro"></p>
+    <div class="card"><div class="bars" id="top10"></div>
+      <p class="note">Elo rating: every result moves a team's rating up or down, by more for a big win, a strong opponent or a World Cup game. Teams that played in the last four years.</p></div>
+  </section>
+
+  <section>
+    <h2>The best rating since 1990</h2>
+    <p class="intro" id="lineIntro"></p>
+    <div class="card"><div class="wrap"><svg class="chart" id="line" viewBox="0 0 900 380" role="img" aria-label="Elo rating of Spain and other top teams at the end of each year, 1990 to 2026"></svg></div>
+      <div class="legend" id="lineLegend"></div>
+      <p class="note">Rating after each team's last game of the year. 2026 = after 12 November.</p></div>
+  </section>
+
+  <section>
+    <h2>The most consistent winners since 2008</h2>
+    <p class="intro">Competitive games only (no friendlies), 2008 to today.</p>
+    <div class="card"><div class="wrap"><table class="t" id="peers"></table></div>
+      <p class="note">Win % = games won. Points per game: 3 for a win, 1 for a draw. Conceded = goals against per game.</p></div>
+  </section>
+
+  <section>
+    <h2>Peak, dip, return</h2>
+    <p class="intro">Spain were not always this good. After 2012 the golden generation aged and the results fell away. The new team got back to exactly the same tournament record.</p>
+    <div class="card"><div class="eras" id="eras"></div>
+      <p class="note">Top 10 = opponents in the Elo top 10 on the day of the game. Tournament = Euro and World Cup finals.</p></div>
+  </section>
+
+  <section>
+    <h2>What the numbers say</h2>
+    <div class="reading" id="reading"></div>
+  </section>
+
+  <section class="build" id="how-it-was-built">
+    <h2>Tech stack</h2>
+    <div class="chips"><span class="chip">Python</span><span class="chip">Elo rating model</span><span class="chip">CSV</span><span class="chip">JavaScript</span><span class="chip">SVG</span><span class="chip">HTML/CSS</span><span class="chip">Playwright</span><span class="chip">GitHub Pages</span></div>
+  </section>
+
+  <section>
+    <h2>Method and sources</h2>
+    <ul class="method">
+      <li><b>Results:</b> every men's international since 1872 from the open <a href="https://github.com/martj42/international_results">international results dataset</a> (to 6 October 2026), plus Czech Republic 0–2 Spain on 12 November 2026 (<a href="https://www.beinsports.com/en-mena/football/uefa-nations-league/articles-video/spain-beat-czechia-to-retain-perfect-nations-league-record-2026-11-12">beIN Sports</a>).</li>
+      <li><b>Elo:</b> the eloratings.net method. Weight 60 for World Cup games, 50 for continental finals, 40 for qualifiers and Nations League, 20 for friendlies; 100 points home advantage; bigger wins move ratings more. All teams start at 1500 in 1872. This is my own model, so the numbers differ slightly from eloratings.net.</li>
+      <li><b>Unbeaten runs:</b> a penalty shoot-out counts as a draw, as in official records. The 2025 Nations League final, lost to Portugal on penalties, is a draw.</li>
+      <li><b>Trophies:</b> <a href="https://www.espn.com/soccer/story/_/id/49402253/world-cup-spain-win-lionel-messi-argentina-reaction-analysis-ferran-torres">ESPN</a> on the 2026 World Cup final; record unbeaten run: <a href="https://www.beinsports.com/en-us/soccer/fifa-world-cup-2026/articles/spain-makes-history-sets-new-international-unbeaten-record-after-winning-the-2026-fifa-world-cup-2026-07-20">beIN Sports</a>.</li>
+    </ul>
+  </section>
+</main>
+<footer class="inner">Stephen tAMBI · Sports analytics · Data, not opinion.</footer>
+
+<script>
+const D = /*__DATA__*/null;
+const $ = id => document.getElementById(id);
+const E = D.elo, TOP = E.final_top10;
+const fmt = d => new Date(d + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+$('byline').textContent = `Stephen tAMBI · results to ${D.last_game}`;
+const t1022 = D.eras[2].top10;
+$('kpis').innerHTML = [
+  [D.comp_run[0], `competitive games unbeaten, since losing to ${D.comp_run[2]} in ${new Date(D.comp_run[1]).getFullYear()}`],
+  [TOP[0][1], `Elo rating: number one, and higher than any top nation has been since 1990`],
+  [`${t1022[2]} in ${t1022[0] + t1022[1] + t1022[2]}`, 'defeats against the world\'s top 10 since 2022'],
+  [`${D.peers[0].win}%`, 'of competitive games won since 2008, the best of any top team'],
+].map(([b, s]) => `<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
+
+$('trophies').innerHTML = [['2008', 'Euro'], ['2010', 'World Cup'], ['2012', 'Euro'], ['2023', 'Nations League'], ['2024', 'Euro'], ['2026', 'World Cup']]
+  .map(([y, c]) => `<div class="tr ${c === 'World Cup' ? 'y' : ''}"><b>${y}</b><span>${c}</span></div>`).join('');
+
+const gap = TOP[0][1] - TOP[1][1];
+$('topIntro').textContent = `Spain are ${gap} rating points clear of ${TOP[1][0]}. In Elo terms that makes them about a ${Math.round(100 / (1 + 10 ** (-gap / 400)))}% favourite on neutral ground against the second-best team in the world (draws counted as half a win).`;
+const mn = TOP[TOP.length - 1][1] - 60, mx = TOP[0][1];
+$('top10').innerHTML = TOP.map(([t, v], i) => `<div class="bar ${t === 'Spain' ? 'es' : ''}"><div class="rk">${i + 1}</div><div class="t">${t}</div><div class="track"><div class="fill" style="width:${(v - mn) / (mx - mn) * 100}%"></div></div><div class="v">${v}</div></div>`).join('');
+
+// line chart
+(() => {
+  const show = ['Spain', 'Argentina', 'France', 'Germany', 'Brazil', 'England'];
+  const col = { Spain: 'var(--red)' }, W = 900, H = 380, L = 48, R = 150, T = 16, B = 30;
+  const ys = E.years, lo = 1700, hi = 2400;
+  const X = i => L + i / (ys.length - 1) * (W - L - R), Y = v => T + (hi - v) / (hi - lo) * (H - T - B);
+  let s = '';
+  for (let g = lo; g <= hi; g += 100) s += `<line x1="${L}" x2="${W - R}" y1="${Y(g)}" y2="${Y(g)}" stroke="var(--grid)"/><text x="${L - 6}" y="${Y(g) + 4}" text-anchor="end">${g}</text>`;
+  ys.forEach((y, i) => { if (y % 4 === 2) s += `<text x="${X(i)}" y="${H - 8}" text-anchor="middle">${y}</text>`; });
+  [[2008, 2012, 'Peak'], [2022, 2026, 'Return']].forEach(([a, b, lab]) => {
+    const x0 = X(ys.indexOf(a)), x1 = X(ys.indexOf(b));
+    s += `<rect x="${x0}" y="${T}" width="${x1 - x0}" height="${H - T - B}" fill="var(--yellow)" opacity=".16"/><text x="${(x0 + x1) / 2}" y="${T + 14}" text-anchor="middle" style="fill:var(--ink);font-weight:700">${lab}</text>`;
+  });
+  const ends = [];
+  show.slice().reverse().forEach(t => {
+    const v = E.yearly[t]; const pts = v.map((x, i) => x == null ? null : `${X(i)},${Y(x)}`).filter(Boolean).join(' ');
+    const es = t === 'Spain';
+    s += `<polyline points="${pts}" fill="none" stroke="${es ? 'var(--red)' : 'var(--other)'}" stroke-width="${es ? 4 : 2}" stroke-linejoin="round"/>`;
+    ends.push([t, v[v.length - 1]]);
+  });
+  ends.sort((a, b) => b[1] - a[1]); let lastY = -99;
+  ends.forEach(([t, v]) => { let y = Y(v) + 4; if (y - lastY < 15) y = lastY + 15; lastY = y;
+    s += `<text x="${W - R + 8}" y="${y}" style="fill:${t === 'Spain' ? 'var(--red-ink)' : 'var(--ink-2)'};font-weight:${t === 'Spain' ? 700 : 500}">${t} ${v}</text>`; });
+  $('line').innerHTML = s;
+  $('lineLegend').innerHTML = `<span><i style="background:var(--red)"></i>Spain</span><span><i style="background:var(--other)"></i>Argentina, France, Germany, Brazil, England</span><span><i style="background:var(--yellow);height:12px;opacity:.5"></i>Spain's two winning eras</span>`;
+  const pk = Object.entries(E.peak).sort((a, b) => b[1] - a[1]);
+  $('lineIntro').textContent = `Spain's rating today (${pk[0][1]}) is higher than any of these teams reached at any point since 1990. Next best: ${pk[1][0]} at their peak, ${pk[1][1]}.`;
+})();
+
+$('peers').innerHTML = `<tr><th>Team</th><th>Games</th><th>Won</th><th>Lost</th><th>Win %</th><th>Points per game</th><th>Conceded</th></tr>` +
+  D.peers.map((p, i) => `<tr class="${p.team === 'Spain' ? 'es' : ''}"><td>${p.team}</td><td>${p.n}</td><td>${p.w}</td><td>${p.l}</td><td class="${i === 0 ? 'hi' : ''}">${p.win}%</td><td>${p.ppg.toFixed(2)}</td><td>${p.ga.toFixed(2)}</td></tr>`).join('');
+
+const lab = { '2008–12': 'Xavi, Iniesta, Casillas', '2013–21': 'The golden generation ages', '2022–26': 'Rodri, Pedri, Yamal' };
+$('eras').innerHTML = D.eras.map(e => `<div class="era ${e.era === '2013–21' ? 'dip' : ''}"><h3>${e.era}</h3>
+  <dl><dt>Win % (all games)</dt><dd>${e.all.win}%</dd><dt>Euro + World Cup games</dt><dd>${e.tour.w}–${e.tour.d}–${e.tour.l}</dd>
+  <dt>Conceded per tournament game</dt><dd>${e.tour.ga.toFixed(2)}</dd><dt>vs Elo top 10</dt><dd>${e.top10[0]}–${e.top10[1]}–${e.top10[2]}</dd></dl>
+  <p>${lab[e.era]} · won–drawn–lost</p></div>`).join('');
+
+const [p, d, r] = D.eras;
+$('reading').innerHTML = [
+  ['They beat the best, not just everyone', `Since 2022 Spain have lost once in ${r.top10.reduce((a, b) => a + b)} games against teams in the world's top 10. In 2013–21 they lost ${d.top10[2]} of ${d.top10.reduce((a, b) => a + b)}. The gap to the rest is not built on beating minnows.`],
+  ['Consistency is the defence', `Spain concede ${D.peers.find(x => x.team === 'Spain').ga.toFixed(2)} goals a game in competitive matches since 2008, and ${r.tour.ga.toFixed(2)} a game at the last three tournaments. Teams that rarely concede rarely lose, which is how an unbeaten run reaches ${D.comp_run[0]}.`],
+  ['The system outlived the players', `The 2008–12 and 2022–26 teams have the same tournament record: ${p.tour.w} wins, ${p.tour.d} draws, ${p.tour.l} defeat. Almost none of the players are the same. The style and the youth pipeline carried over, which is exactly what Germany lost.`],
+  ['Not unbeatable', `They lost on penalties to Portugal in the 2025 Nations League final and drew 0–0 with Cape Verde at the World Cup. The dip of 2013–21 shows how quickly it can go: ${d.tour.w} wins in ${d.tour.n} tournament games.`],
+].map(([h, t]) => `<div><b class="h">${h}</b><p>${t}</p></div>`).join('');
+</script>
+</body>
+</html>
